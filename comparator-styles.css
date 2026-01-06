@@ -492,20 +492,20 @@ th {
 
 /* Classes de couleur basées sur les pourcentages - texte seulement */
 .coverage-red {
-    color: #d32f2f;
+    color: #e53935;
 }
 
 .coverage-orange {
-    color: #f57c00;
+    color: #ff9800;
 }
 
 .coverage-black {
-    color: #000000;
+    color: #66bb6a;
     font-weight: bold;
 }
 
 .coverage-green {
-    color: #1b5e20;
+    color: #2e7d32;
     font-weight: bold;
 }
 
