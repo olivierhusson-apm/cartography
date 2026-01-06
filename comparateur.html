@@ -99,17 +99,19 @@
   }
 
 
+  let expectedL4Loaded = false;
+  
   fetch('bc-definitions.json').then(r=>r.json()).then(d=>{ bcdefs=d; maybeInit(); });
   fetch('app-capabilities-unified.json').then(r=>r.json()).then(d=>{ data=d; maybeInit(); });
   fetch('bc-mapping.json').then(r=>r.json()).then(d=>{ bc=d._hierarchy; maybeInit(); });
   fetch('l3-descriptions.json').then(r=>r.json()).then(d=>{ l3Descriptions=d.L3_DESCRIPTIONS||{}; maybeInit(); });
-  fetch('expectedL4ByCategory.json').then(r=>r.json()).then(d=>{ window.expectedL4ByCategory=d; });
+  fetch('expectedL4ByCategory.json').then(r=>r.json()).then(d=>{ window.expectedL4ByCategory=d; expectedL4Loaded=true; maybeInit(); });
 
   document.addEventListener('DOMContentLoaded', function() {
   });
 
   function maybeInit() {
-    if (data && bc && bcdefs && Object.keys(bcdefs).length > 0) fillSelects();
+    if (data && bc && bcdefs && Object.keys(bcdefs).length > 0 && expectedL4Loaded) fillSelects();
   }
     function fillSelects() {
       let apps=Object.keys(data);
@@ -624,12 +626,39 @@
                   const l3Description = l3Descriptions[l3] || '';
                   const tooltipAttr = l3Description ? ` title="${l3Description.replace(/"/g, '&quot;').replace(/<br><br>/g, '\n\n').replace(/<br>/g, '\n')}"` : '';
                   
+                  // Fonction pour générer la barre de progression (niveau 2)
+                  function getProgressBarL3(percentage) {
+                    const barWidth = 160;
+                    const fillWidth = Math.round((barWidth * percentage) / 100);
+                    let barColor = '#2e7d32'; // vert foncé par défaut (≥80%)
+                    if (percentage < 20) {
+                      barColor = '#e53935'; // rouge
+                    } else if (percentage < 50) {
+                      barColor = '#ff9800'; // orange
+                    } else if (percentage < 80) {
+                      barColor = '#66bb6a'; // vert clair
+                    }
+                    // Créer les marqueurs tous les 20%
+                    const markers = [20, 40, 60, 80].map(p => {
+                      const pos = (barWidth * p) / 100;
+                      return `<div style="position:absolute;left:${pos}px;top:0;width:1px;height:100%;background:#999;opacity:0.5;"></div>`;
+                    }).join('');
+                    
+                    return `<div style="display:flex;align-items:center;gap:8px;">
+                      <div style="position:relative;width:${barWidth}px;height:12px;background:#eee;border-radius:6px;overflow:hidden;">
+                        <div style="position:absolute;left:0;top:0;height:100%;width:${fillWidth}px;background:${barColor};border-radius:6px;"></div>
+                        ${markers}
+                      </div>
+                      <span style="font-weight:bold;min-width:40px;">${percentage}%</span>
+                    </div>`;
+                  }
+                  
                   // Ajouter un style pour espacer après la dernière L3 de chaque L2
                   const isLastL3 = l3Index === l3AttendusPourL2.length - 1;
                   const spacingStyle = isLastL3 ? 'border-bottom: 15px solid #f5f5f5;' : '';
                   
-                  const tdApp2L3 = hasApp2 ? `<td class="tick app-column ${a2ColorClass}">${a2Percentage}%</td>` : '';
-                  html+=`<tr class="l3-row" style="background:#f0f4ff; ${spacingStyle}"${tooltipAttr}><td style="padding-left: 30px;">${l3Def}</td><td class="tick app-column ${a1ColorClass}">${a1Percentage}%</td>${tdApp2L3}</tr>`;
+                  const tdApp2L3 = hasApp2 ? `<td class="tick app-column ${a2ColorClass}"><div style="display:flex;justify-content:center;align-items:center;">${getProgressBarL3(a2Percentage)}</div></td>` : '';
+                  html+=`<tr class="l3-row" style="background:#f0f4ff; ${spacingStyle}"${tooltipAttr}><td style="padding-left: 30px;">${l3Def}</td><td class="tick app-column ${a1ColorClass}"><div style="display:flex;justify-content:center;align-items:center;">${getProgressBarL3(a1Percentage)}</div></td>${tdApp2L3}</tr>`;
                 });
               }
             }
@@ -705,8 +734,8 @@
               const l1Code = Object.keys(l1Mapping).find(k => l1Mapping[k] === l1Full) || l1Full;
               
               // Affichage du ratio pour chaque L1
-              const tdApp2L1 = hasApp2 ? `<td class="coverage app-column" style="font-size:1.6em;">${a2L2Couverts}/${totalL2}</td>` : '';
-              html += `<tr class="l1-row" data-l1="${l1Code}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.2em;"><b>${l1Def}</b></td><td class="coverage app-column" style="font-size:1.6em;">${a1L2Couverts}/${totalL2}</td>${tdApp2L1}</tr>`;
+              const tdApp2L1 = hasApp2 ? `<td class="coverage app-column" style="font-size:1.6em;text-align:center;">${a2L2Couverts}/${totalL2}</td>` : '';
+              html += `<tr class="l1-row" data-l1="${l1Code}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.2em;"><b>${l1Def}</b></td><td class="coverage app-column" style="font-size:1.6em;text-align:center;">${a1L2Couverts}/${totalL2}</td>${tdApp2L1}</tr>`;
               
               // Afficher les L2 attendus
               l2Attendus.forEach((l2, l2Index) => {
@@ -762,13 +791,40 @@
                 const a1ColorClass = getColorClass(a1L2Percentage);
                 const a2ColorClass = getColorClass(a2L2Percentage);
                 
+                // Fonction pour générer la barre de progression
+                function getProgressBar(percentage) {
+                  const barWidth = 160;
+                  const fillWidth = Math.round((barWidth * percentage) / 100);
+                  let barColor = '#2e7d32'; // vert foncé par défaut (≥80%)
+                  if (percentage < 20) {
+                    barColor = '#e53935'; // rouge
+                  } else if (percentage < 50) {
+                    barColor = '#ff9800'; // orange
+                  } else if (percentage < 80) {
+                    barColor = '#66bb6a'; // vert clair
+                  }
+                  // Créer les marqueurs tous les 20%
+                  const markers = [20, 40, 60, 80].map(p => {
+                    const pos = (barWidth * p) / 100;
+                    return `<div style="position:absolute;left:${pos}px;top:0;width:1px;height:100%;background:#999;opacity:0.5;"></div>`;
+                  }).join('');
+                  
+                  return `<div style="display:flex;align-items:center;gap:8px;">
+                    <div style="position:relative;width:${barWidth}px;height:12px;background:#eee;border-radius:6px;overflow:hidden;">
+                      <div style="position:absolute;left:0;top:0;height:100%;width:${fillWidth}px;background:${barColor};border-radius:6px;"></div>
+                      ${markers}
+                    </div>
+                    <span style="font-weight:bold;min-width:40px;">${percentage}%</span>
+                  </div>`;
+                }
+                
                 // Ajouter un style pour espacer après le dernier L2 de chaque L1
                 const isLastL2 = l2Index === l2Attendus.length - 1;
                 const spacingStyle = isLastL2 ? 'border-bottom: 15px solid #f5f5f5;' : '';
                 
-                const tdApp2L2 = hasApp2 ? `<td class="app-column ${a2ColorClass}">${a2L2Percentage}%</td>` : '';
+                const tdApp2L2 = hasApp2 ? `<td class="app-column ${a2ColorClass}"><div style="display:flex;justify-content:center;align-items:center;">${getProgressBar(a2L2Percentage)}</div></td>` : '';
                 html += `<tr class="l2-row l2-clickable" data-l1="${l1Code}" data-l2="${l2}" style="background:#e3f2fd; ${spacingStyle}"><td style="padding-left: 30px;">${l2Def}</td>`
-                      + `<td class="app-column ${a1ColorClass}">${a1L2Percentage}%</td>`
+                      + `<td class="app-column ${a1ColorClass}"><div style="display:flex;justify-content:center;align-items:center;">${getProgressBar(a1L2Percentage)}</div></td>`
                       + tdApp2L2 + `</tr>`;
               });
             });
