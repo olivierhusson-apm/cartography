@@ -1,0 +1,1254 @@
+// Stocker la liste des apps de la région sélectionnée pour l'export
+            window.selectedRegionName = regionName;
+            window.selectedRegionApps = appsWithMatrixDuplicates;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Carte Interactive Minimaliste</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div id="banner">
+        <img src="CEVA_BlueRed.jpg" alt="CEVA Logistics" id="banner-logo">
+        <h1>Applications Cartography</h1>
+    </div>
+    <div id="sidebar">
+        <!-- Bouton d'expansion supprimé -->
+        <div id="capabilities-block">
+            <!-- Gros boutons capabilities (L1) doivent être ici si générés dynamiquement -->
+            <form id="capabilities-form" style="margin-bottom: 0; padding: 4px 0 0 0; font-size: 13px;">
+                <!-- Cases à cocher générées dynamiquement -->
+            </form>
+        </div>
+        <!-- Section Categories sous Finance Management -->
+        <div id="categories-filter-section" style="margin-top: 0; margin-bottom: 4px; padding-top: 0;">
+            <div id="categories-list" style="
+                max-height: 80px;
+                overflow-y: auto;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 0 4px 1px 4px;
+                background: white;
+                font-size: 12px;
+            ">
+                <!-- Les catégories seront générées ici -->
+            </div>
+        </div>
+        
+        <div style="border-top: 2px solid #ddd; margin: 2px 0;"></div>
+        <div class="search-container" style="margin-bottom: 0;">
+            <input type="text" id="search-input" placeholder="Search for an application..." style="width: 100%; padding: 6px 30px 6px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
+            <!-- Bouton toggle supprimé - panneau toujours visible -->
+        </div>
+        <button id="exportFilteredApps" style="width:100%;margin:0 0 4px 0;padding:8px 0;border-radius:4px;background:#1976d2;color:white;font-size:15px;border:none;cursor:pointer;">Extract Filtered Apps</button>
+        <div id="info-panel" style="background:#f0f4ff; padding:4px 10px 4px 10px; border-radius:6px; margin-top: 4px; font-size: 13px;"></div>
+    </div>
+    <div id="map">
+        <div id="selected-app-container" style="
+            position: fixed;
+            top: max(20px, 5vh);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: none;
+            max-width: 90vw;
+        ">
+            <div id="selected-app-button" style="
+                background: #e53935;
+                color: white;
+                padding: 12px 18px;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 14px;
+                font-weight: bold;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                white-space: nowrap;
+                min-width: 200px;
+            ">
+                <span id="selected-app-name"></span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span id="deselect-button" style="
+                        cursor: pointer;
+                        font-size: 18px;
+                        opacity: 0.8;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.2);
+                    " title="Désélectionner">✕</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="capabilities.js"></script>
+    <script src="filters.js"></script>
+    <script src="HiddenApps.js"></script>
+    <script type="module">
+        import { countries } from './countriesList.js';
+
+        // Centres géographiques des régions principales
+        const regionCenters = {
+            "nortam": [45.0, -100.0],
+            "europe": [46.818188, 8.227512],
+            "apac": [15.0, 120.0],
+            "latam": [-15.0, -60.0],
+            "imea": [20.0, 25.0]
+        };
+
+        let countryMarkers = [];
+        window.currentItems = [];
+        let currentAllApps = [];
+        const ZOOM_THRESHOLD = 4; // Niveau de zoom pour dégrouper
+        
+        // Variables globales pour la carte
+        window.countryLayers = {};
+
+        // Fonction pour obtenir les applications uniques d'un pays
+        function getUniqueAppsForCountry(countryName) {
+            const allApps = Object.values(window.allApplications).flat();
+            const uniqueApps = allApps.filter(app => 
+                app.countries?.length === 1 && app.countries[0] === countryName
+            ).map(app => app.name);
+            return { count: uniqueApps.length, apps: uniqueApps };
+        }
+
+        // Fonction pour obtenir les applications uniques d'une région
+        function getUniqueAppsForRegion(regionName) {
+            const allApps = Object.values(window.allApplications).flat();
+            const uniqueApps = allApps.filter(app => 
+                app.regions?.length === 1 && app.regions[0] === regionName
+            ).map(app => app.name);
+            return { count: uniqueApps.length, apps: uniqueApps };
+        }
+
+        // Initialisation de la carte avec zoomControl désactivé
+        const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+        // Ajoute le contrôle de zoom en haut à droite
+        L.control.zoom({ position: 'topright' }).addTo(map);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+        }).addTo(map);
+
+        function showCountryMarkers(items, allApps) {
+            // Sauvegarder les données pour le re-render lors du zoom
+            window.currentItems = items;
+            currentAllApps = allApps;
+            
+            countryMarkers.forEach(marker => map.removeLayer(marker));
+            countryMarkers = [];
+
+            const currentZoom = map.getZoom();
+            
+            if (currentZoom < ZOOM_THRESHOLD) {
+                // Mode regroupé : afficher les markers régionaux
+                showGroupedMarkers(items, allApps);
+            } else {
+                // Mode dégroupé : afficher les markers individuels par pays
+                showIndividualMarkers(items, allApps);
+            }
+        }
+
+        function showGroupedMarkers(items, allApps) {
+            // Grouper les pays par région
+            const regionGroups = {
+                nortam: [],
+                europe: [],
+                apac: [],
+                latam: [],
+                imea: []
+            };
+
+            // Classifier chaque pays dans sa région
+            countries.forEach(countryObj => {
+                const country = countryObj.name;
+                let filtered = items.filter(item => item.countries && item.countries.includes(country));
+                
+                // Si des capabilities sont actives, filtrer les parents dont les variantes du pays ne couvrent pas la capability
+                if (window.allActiveCapabilities && window.allActiveCapabilities.length > 0) {
+                    filtered = filtered.filter(item => {
+                        // Vérifier si c'est un parent
+                        const hasVariants = window.allApplications.some(a => a.parent === item.name);
+                        if (hasVariants && !item.parent) {
+                            // Pour Matrix, inclure les variantes même hidden
+                            let variantsInCountry;
+                            if (item.name === "Matrix") {
+                                variantsInCountry = window.allApplications.filter(variant => {
+                                    if (variant.parent !== item.name) return false;
+                                    if (!variant.countries || !variant.countries.includes(country)) return false;
+                                    return (
+                                        (variant.l2 && variant.l2.some(l2 => window.allActiveCapabilities.includes(l2))) ||
+                                        (variant.l3 && variant.l3.some(l3 => window.allActiveCapabilities.includes(l3))) ||
+                                        (variant.l4 && variant.l4.some(l4 => window.allActiveCapabilities.includes(l4)))
+                                    );
+                                });
+                            } else {
+                                variantsInCountry = window.allApplications.filter(variant => {
+                                    if (variant.parent !== item.name || variant.hidden === true) return false;
+                                    if (!variant.countries || !variant.countries.includes(country)) return false;
+                                    return (
+                                        (variant.l2 && variant.l2.some(l2 => window.allActiveCapabilities.includes(l2))) ||
+                                        (variant.l3 && variant.l3.some(l3 => window.allActiveCapabilities.includes(l3))) ||
+                                        (variant.l4 && variant.l4.some(l4 => window.allActiveCapabilities.includes(l4)))
+                                    );
+                                });
+                            }
+                            // Si aucune variante du pays ne couvre la capability, exclure le parent
+                            return variantsInCountry.length > 0;
+                        }
+                        // Pas un parent : garder
+                        return true;
+                    });
+                }
+                
+                if (filtered.length === 0) return;
+
+                const countryData = { country, center: countryObj.center, apps: filtered };
+                
+                // Déterminer la région du pays
+                if (['United States of America', 'Canada', 'Mexico'].includes(country)) {
+                    regionGroups.nortam.push(countryData);
+                } else if (['Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia', 'Paraguay', 'Uruguay', 'Guyana', 'Suriname'].includes(country)) {
+                    regionGroups.latam.push(countryData);
+                } else if (['China', 'Japan', 'South Korea', 'Singapore', 'Malaysia', 'Thailand', 'Indonesia', 'Philippines', 'Vietnam', 'Australia', 'New Zealand', 'Cambodia', 'Laos', 'Myanmar', 'Brunei', 'China (Mainland)'].includes(country)) {
+                    regionGroups.apac.push(countryData);
+                } else if (['India', 'United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman', 'Jordan', 'Lebanon', 'Israel', 'Iran', 'Iraq', 'Syria', 'Yemen', 'South Africa', 'Nigeria', 'Kenya', 'Ghana', 'Ethiopia', 'Tanzania', 'Uganda'].includes(country)) {
+                    regionGroups.imea.push(countryData);
+                } else if (['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt'].includes(country)) {
+                    // Maghreb fait partie de l'Europe
+                    regionGroups.europe.push(countryData);
+                } else {
+                    // Par défaut, Europe
+                    regionGroups.europe.push(countryData);
+                }
+            });
+
+            // Créer des markers pour chaque région
+            Object.keys(regionGroups).forEach(regionName => {
+                const regionCountries = regionGroups[regionName];
+                if (regionCountries.length === 0) return;
+
+                // 1. Récupérer toutes les applications distinctes de la région selon la sélection courante (items)
+                const regionAppsSet = new Set();
+                regionCountries.forEach(countryData => {
+                    countryData.apps.forEach(app => regionAppsSet.add(app.name));
+                });
+                const allRegionApps = Array.from(regionAppsSet);
+                const allAppsFlat = Object.values(window.allApplications).flat();
+                // 2. Calculer les applications uniques à la région (présentes uniquement dans cette région)
+                const uniqueRegionApps = allRegionApps.map(name => allAppsFlat.find(app => app.name === name))
+                    .filter(app => Array.isArray(app.regions) && app.regions.length === 1 && app.regions[0] === regionName);
+                // Compter les apps uniques (Matrix compté une seule fois)
+                const totalApps = allRegionApps.length;
+                const regionOnlyApps = uniqueRegionApps.length;
+                // 3. Ratio unique/total
+                const progressPercentage = totalApps > 0 ? Math.round((regionOnlyApps / totalApps) * 100) : 0;
+                const regionCenter = regionCenters[regionName];
+                if (!regionCenter) return;
+
+                // Couleur blanc pour le cercle de progression
+                let progressColor = '#FFFFFF'; // Blanc
+
+                const marker = L.marker(regionCenter, {
+                    icon: L.divIcon({
+                        className: 'region-count-icon',
+                        html: `<div style="
+                            background: #388e3c;
+                            color: white;
+                            border-radius: 50%;
+                            width: 40px;
+                            height: 40px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: bold;
+                            font-size: 1.1em;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                            cursor: pointer;
+                            position: relative;
+                            background-image: conic-gradient(
+                                ${progressColor} 0deg ${progressPercentage * 3.6}deg,
+                                transparent ${progressPercentage * 3.6}deg 360deg
+                            );
+                            padding: 3px;
+                        " title="Applications région-uniquement: ${progressPercentage}% (${regionOnlyApps}/${totalApps})">
+                            <div style="
+                                background: #388e3c;
+                                color: white;
+                                border-radius: 50%;
+                                width: 34px;
+                                height: 34px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                                font-size: 1.1em;
+                            ">${totalApps}</div>
+                        </div>`,
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20]
+                    }),
+                    interactive: true
+                }).addTo(map);
+
+                // Clic pour une région
+                marker.on('click', function() {
+                    // Pas de pays à mémoriser pour un marker régional
+                    window.selectedRegionName = regionName.toUpperCase();
+                    window.selectedCountryName = null;
+                    showRegionApps(regionName.toUpperCase(), regionCountries, allApps);
+                });
+
+                countryMarkers.push(marker);
+            });
+        }
+
+        function showIndividualMarkers(items, allApps) {
+            countries.forEach(countryObj => {
+                const country = countryObj.name;
+                const center = countryObj.center;
+                // Filtrer les apps de la sélection courante (items) présentes dans ce pays
+                let filtered = items.filter(item => item.countries && item.countries.includes(country));
+                
+                // Si des capabilities sont actives, filtrer les parents dont les variantes du pays ne couvrent pas la capability
+                if (window.allActiveCapabilities && window.allActiveCapabilities.length > 0) {
+                    filtered = filtered.filter(item => {
+                        // Vérifier si c'est un parent
+                        const hasVariants = window.allApplications.some(a => a.parent === item.name);
+                        if (hasVariants && !item.parent) {
+                            // Pour Matrix, inclure les variantes même hidden
+                            let variantsInCountry;
+                            if (item.name === "Matrix") {
+                                variantsInCountry = window.allApplications.filter(variant => {
+                                    if (variant.parent !== item.name) return false;
+                                    if (!variant.countries || !variant.countries.includes(country)) return false;
+                                    return (
+                                        (variant.l2 && variant.l2.some(l2 => window.allActiveCapabilities.includes(l2))) ||
+                                        (variant.l3 && variant.l3.some(l3 => window.allActiveCapabilities.includes(l3))) ||
+                                        (variant.l4 && variant.l4.some(l4 => window.allActiveCapabilities.includes(l4)))
+                                    );
+                                });
+                            } else {
+                                variantsInCountry = window.allApplications.filter(variant => {
+                                    if (variant.parent !== item.name || variant.hidden === true) return false;
+                                    if (!variant.countries || !variant.countries.includes(country)) return false;
+                                    return (
+                                        (variant.l2 && variant.l2.some(l2 => window.allActiveCapabilities.includes(l2))) ||
+                                        (variant.l3 && variant.l3.some(l3 => window.allActiveCapabilities.includes(l3))) ||
+                                        (variant.l4 && variant.l4.some(l4 => window.allActiveCapabilities.includes(l4)))
+                                    );
+                                });
+                            }
+                            // Si aucune variante du pays ne couvre la capability, exclure le parent
+                            return variantsInCountry.length > 0;
+                        }
+                        // Pas un parent : garder
+                        return true;
+                    });
+                }
+                
+                if (filtered.length === 0) return;
+
+                // Calcul du ratio d'applications uniques
+                const uniqueAppsResult = getUniqueAppsForCountry(country);
+                const uniqueAppsForCountry = uniqueAppsResult.apps;
+                // Compter les apps uniques par nom (Matrix compté une seule fois)
+                const uniqueAppNames = new Set(filtered.map(app => app.name));
+                const uniqueCount = Array.from(uniqueAppNames).filter(appName => uniqueAppsForCountry.includes(appName)).length;
+                const totalCount = uniqueAppNames.size;
+                const uniqueRatio = totalCount > 0 ? Math.round((uniqueCount / totalCount) * 100) : 0;
+
+                // Marker : cercle principal vert, ratio unique en cercle jaune
+                const marker = L.marker(center, {
+                    icon: L.divIcon({
+                        className: 'country-count-icon',
+                        html: `<div style="
+                            background: #43a047;
+                            color: white;
+                            border-radius: 50%;
+                            width: 32px;
+                            height: 32px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: bold;
+                            font-size: 1.1em;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                            cursor: pointer;
+                            position: relative;
+                            background-image: conic-gradient(
+                                #FFFFFF 0deg ${uniqueRatio * 3.6}deg,
+                                transparent ${uniqueRatio * 3.6}deg 360deg
+                            );
+                            padding: 3px;">
+                            <div style="
+                                background: #43a047;
+                                color: white;
+                                border-radius: 50%;
+                                width: 26px;
+                                height: 26px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                                font-size: 1.1em;">
+                                ${totalCount}
+                            </div>
+                        </div>`,
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 16]
+                    }),
+                    interactive: true
+                }).addTo(map);
+
+                // Clic pour un pays
+                marker.on('click', function() {
+                    HiddenApps.setSelectedCountry(country);
+                    window.selectedRegionName = null;
+                    showCountryApps(country, filtered, allApps);
+                });
+
+                countryMarkers.push(marker);
+            });
+        }
+
+        // Fonction pour afficher les applications d'un pays
+        function showCountryApps(country, apps, allApps) {
+            const infoPanel = document.getElementById('info-panel');
+            const sidebar = document.getElementById('sidebar');
+            
+            // Récupérer les catégories filtrées (si elles existent)
+            const checkedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Dupliquer Matrix par catégorie selon les variantes présentes dans le pays
+            let appsWithMatrixDuplicates = [];
+            apps.forEach(app => {
+                if (app.name === "Matrix") {
+                    // Récupérer toutes les variantes Matrix (même hidden)
+                    const variants = allApps.filter(v => v.parent === "Matrix");
+                    // Grouper par catégorie pour ce pays
+                    const categoriesMap = {};
+                    variants.forEach(variant => {
+                        if (variant.countries && variant.countries.includes(country)) {
+                            const category = variant.category;
+                            // Si un filtre de catégorie est actif, ne garder que les catégories filtrées
+                            if (checkedCategories.length === 0 || checkedCategories.includes(category)) {
+                                if (!categoriesMap[category]) {
+                                    categoriesMap[category] = true;
+                                }
+                            }
+                        }
+                    });
+                    // Créer une copie Matrix pour chaque catégorie trouvée
+                    Object.keys(categoriesMap).forEach(category => {
+                        appsWithMatrixDuplicates.push({
+                            ...app,
+                            category: category
+                        });
+                    });
+                } else {
+                    appsWithMatrixDuplicates.push(app);
+                }
+            });
+
+            // Dédupliquer Matrix par catégorie (garantir un seul Matrix par catégorie unique)
+            const matrixByCategory = {};
+            const nonMatrixApps = [];
+            appsWithMatrixDuplicates.forEach(app => {
+                if (app.name === "Matrix") {
+                    const key = app.category || "Autre";
+                    if (!matrixByCategory[key]) {
+                        matrixByCategory[key] = app;
+                    }
+                } else {
+                    nonMatrixApps.push(app);
+                }
+            });
+            appsWithMatrixDuplicates = [...nonMatrixApps, ...Object.values(matrixByCategory)];
+            // Stocker la liste des apps du pays sélectionné pour l'export
+            window.selectedCountryName = country;
+            window.selectedCountryApps = appsWithMatrixDuplicates;
+
+            // Compter les applications uniques (Matrix compté une seule fois)
+            const uniqueAppNames = new Set();
+            appsWithMatrixDuplicates.forEach(app => uniqueAppNames.add(app.name));
+            const totalUniqueAppsCount = uniqueAppNames.size;
+
+            // Grouper les applications par catégorie
+            const groupedApps = {};
+            appsWithMatrixDuplicates.forEach(app => {
+                const cat = app.category || "Autre";
+                if (!groupedApps[cat]) groupedApps[cat] = [];
+                groupedApps[cat].push(app.name);
+            });
+
+            // Obtenir les applications uniques 
+            const uniqueAppsResult = getUniqueAppsForCountry(country);
+            const uniqueAppsForCountry = uniqueAppsResult.apps;
+            const uniqueAppsFiltered = appsWithMatrixDuplicates.filter(app => uniqueAppsForCountry.includes(app.name));
+            const uniqueAppsUniqueNames = new Set();
+            uniqueAppsFiltered.forEach(app => uniqueAppsUniqueNames.add(app.name));
+            const totalUniqueCount = uniqueAppsUniqueNames.size;
+
+            // Grouper les applications uniques par catégorie
+            const groupedUniqueApps = {};
+            uniqueAppsFiltered.forEach(app => {
+                const cat = app.category || "Autre";
+                if (!groupedUniqueApps[cat]) groupedUniqueApps[cat] = [];
+                groupedUniqueApps[cat].push(app.name);
+            });
+
+            // Calculer les applications non-uniques (présentes dans d'autres pays)
+            const nonUniqueAppsFiltered = appsWithMatrixDuplicates.filter(app => !uniqueAppsForCountry.includes(app.name));
+            const nonUniqueAppsUniqueNames = new Set();
+            nonUniqueAppsFiltered.forEach(app => nonUniqueAppsUniqueNames.add(app.name));
+            const totalNonUniqueCount = nonUniqueAppsUniqueNames.size;
+            const groupedNonUniqueApps = {};
+            nonUniqueAppsFiltered.forEach(app => {
+                const cat = app.category || "Autre";
+                if (!groupedNonUniqueApps[cat]) groupedNonUniqueApps[cat] = [];
+                groupedNonUniqueApps[cat].push(app.name);
+            });
+
+            // Variable globale pour suivre le filtre actif (all/unique/nonunique)
+            window.currentCountryFilter = 'all';
+            // Pour l'export : stocker les listes filtrées
+            window.countryAllApps = appsWithMatrixDuplicates;
+            window.countryUniqueApps = uniqueAppsFiltered;
+            window.countryNonUniqueApps = nonUniqueAppsFiltered;
+
+            // Définir les couleurs claires
+            const COLOR_ALL = '#42A5F5';      // Bleu clair
+            const COLOR_UNIQUE = '#66BB6A';   // Vert clair
+            const COLOR_OTHER = '#BA68C8';    // Violet clair
+            const COLOR_ALL_DARK = '#1976D2';
+            const COLOR_UNIQUE_DARK = '#2E7D32';
+            const COLOR_OTHER_DARK = '#8E24AA';
+
+            // Fonction pour générer le HTML de la liste
+            function generateAppList(grouped, color) {
+                // Ordre des catégories défini dans capabilities.js
+                const categoryOrder = [
+                    "TMS", "Asset & Fleet Management", "Track & Trace", "Integration & Middleware", "Financial & Settlement Systems",
+                    "Reporting & BI", "Route & Planning Optimization", "Customs",
+                    "Freight Marketplace", "Customer Portal", "Documents & Collaboration",
+                    "Digital Forwarding", "YMS", "Warehouse Management Systems (WMS)", "Customer Relationship Management (CRM)", "Order Management System (OMS)", "Last Mile Distribution",
+                    "Claims & Damages", "Carriers Portal", "Control & Quality",
+                    "Mobile App", "Legal Compliance", "Autre"
+                ];
+                
+                let listHtml = '';
+                // Trier les catégories selon l'ordre défini
+                const sortedCategories = Object.keys(grouped).sort((a, b) => {
+                    const indexA = categoryOrder.indexOf(a);
+                    const indexB = categoryOrder.indexOf(b);
+                    // Si une catégorie n'est pas dans l'ordre, la mettre à la fin
+                    if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+                    if (indexA === -1) return 1;
+                    if (indexB === -1) return -1;
+                    return indexA - indexB;
+                });
+                
+                sortedCategories.forEach(cat => {
+                    let textColor = color ? `color: ${color};` : '';
+                    listHtml += `<div style=\"margin-bottom:10px;\">
+                        <span style=\"font-weight:bold; font-size: 1.1em; ${textColor}\">${cat} (${grouped[cat].length})</span><br>
+                        ${grouped[cat].map(name =>
+                            `<span class=\"sidebar-item\" data-name=\"${name}\" style=\"margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.5em; ${textColor}\">${name}</span>`
+                        ).join('<br>')}
+                    </div>`;
+                });
+                return listHtml;
+            }
+
+            // Créer le HTML avec bouton retour
+            let html = `<div style=\"display: flex; align-items: center; margin-bottom: 8px;\">
+                <button onclick=\"window.showAllApplications()\" class=\"back-button\" style=\"margin-right: 10px; background: #e0e0e0; color: #333; border: none; border-radius: 6px; padding: 4px 10px; font-size: 1em; font-weight: bold; cursor: pointer;\">← Back</button>
+                <h4 style=\"margin: 0; color: #d32f2f; font-size: 1.4em; line-height: 1.2;\">${country}</h4>
+            </div>`;
+
+            // Titre "All Applications" avec trois boutons
+            html += `<div style=\"display: flex; align-items: center; gap: 10px; margin-bottom: 10px;\">
+                <button id=\"toggleAllApps\" style=\"
+                    background: ${COLOR_ALL};
+                    color: white;
+                    border: none;
+                    border-radius: 15px;
+                    padding: 5px 12px;
+                    font-size: 0.9em;
+                    font-weight: bold;
+                    cursor: pointer;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    transition: background 0.3s;
+                \">All : ${totalUniqueAppsCount}</button>
+                <button id=\"toggleUniqueApps\" style=\"
+                    background: ${COLOR_UNIQUE};
+                    color: white;
+                    border: none;
+                    border-radius: 15px;
+                    padding: 5px 12px;
+                    font-size: 0.9em;
+                    font-weight: bold;
+                    cursor: pointer;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    transition: background 0.3s;
+                \">Local : ${totalUniqueCount}</button>
+                <button id=\"toggleNonUniqueApps\" style=\"
+                    background: ${COLOR_OTHER};
+                    color: white;
+                    border: none;
+                    border-radius: 15px;
+                    padding: 5px 12px;
+                    font-size: 0.9em;
+                    font-weight: bold;
+                    cursor: pointer;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    transition: background 0.3s;
+                \">Global : ${totalNonUniqueCount}</button>
+            </div>`;
+
+            // Container pour la liste d'applications
+            html += `<div id=\"appListContainer\">`;
+            html += generateAppList(groupedApps, COLOR_ALL_DARK);
+            html += `</div>`;
+
+            infoPanel.innerHTML = html;
+            
+            // Ajouter l'événement de toggle pour les boutons
+            const toggleAllBtn = document.getElementById('toggleAllApps');
+            const toggleBtn = document.getElementById('toggleUniqueApps');
+            const toggleNonUniqueBtn = document.getElementById('toggleNonUniqueApps');
+            const appListContainer = document.getElementById('appListContainer');
+            
+            function setActive(btn, color) {
+                toggleAllBtn.style.background = COLOR_ALL;
+                toggleBtn.style.background = COLOR_UNIQUE;
+                toggleNonUniqueBtn.style.background = COLOR_OTHER;
+                btn.style.background = color;
+            }
+
+            if (toggleAllBtn && toggleBtn && toggleNonUniqueBtn && appListContainer) {
+                toggleAllBtn.addEventListener('click', () => {
+                    setActive(toggleAllBtn, COLOR_ALL_DARK);
+                    appListContainer.innerHTML = generateAppList(groupedApps, COLOR_ALL_DARK);
+                    window.currentCountryFilter = 'all';
+                    addAppClickEvents(infoPanel, allApps);
+                });
+                toggleBtn.addEventListener('click', () => {
+                    setActive(toggleBtn, COLOR_UNIQUE_DARK);
+                    appListContainer.innerHTML = generateAppList(groupedUniqueApps, COLOR_UNIQUE_DARK);
+                    window.currentCountryFilter = 'unique';
+                    addAppClickEvents(infoPanel, allApps);
+                });
+                toggleNonUniqueBtn.addEventListener('click', () => {
+                    setActive(toggleNonUniqueBtn, COLOR_OTHER_DARK);
+                    appListContainer.innerHTML = generateAppList(groupedNonUniqueApps, COLOR_OTHER_DARK);
+                    window.currentCountryFilter = 'nonunique';
+                    addAppClickEvents(infoPanel, allApps);
+                });
+            }
+            
+            addAppClickEvents(infoPanel, allApps);
+        }
+
+        // Fonction pour afficher les applications d'une région
+        function showRegionApps(regionName, regionCountries, allApps) {
+            const infoPanel = document.getElementById('info-panel');
+            const sidebar = document.getElementById('sidebar');
+            
+            // Récupérer les catégories filtrées (si elles existent)
+            const checkedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Collecter toutes les applications distinctes de la région
+            const allAppsFlat = Object.values(window.allApplications).flat();
+            const regionAppsSet = new Set();
+            regionCountries.forEach(countryData => {
+                countryData.apps.forEach(app => regionAppsSet.add(app.name));
+            });
+            let allRegionApps = Array.from(regionAppsSet).map(name => allAppsFlat.find(app => app.name === name));
+
+            // Dupliquer Matrix par catégorie selon les variantes présentes dans la région
+            let appsWithMatrixDuplicates = [];
+            allRegionApps.forEach(app => {
+                if (app.name === "Matrix") {
+                    // Récupérer toutes les variantes Matrix (même hidden)
+                    const variants = allAppsFlat.filter(v => v.parent === "Matrix");
+                    // Grouper par catégorie pour cette région
+                    const categoriesMap = {};
+                    variants.forEach(variant => {
+                        if (variant.regions && variant.regions.some(r => r === regionName.toLowerCase())) {
+                            const category = variant.category;
+                            // Si un filtre de catégorie est actif, ne garder que les catégories filtrées
+                            if (checkedCategories.length === 0 || checkedCategories.includes(category)) {
+                                if (!categoriesMap[category]) {
+                                    categoriesMap[category] = true;
+                                }
+                            }
+                        }
+                    });
+                    // Créer une copie Matrix pour chaque catégorie trouvée
+                    Object.keys(categoriesMap).forEach(category => {
+                        appsWithMatrixDuplicates.push({
+                            ...app,
+                            category: category
+                        });
+                    });
+                } else {
+                    appsWithMatrixDuplicates.push(app);
+                }
+            });
+
+            // Dédupliquer Matrix par catégorie (garantir un seul Matrix par catégorie unique)
+            const matrixByCategory = {};
+            const nonMatrixApps = [];
+            appsWithMatrixDuplicates.forEach(app => {
+                if (app.name === "Matrix") {
+                    const key = app.category || "Autre";
+                    if (!matrixByCategory[key]) {
+                        matrixByCategory[key] = app;
+                    }
+                } else {
+                    nonMatrixApps.push(app);
+                }
+            });
+            appsWithMatrixDuplicates = [...nonMatrixApps, ...Object.values(matrixByCategory)];
+            // Stocker la liste des apps de la région sélectionnée pour l'export
+            window.selectedRegionName = regionName.toLowerCase();
+            window.selectedRegionApps = appsWithMatrixDuplicates;
+
+            // Compter les applications uniques (Matrix compté une seule fois)
+            const uniqueAppNames = new Set();
+            appsWithMatrixDuplicates.forEach(app => uniqueAppNames.add(app.name));
+            const totalUniqueAppsCount = uniqueAppNames.size;
+
+            // Grouper toutes les applications par catégorie
+            const groupedApps = {};
+            appsWithMatrixDuplicates.forEach(app => {
+                const cat = app.category || "Autre";
+                if (!groupedApps[cat]) groupedApps[cat] = [];
+                groupedApps[cat].push(app.name);
+            });
+
+            // Créer le HTML avec bouton retour
+            let html = `<div style=\"display: flex; align-items: center; margin-bottom: 8px;\">`
+                + `<button onclick=\"window.showAllApplications()\" class=\"back-button\" style=\"margin-right: 10px; background: #e0e0e0; color: #333; border: none; border-radius: 6px; padding: 4px 10px; font-size: 1em; font-weight: bold; cursor: pointer;\">← Back</button>`
+                + `<h4 style=\"margin: 0; color: #d32f2f; font-size: 1.4em; line-height: 1.2;\">${regionName}</h4>`
+                + `</div>`;
+
+            // Calculer les applications uniques à la région (exclusives)
+            const uniqueRegionApps = appsWithMatrixDuplicates.filter(app =>
+                Array.isArray(app.regions) && app.regions.length === 1 && app.regions[0] === regionName.toLowerCase()
+            );
+            const uniqueRegionAppsNames = new Set();
+            uniqueRegionApps.forEach(app => uniqueRegionAppsNames.add(app.name));
+            const uniqueCount = uniqueRegionAppsNames.size;
+
+            // Calculer les applications multi-régions (présentes dans cette région ET au moins une autre)
+            const multiRegionApps = appsWithMatrixDuplicates.filter(app =>
+                Array.isArray(app.regions) && app.regions.length > 1 && app.regions.includes(regionName.toLowerCase())
+            );
+            const multiRegionAppsNames = new Set();
+            multiRegionApps.forEach(app => multiRegionAppsNames.add(app.name));
+            const multiCount = multiRegionAppsNames.size;
+
+            // Boutons pour afficher les uniques et multi-régions
+            html += `<div style=\"display: flex; align-items: center; gap: 10px; margin: 5px 0 8px 0;\">`
+                + `<button id=\"showAllRegionAppsBtn\" style=\"background: #1976d2; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 1em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">All : ${totalUniqueAppsCount}</button>`
+                + `<button id=\"showUniqueRegionAppsBtn\" style=\"background: #66BB6A; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 0.95em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">Local : ${uniqueCount}</button>`
+                + `<button id=\"showMultiRegionAppsBtn\" style=\"background: #BA68C8; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 0.95em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">Global : ${multiCount}</button>`
+                + `</div>`;
+
+            // Générer la liste HTML par catégorie
+            function generateAppList(grouped, color) {
+                // Ordre des catégories défini dans capabilities.js
+                const categoryOrder = [
+                    "TMS", "Asset & Fleet Management", "Track & Trace", "Integration & Middleware", "Financial & Settlement Systems",
+                    "Reporting & BI", "Route & Planning Optimization", "Customs",
+                    "Freight Marketplace", "Customer Portal", "Documents & Collaboration",
+                    "Digital Forwarding", "YMS", "Warehouse Management Systems (WMS)", "Customer Relationship Management (CRM)", "Order Management System (OMS)", "Last Mile Distribution",
+                    "Claims & Damages", "Carriers Portal", "Control & Quality",
+                    "Mobile App", "Legal Compliance", "Autre"
+                ];
+                
+                let listHtml = '';
+                // Trier les catégories selon l'ordre défini
+                const sortedCategories = Object.keys(grouped).sort((a, b) => {
+                    const indexA = categoryOrder.indexOf(a);
+                    const indexB = categoryOrder.indexOf(b);
+                    if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+                    if (indexA === -1) return 1;
+                    if (indexB === -1) return -1;
+                    return indexA - indexB;
+                });
+                
+                sortedCategories.forEach(cat => {
+                    let textColor = color ? `color: ${color};` : '';
+                    listHtml += `<div style=\"margin-bottom:10px;\">`
+                        + `<span style=\"font-weight:bold; font-size: 1.1em; ${textColor}\">${cat} (${grouped[cat].length})</span><br>`
+                        + grouped[cat].map(name =>
+                            `<span class=\"sidebar-item\" data-name=\"${name}\" style=\"margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.3em; ${textColor}\">${name}</span>`
+                        ).join('<br>')
+                        + `</div>`;
+                });
+                return listHtml;
+            }
+
+            html += `<div id=\"appListContainer\">`;
+            html += generateAppList(groupedApps, '#1976d2');
+            html += `</div>`;
+            html += `<div style=\"height: 10px;\"></div>`;
+
+            infoPanel.innerHTML = html;
+            addAppClickEvents(infoPanel, allApps);
+
+            // Ajout des événements pour les boutons
+            const appListContainer = document.getElementById('appListContainer');
+            const uniqueBtn = document.getElementById('showUniqueRegionAppsBtn');
+            const multiBtn = document.getElementById('showMultiRegionAppsBtn');
+            const allBtn = document.getElementById('showAllRegionAppsBtn');
+            if (allBtn && appListContainer) {
+                allBtn.addEventListener('click', () => {
+                    appListContainer.innerHTML = generateAppList(groupedApps, '#1976d2');
+                    allBtn.style.background = '#1976d2';
+                    uniqueBtn.style.background = '#66BB6A';
+                    multiBtn.style.background = '#BA68C8';
+                    addAppClickEvents(infoPanel, allApps);
+                });
+            }
+            if (uniqueBtn && appListContainer) {
+                uniqueBtn.addEventListener('click', () => {
+                    // Générer la liste des uniques par catégorie
+                    const groupedUnique = {};
+                    uniqueRegionApps.forEach(app => {
+                        const cat = app.category || "Autre";
+                        if (!groupedUnique[cat]) groupedUnique[cat] = [];
+                        groupedUnique[cat].push(app.name);
+                    });
+                    appListContainer.innerHTML = generateAppList(groupedUnique, '#2E7D32');
+                    allBtn.style.background = '#1976d2';
+                    uniqueBtn.style.background = '#2E7D32';
+                    multiBtn.style.background = '#BA68C8';
+                    addAppClickEvents(infoPanel, allApps);
+                });
+            }
+            if (multiBtn && appListContainer) {
+                multiBtn.addEventListener('click', () => {
+                    // Générer la liste des multi-régions par catégorie
+                    const groupedMulti = {};
+                    multiRegionApps.forEach(app => {
+                        const cat = app.category || "Autre";
+                        if (!groupedMulti[cat]) groupedMulti[cat] = [];
+                        groupedMulti[cat].push(app.name);
+                    });
+                    appListContainer.innerHTML = generateAppList(groupedMulti, '#8E24AA');
+                    allBtn.style.background = '#1976d2';
+                    uniqueBtn.style.background = '#66BB6A';
+                    multiBtn.style.background = '#8E24AA';
+                    addAppClickEvents(infoPanel, allApps);
+                });
+            }
+        }
+
+        // Fonction pour afficher le bouton de sélection
+        function showSelectedAppButton(appName) {
+            const container = document.getElementById('selected-app-container');
+            const nameSpan = document.getElementById('selected-app-name');
+            const deselectButton = document.getElementById('deselect-button');
+
+            // Gérer l'affichage/masquage des boutons Matrix via HiddenApps
+            if (window.HiddenApps && typeof window.HiddenApps.handleMatrixButtonsOnSelection === 'function') {
+                window.HiddenApps.handleMatrixButtonsOnSelection(appName);
+            }
+
+            // Pour Matrix, les boutons sont gérés par HiddenApps, pas besoin du bouton unique
+            if (appName === 'Matrix') {
+                container.style.display = 'none';
+                return;
+            }
+
+            // Affichage normal du bouton sélectionné
+            nameSpan.textContent = appName;
+            container.style.display = 'block';
+
+            // Ajouter l'événement de désélection
+            deselectButton.onclick = function() {
+                hideSelectedAppButton();
+                // Réafficher les markers
+                showAllMarkers();
+                // Recolorier la carte selon les filtres actifs
+                if (typeof filterAndShowApplications === 'function') filterAndShowApplications();
+                // Réinitialiser tous les styles des applications
+                document.querySelectorAll('.sidebar-item').forEach(e => {
+                    e.style.fontWeight = 'normal';
+                });
+                document.querySelectorAll('.search-result').forEach(e => {
+                    e.classList.remove('selected');
+                });
+            };
+        }
+        
+        // ...fonction déplacée dans HiddenApps.js...
+        
+        // Fonction pour masquer les boutons Matrix
+        function hideMatrixVariantsButtons() {
+            const matrixContainer = document.getElementById('matrix-variants-container');
+            if (matrixContainer) {
+                matrixContainer.style.display = 'none';
+            }
+        }
+        
+        // Fonction pour masquer le bouton de sélection
+        function hideSelectedAppButton() {
+            const container = document.getElementById('selected-app-container');
+            container.style.display = 'none';
+            
+            // Masquer aussi les boutons Matrix si ils sont affichés
+            hideMatrixVariantsButtons();
+        }
+
+        // Fonction pour cacher tous les markers
+        function hideAllMarkers() {
+            countryMarkers.forEach(marker => map.removeLayer(marker));
+        }
+
+        // Fonction pour réafficher tous les markers
+        function showAllMarkers() {
+            if (currentItems.length > 0 && currentAllApps.length > 0) {
+                showCountryMarkers(currentItems, currentAllApps);
+            }
+        }
+
+        // Fonction pour ajouter les événements de clic sur les applications
+
+        function addAppClickEvents(infoPanel, allApps) {
+            infoPanel.querySelectorAll('.sidebar-item').forEach(elem => {
+                elem.onclick = function() {
+                    const itemName = this.getAttribute('data-name');
+                    const isCurrentlySelected = this.style.fontWeight === 'bold';
+                    // Centraliser la gestion des boutons Matrix
+                    if (window.HiddenApps && typeof window.HiddenApps.handleMatrixButtonsOnSelection === 'function') {
+                        window.HiddenApps.handleMatrixButtonsOnSelection(itemName);
+                    }
+                    // Réinitialiser tous les styles
+                    infoPanel.querySelectorAll('.sidebar-item').forEach(e => {
+                        e.style.fontWeight = 'normal';
+                    });
+                    // Si l'élément n'était pas sélectionné, le sélectionner
+                    if (!isCurrentlySelected) {
+                        this.style.fontWeight = 'bold';
+                        // Afficher le bouton de sélection
+                        showSelectedAppButton(itemName);
+                        // Trouver l'application dans la liste complète
+                        let item = allApps.find(i => i.name === itemName);
+                        // Patch spécial pour Matrix : n'afficher que les variantes du pays sélectionné
+                        if (itemName === 'Matrix' && window.HiddenApps && typeof window.HiddenApps.getCombinedMatrixForCountry === 'function' && window.selectedCountryName) {
+                            const combined = window.HiddenApps.getCombinedMatrixForCountry(window.selectedCountryName, window.allApplications);
+                            if (combined) item = combined;
+                        }
+                        if (!item) return;
+                        // Afficher les capabilities de l'application
+                        if (typeof window.displayApplicationCapabilities === 'function') {
+                            window.displayApplicationCapabilities(itemName, item);
+                        } else {
+                            console.error('❌ window.displayApplicationCapabilities n\'est pas une fonction !');
+                        }
+                        // Cacher tous les markers quand on sélectionne une app
+                        hideAllMarkers();
+                        // Colorier les pays sur la carte
+                        if (item.countries) {
+                            resetCountryColors();
+                            item.countries.forEach(countryName => {
+                                if (window.countryLayers[countryName]) {
+                                    window.countryLayers[countryName].setStyle({
+                                        fillColor: "#e53935", // rouge
+                                        fillOpacity: 0.5,
+                                        color: "#e53935",
+                                        weight: 2
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        // Si l'élément était déjà sélectionné, le désélectionner
+                        hideSelectedAppButton();
+                        resetCountryColors();
+                        // Réafficher les markers
+                        showAllMarkers();
+                        // Retourner à la liste complète des applications
+                        showAllApplications();
+                    }
+                };
+            });
+        }
+
+        // Variables globales pour la carte
+        window.countryLayers = {};
+        
+        // Exposer les fonctions nécessaires comme globales pour capabilities.js
+        window.showCountryMarkers = showCountryMarkers;
+        window.showSelectedAppButton = showSelectedAppButton;
+        window.hideSelectedAppButton = hideSelectedAppButton;
+        window.hideMatrixVariantsButtons = hideMatrixVariantsButtons;
+        window.resetCountryColors = resetCountryColors;
+        window.addAppClickEvents = addAppClickEvents;
+        window.hideAllMarkers = hideAllMarkers;
+        window.showAllMarkers = showAllMarkers;
+        window.showCountryApps = showCountryApps;
+
+        window.addEventListener('DOMContentLoaded', () => {
+
+            Promise.all([
+                fetch('bc-mapping.json').then(r => r.json()),
+                fetch('data.json').then(r => r.json()),
+                fetch('app-capabilities-unified.json').then(r => r.json()),
+                fetch('bc-definitions.json').then(r => r.json())
+            ]).then(([bcMapping, appData, unifiedData, bcDefinitions]) => {
+                // Fusionne les pays si countriesRef est présent
+                appData.forEach(app => {
+                    if (app.countriesRef) {
+                        const refApp = appData.find(a => a.name === app.countriesRef);
+                        if (refApp && refApp.countries) {
+                            let countries = [...refApp.countries, ...(app.countries || [])];
+                            app.countries = Array.from(new Set(countries));
+                        }
+                    }
+                });
+
+                // Applique excludeCountries à toutes les applications
+                appData.forEach(app => {
+                    if (app.excludeCountries && app.countries) {
+                        app.countries = app.countries.filter(c => !app.excludeCountries.includes(c));
+                    }
+                });
+
+                // INJECTION DES L1/L2/L3/L4 POUR TOUTES LES APPLIS
+                // Stocker unifiedData globalement pour l'accès depuis capabilities.js
+                window.appCapabilitiesUnified = unifiedData;
+                
+                let injectionCount = 0;
+                appData.forEach(app => {
+                    const caps = unifiedData[app.name];
+                    if (caps) {
+                        app.l1 = caps.l1 || [];
+                        app.l2 = caps.l2 || [];
+                        app.l3 = caps.l3 || [];
+                        app.l4 = caps.l4 || [];
+                        injectionCount++;
+                    } else {
+                        console.warn(`⚠️ Pas de données unifiées pour ${app.name}`);
+                    }
+                });
+                
+                // Stocker bcMapping globalement pour l'accès depuis capabilities.js
+                window.bcMapping = bcMapping;
+                
+                // Initialiser les capabilities depuis les définitions BC
+                initializeCapabilities(bcDefinitions, appData);
+                
+                // Initialiser la recherche avec un petit délai pour s'assurer que le DOM est prêt
+                setTimeout(() => {
+                    initializeSearch();
+                }, 100);
+                
+                // Ajouter l'événement de zoom pour regrouper/dégrouper les markers
+                map.on('zoomend', function() {
+                    // Ne pas afficher les markers si une application est sélectionnée
+                    const selectedAppContainer = document.getElementById('selected-app-container');
+                    const matrixContainer = document.getElementById('matrix-variants-container');
+                    if (currentItems.length > 0) {
+                        showCountryMarkers(currentItems, currentAllApps);
+                    }
+                });
+            });
+
+            fetch('countries.geojson')
+                .then(r => r.json())
+                .then(geojson => {
+                    L.geoJSON(geojson, {
+                        style: {
+                            color: "#888",
+                            weight: 1,
+                            fillOpacity: 0.1
+                        },
+                        onEachFeature: function (feature, layer) {
+                            const name = feature.properties.ADMIN || feature.properties.name;
+                            window.countryLayers[name] = layer;
+                            layer.addTo(map);
+                            
+                            // Rendre le pays cliquable
+                            layer.on('click', function() {
+                                // Trouver les applications de ce pays dans currentItems
+                                if (currentItems.length > 0) {
+                                    const countryApps = currentItems.filter(item => 
+                                        item.countries && item.countries.includes(name)
+                                    );
+                                    
+                                    if (countryApps.length > 0) {
+                                        HiddenApps.setSelectedCountry(name);
+                                        window.selectedRegionName = null;
+                                        showCountryApps(name, countryApps, currentAllApps);
+                                    }
+                                }
+                            });
+                            
+                            // Effet hover
+                            layer.on('mouseover', function() {
+                                if (currentItems.length > 0) {
+                                    const countryApps = currentItems.filter(item => 
+                                        item.countries && item.countries.includes(name)
+                                    );
+                                    if (countryApps.length > 0) {
+                                        // Sauvegarder l'opacité actuelle à chaque hover
+                                        this._originalOpacity = this.options.fillOpacity;
+                                        this._originalWeight = this.options.weight;
+                                        this.setStyle({
+                                            fillOpacity: 0.3,
+                                            weight: 2
+                                        });
+                                    }
+                                }
+                            });
+                            
+                            layer.on('mouseout', function() {
+                                // Restaurer l'opacité et le poids originaux
+                                if (this._originalOpacity !== undefined && this._originalWeight !== undefined) {
+                                    this.setStyle({
+                                        fillOpacity: this._originalOpacity,
+                                        weight: this._originalWeight
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+        });
+
+        function resetCountryColors() {
+            Object.values(window.countryLayers).forEach(layer => {
+                layer.setStyle({
+                    fillColor: "#888",
+                    fillOpacity: 0.1,
+                    color: "#888",
+                    weight: 1
+                });
+            });
+        }
+    // Fonction d'export des applications filtrées
+    document.getElementById('exportFilteredApps').addEventListener('click', function() {
+        // Déterminer le contexte (pays/région) et le filtre actif
+        let filteredApps = [];
+        if (window.selectedCountryName) {
+            if (window.currentCountryFilter === 'unique') {
+                filteredApps = window.countryUniqueApps || [];
+            } else if (window.currentCountryFilter === 'nonunique') {
+                filteredApps = window.countryNonUniqueApps || [];
+            } else {
+                filteredApps = window.countryAllApps || [];
+            }
+        } else if (window.selectedRegionName) {
+            // À adapter si tu veux la même logique pour les régions (ajouter currentRegionFilter, etc.)
+            filteredApps = window.selectedRegionApps || [];
+        } else {
+            filteredApps = window.currentItems || [];
+        }
+        if (filteredApps.length === 0) {
+            alert('Aucune application filtrée à exporter.');
+            return;
+        }
+        // Récupérer toutes les variantes de Matrix
+        const allAppsFlat = Array.isArray(window.allApplications) ? window.allApplications : Object.values(window.allApplications).flat();
+        const matrixVariants = allAppsFlat.filter(app => app.parent === "Matrix");
+        // Remplacer Matrix par ses variantes filtrées
+        let exportList = [];
+        filteredApps.forEach(app => {
+            if (app.name === "Matrix") {
+                // Filtrer les variantes selon le contexte de l'app (pays, région, catégorie, capabilities)
+                matrixVariants.forEach(variant => {
+                    // Pays
+                    let matchCountry = true;
+                    if (window.selectedCountryName && Array.isArray(variant.countries)) {
+                        matchCountry = variant.countries.includes(window.selectedCountryName);
+                    }
+                    // Région
+                    let matchRegion = true;
+                    if (window.selectedRegionName && Array.isArray(variant.regions)) {
+                        matchRegion = variant.regions.includes(window.selectedRegionName);
+                    }
+                    // Catégorie
+                    let matchCategory = true;
+                    if (app.category && variant.category) {
+                        matchCategory = variant.category === app.category;
+                    }
+                    // Capabilities (si filtrées)
+                    let matchCapabilities = true;
+                    if (window.allActiveCapabilities && window.allActiveCapabilities.length > 0) {
+                        matchCapabilities = false;
+                        [variant.l2, variant.l3, variant.l4].forEach(level => {
+                            if (Array.isArray(level) && level.some(l => window.allActiveCapabilities.includes(l))) {
+                                matchCapabilities = true;
+                            }
+                        });
+                    }
+                    if (matchCountry && matchRegion && matchCategory && matchCapabilities) {
+                        exportList.push(variant);
+                    }
+                });
+            } else {
+                exportList.push(app);
+            }
+        });
+        // Supprimer les doublons (par nom + pays + région + catégorie)
+        const uniqueExport = [];
+        const seen = new Set();
+        exportList.forEach(app => {
+            const key = [app.name, (app.countries||[]).join(','), (app.regions||[]).join(','), app.category||''].join('|');
+            if (!seen.has(key)) {
+                seen.add(key);
+                uniqueExport.push(app);
+            }
+        });
+        // Créer les données pour Excel
+        const excelData = [];
+        // En-têtes
+        excelData.push(['name', 'countries', 'regions', 'category', 'application_code', '7R_analysis', '7R_action_year', 'replace_by', 'it_owner', 'description']);
+        
+        // Données
+        uniqueExport.forEach(app => {
+            excelData.push([
+                app.name || '',
+                Array.isArray(app.countries) ? app.countries.join(', ') : '',
+                Array.isArray(app.regions) ? app.regions.join(', ') : '',
+                app.category || '',
+                app.application_code || '',
+                app["7R_analysis"] || '',
+                app["7R_action_year"] || '',
+                app.replace_by || '',
+                app.it_owner || '',
+                app.description || ''
+            ]);
+        });
+        
+        // Créer le fichier Excel
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(excelData);
+        XLSX.utils.book_append_sheet(wb, ws, 'Applications');
+        
+        // Télécharger le fichier
+        XLSX.writeFile(wb, 'applications_filtrees.xlsx');
+    });
+        // Stocker la liste des apps du pays sélectionné pour l'export
+        window.selectedCountryName = country;
+        window.selectedCountryApps = appsWithMatrixDuplicates;
+    </script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIA - Business Impact Analysis</title>
+    <link rel="stylesheet" href="BIA-styles.css">
+</head>
+<body>
+    <div id="banner">
+        <img src="CEVA_BlueRed.jpg" alt="CEVA Logistics" id="banner-logo">
+        <h1>Business Impact Analysis Tool</h1>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <button class="back-button" onclick="window.close()">← Back</button>
+            
+            <!-- Liste déroulante des applications -->
+            <div style="margin: 15px 0;">
+                <label style="color: white; font-size: 1.1em; margin-right: 10px;">Sélectionner une application:</label>
+                <select id="app-selector" style="
+                    padding: 10px 15px;
+                    font-size: 1em;
+                    border-radius: 6px;
+                    border: 2px solid white;
+                    background: white;
+                    color: #1a237e;
+                    font-weight: bold;
+                    cursor: pointer;
+                    min-width: 250px;
+                ">
+                    <option value="">-- Choisir une application --</option>
+                    <option value="Orion Brazil">Orion Brazil</option>
+                    <option value="OMS 3PL (PFS)">OMS 3PL (PFS)</option>
+                    <option value="Matrix TMS">Matrix TMS</option>
+                    <option value="Matrix SCM">Matrix SCM</option>
+                    <option value="Matrix FSS">Matrix FSS</option>
+                    <option value="INES">INES</option>
+                    <option value="MSN 2.0">MSN 2.0</option>
+                    <option value="Parts">Parts</option>
+                    <option value="DAGITIM">DAGITIM</option>
+                    <option value="Chronotruck">Chronotruck</option>
+                    <option value="CEVA SPOT MODULE">CEVA SPOT MODULE</option>
+                    <option value="CADIS (R4)">CADIS (R4)</option>
+                    <option value="Samsara MyFleet">Samsara MyFleet</option>
+                    <option value="Fleetwave">Fleetwave</option>
+                    <option value="Project 44 (Ground)">Project 44 (Ground)</option>
+                    <option value="My-Fleet">My-Fleet</option>
+                </select>
+            </div>
+            
+            <div id="app-name-display">Application Name</div>
+            <p>Analyse d'impact métier et informations critiques</p>
+            
+            <!-- Slider pour basculer entre les vues -->
+            <div class="view-toggle-container">
+                <input type="range" id="view-slider" min="0" max="2" value="1" style="width:200px;">
+                <span id="view-label">BIA</span>
+            </div>
+        </div>
+        
+        <div class="comparison-area">
+            <!-- Vue 1: Application Dependencies -->
+            <div id="dependencies-view" style="display: none;">
+                <div id="heatmap-result"></div>
+            </div>
+            
+            <!-- Vue 2: BIA (vue par défaut) -->
+            <div id="bia-view" style="display: block;">
+                <div id="result"></div>
+            </div>
+            
+            <!-- Vue 3: Impact on Process -->
+            <div id="process-view" style="display: none;">
+                <div id="process-result"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mapping entre codes L1 courts et noms complets
+        const l1Mapping = {
+            'TM': 'Transport Management',
+            'OM': 'Order Management',
+            'CM': 'Carrier Management',
+            'ANM': 'Asset & Network Management',
+            'FM': 'Finance Management',
+            'OP': 'From Offering to Pricing'
+        };
+        
+        // Fonction pour déterminer la classe de couleur basée sur le pourcentage
+        function getColorClass(percentage) {
+            if (percentage < 20) return 'coverage coverage-red';
+            if (percentage < 50) return 'coverage coverage-orange';
+            if (percentage < 80) return 'coverage coverage-black';
+            return 'coverage coverage-green';
+        }
+        
+        // Récupérer le nom de l'application depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const appName = urlParams.get('app');
+        
+        // Fonction pour charger et afficher les données d'une application
+        function loadAppData(selectedAppName) {
+            document.getElementById('app-name-display').textContent = selectedAppName || 'Business Impact Analysis';
+            
+            // Charger les données BIA
+            fetch('BIA.json').then(r => r.json()).then(biaData => {
+                // Générer le tableau niveau 1
+                const timeLabels = ['2h', '4h', '1d', '3d', '1w', '2w', '1M', '≥3M'];
+                
+                // Ordre défini pour les L1
+                const l1Order = [
+                    'Transport Management',
+                    'Order Management',
+                    'Carrier Management',
+                    'Asset & Network Management',
+                    'From Offering to Pricing',
+                    'Finance Management'
+                ];
+                
+                // Convertir en tableau et trier
+                const sortedL2Codes = Object.keys(biaData).sort((a, b) => {
+                    const l1A = biaData[a].l1 || 'Autre';
+                    const l1B = biaData[b].l1 || 'Autre';
+                    const indexA = l1Order.indexOf(l1A);
+                    const indexB = l1Order.indexOf(l1B);
+                    if (indexA !== indexB) {
+                        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+                    }
+                    return (biaData[a].name || a).localeCompare(biaData[b].name || b);
+                });
+                
+                let html = '<div class="comparison-table"><div class="table-header">';
+                html += `<h3>Business Impact Analysis</h3>`;
+                html += '</div>';
+                html += '<table class="capability-table"><thead><tr><th>Business Capabilities</th>';
+                
+                // Afficher les périodes temporelles en en-têtes de colonnes
+                timeLabels.forEach(label => {
+                    html += `<th style="text-align:center;">${label}</th>`;
+                });
+                html += '</tr></thead><tbody>';
+                
+                // Parcourir toutes les L2 dans BIA.json
+                sortedL2Codes.forEach((l2Code, index) => {
+                    const l2Data = biaData[l2Code];
+                    const l2Def = l2Data.name || l2Code;
+                    const l1Name = l2Data.l1 || 'Autre';
+                    
+                    // Ajouter une ligne L1 au début de chaque groupe
+                    if (index === 0 || biaData[sortedL2Codes[index - 1]].l1 !== l1Name) {
+                        html += `<tr class="l1-row" style="background:#e3f2fd; border-top:2px solid #ccc;"><td colspan="${timeLabels.length + 1}" style="font-size:1.2em;"><b>${l1Name}</b></td></tr>`;
+                    }
+                    
+                    // Récupérer les données BIA pour ce L2
+                    const impactValues = l2Data.bia_impact ? l2Data.bia_impact.split(',').map(v => parseInt(v.trim())) : [1,1,1,1,1,1,1,1];
+                    
+                    const isLastOfGroup = index === sortedL2Codes.length - 1 || 
+                        (index < sortedL2Codes.length - 1 && biaData[sortedL2Codes[index + 1]].l1 !== l1Name);
+                    const spacingStyle = isLastOfGroup ? 'border-bottom: 15px solid #f5f5f5;' : '';
+                    
+                    html += `<tr class="l2-row" style="background:#e3f2fd; ${spacingStyle}"><td style="padding-left: 30px;">${l2Def}</td>`;
+                    
+                    // Ajouter une cellule par période temporelle avec la valeur d'impact
+                    impactValues.forEach((value, idx) => {
+                        html += `<td style="text-align:center;" class="impact-${value}">${value}</td>`;
+                    });
+                    
+                    html += '</tr>';
+                });
+                
+                html += '</tbody></table></div>';
+                document.getElementById('result').innerHTML = html;
+            }).catch(err => {
+                console.error('Erreur lors du chargement des données:', err);
+                document.getElementById('result').innerHTML = '<div class="comparison-table"><div class="table-header"><h3>Erreur de chargement</h3></div></div>';
+            });
+        }
+        
+        // Fonction pour charger et afficher les impacts par processus
+        function loadProcessImpacts() {
+            fetch('BIA.json').then(r => r.json()).then(biaData => {
+                const timeLabels = ['2h', '4h', '1d', '3d', '1w', '2w', '1M', '≥3M'];
+                const impactTypes = [
+                    { key: 'financial', label: 'Financial' },
+                    { key: 'reputation', label: 'Reputation' },
+                    { key: 'health_safety', label: 'Health & Safety' },
+                    { key: 'hr_social', label: 'HR & Social' },
+                    { key: 'legal', label: 'Legal' }
+                ];
+                
+                // Ordre défini pour les L1
+                const l1Order = [
+                    'Transport Management',
+                    'Order Management',
+                    'Carrier Management',
+                    'Asset & Network Management',
+                    'From Offering to Pricing',
+                    'Finance Management'
+                ];
+                
+                // Convertir en tableau et trier
+                const sortedL2Codes = Object.keys(biaData).sort((a, b) => {
+                    const l1A = biaData[a].l1 || 'Autre';
+                    const l1B = biaData[b].l1 || 'Autre';
+                    const indexA = l1Order.indexOf(l1A);
+                    const indexB = l1Order.indexOf(l1B);
+                    if (indexA !== indexB) {
+                        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+                    }
+                    return (biaData[a].name || a).localeCompare(biaData[b].name || b);
+                });
+                
+                let html = '<div class="comparison-table"><div class="table-header">';
+                html += `<h3>Impact on Process</h3>`;
+                html += '</div>';
+                html += '<table class="capability-table"><thead><tr><th>Business Capabilities / Process Type</th>';
+                
+                // Afficher les périodes temporelles en en-têtes de colonnes
+                timeLabels.forEach(label => {
+                    html += `<th style="text-align:center;">${label}</th>`;
+                });
+                html += '</tr></thead><tbody>';
+                
+                // Parcourir toutes les L2 dans BIA.json
+                sortedL2Codes.forEach((l2Code, index) => {
+                    const l2Data = biaData[l2Code];
+                    const l2Def = l2Data.name || l2Code;
+                    const l1Name = l2Data.l1 || 'Autre';
+                    
+                    // Ajouter une ligne L1 au début de chaque groupe
+                    if (index === 0 || biaData[sortedL2Codes[index - 1]].l1 !== l1Name) {
+                        html += `<tr class="l1-row" style="background:#e3f2fd; border-top:2px solid #ccc;"><td colspan="${timeLabels.length + 1}" style="font-size:1.2em;"><b>${l1Name}</b></td></tr>`;
+                    }
+                    
+                    // Ajouter la ligne L2
+                    html += `<tr class="l2-row" style="background:#e3f2fd;"><td style="padding-left: 30px; font-weight:bold;" colspan="${timeLabels.length + 1}">${l2Def}</td></tr>`;
+                    
+                    // Ajouter une ligne pour chaque type d'impact
+                    impactTypes.forEach((impactType, typeIndex) => {
+                        const impactValues = l2Data.impact_types && l2Data.impact_types[impactType.key] 
+                            ? l2Data.impact_types[impactType.key].split(',').map(v => parseInt(v.trim())) 
+                            : [1,1,1,1,1,1,1,1];
+                        
+                        const isLastType = typeIndex === impactTypes.length - 1;
+                        const isLastOfGroup = isLastType && (index === sortedL2Codes.length - 1 || 
+                            (index < sortedL2Codes.length - 1 && biaData[sortedL2Codes[index + 1]].l1 !== l1Name));
+                        const spacingStyle = isLastOfGroup ? 'border-bottom: 15px solid #f5f5f5;' : '';
+                        
+                        html += `<tr style="background:#f5f5f5; ${spacingStyle}"><td style="padding-left: 60px; font-style:italic;">${impactType.label}</td>`;
+                        
+                        // Ajouter une cellule par période temporelle avec la valeur d'impact
+                        impactValues.forEach((value, idx) => {
+                            html += `<td style="text-align:center;" class="impact-${value}">${value}</td>`;
+                        });
+                        
+                        html += '</tr>';
+                    });
+                });
+                
+                html += '</tbody></table></div>';
+                document.getElementById('process-result').innerHTML = html;
+            }).catch(err => {
+                console.error('Erreur lors du chargement des données:', err);
+                document.getElementById('process-result').innerHTML = '<div class="comparison-table"><div class="table-header"><h3>Erreur de chargement</h3></div></div>';
+            });
+        }
+        
+        // Fonction pour charger le heatmap des dépendances applicatives
+        function loadDependenciesHeatmap(selectedAppName) {
+            if (!selectedAppName || selectedAppName === 'default') {
+                document.getElementById('heatmap-result').innerHTML = '<div class="comparison-table"><div class="table-header"><h3>Application Dependencies Heatmap</h3></div><div style="padding:20px; text-align:center;">Veuillez sélectionner une application</div></div>';
+                return;
+            }
+            
+            fetch('BIA.json').then(r => r.json()).then(biaData => {
+                const timeLabels = ['2h', '4h', '1d', '3d', '1w', '2w', '1M', '≥3M'];
+                
+                // Filtrer les L2 qui sont utilisées par l'application sélectionnée
+                const appL2s = [];
+                Object.keys(biaData).forEach(l2Code => {
+                    const l2Data = biaData[l2Code];
+                    if (l2Data.applications && l2Data.applications.some(app => app.name === selectedAppName)) {
+                        // Récupérer le status de l'application
+                        const appInfo = l2Data.applications.find(app => app.name === selectedAppName);
+                        const status = appInfo ? appInfo.status : 1;
+                        
+                        appL2s.push({
+                            code: l2Code,
+                            name: l2Data.name,
+                            l1: l2Data.l1,
+                            status: status,
+                            impactValues: l2Data.bia_impact ? l2Data.bia_impact.split(',').map(v => parseInt(v.trim())) : [1,1,1,1,1,1,1,1]
+                        });
+                    }
+                });
+                
+                if (appL2s.length === 0) {
+                    document.getElementById('heatmap-result').innerHTML = '<div class="comparison-table"><div class="table-header"><h3>Application Dependencies Heatmap</h3></div><div style="padding:20px; text-align:center;">Aucune capability trouvée pour cette application</div></div>';
+                    return;
+                }
+                
+                // Ordre défini pour les L1
+                const l1Order = [
+                    'Transport Management',
+                    'Order Management',
+                    'Carrier Management',
+                    'Asset & Network Management',
+                    'From Offering to Pricing',
+                    'Finance Management'
+                ];
+                
+                // Trier les L2 selon l'ordre des L1
+                appL2s.sort((a, b) => {
+                    const indexA = l1Order.indexOf(a.l1);
+                    const indexB = l1Order.indexOf(b.l1);
+                    if (indexA !== indexB) {
+                        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+                    }
+                    return a.name.localeCompare(b.name);
+                });
+                
+                // Construire le heatmap
+                const dependencyLabels = {
+                    1: 'Low Dependency',
+                    2: 'Moderate Dependency',
+                    3: 'High Dependency',
+                    4: 'Critical Dependency'
+                };
+                
+                let html = '<div class="comparison-table"><div class="table-header">';
+                html += `<h3>Application Dependencies Heatmap - ${selectedAppName}</h3>`;
+                html += '</div>';
+                html += '<table class="capability-table"><thead><tr><th>L2 Capability</th>';
+                html += '<th style="text-align:center;">Dependency Weight</th>';
+                
+                // En-têtes de colonnes: périodes BIA
+                timeLabels.forEach(label => {
+                    html += `<th style="text-align:center;">${label}</th>`;
+                });
+                html += '</tr></thead><tbody>';
+                
+                // Lignes: L2 capabilities groupées par L1
+                let currentL1 = null;
+                appL2s.forEach((l2, index) => {
+                    // Ajouter une ligne L1 au début de chaque groupe
+                    if (l2.l1 !== currentL1) {
+                        currentL1 = l2.l1;
+                        html += `<tr class="l1-row" style="background:#e3f2fd; border-top:2px solid #ccc;"><td colspan="${timeLabels.length + 2}" style="font-size:1.2em;"><b>${currentL1}</b></td></tr>`;
+                    }
+                    
+                    const isLastOfGroup = index === appL2s.length - 1 || appL2s[index + 1].l1 !== currentL1;
+                    const spacingStyle = isLastOfGroup ? 'border-bottom: 15px solid #f5f5f5;' : '';
+                    
+                    html += `<tr class="l2-row" style="background:#e3f2fd; ${spacingStyle}"><td style="padding-left: 30px; font-weight:bold;">${l2.name}</td>`;
+                    
+                    // Colonne Dependency Weight
+                    html += `<td style="text-align:center;" class="dependency-${l2.status}">${dependencyLabels[l2.status]}</td>`;
+                    
+                    // Cellules: valeurs d'impact pour chaque période
+                    l2.impactValues.forEach((impactValue, timeIndex) => {
+                        html += `<td style="text-align:center; padding:15px 5px;" class="impact-${impactValue}" title="${l2.name} - ${timeLabels[timeIndex]}: Impact ${impactValue}">${impactValue}</td>`;
+                    });
+                    
+                    html += '</tr>';
+                });
+                
+                html += '</tbody></table></div>';
+                
+                document.getElementById('heatmap-result').innerHTML = html;
+            }).catch(err => {
+                console.error('Erreur lors du chargement des données:', err);
+                document.getElementById('heatmap-result').innerHTML = '<div class="comparison-table"><div class="table-header"><h3>Erreur de chargement</h3></div></div>';
+            });
+        }
+        
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Charger le tableau BIA par défaut
+            loadAppData('default');
+            // Pré-charger le tableau process
+            loadProcessImpacts();
+            // Charger le heatmap si une app est sélectionnée
+            const urlParams = new URLSearchParams(window.location.search);
+            const appName = urlParams.get('app');
+            if (appName) {
+                loadDependenciesHeatmap(appName);
+                // Positionner le slider sur la vue Dependencies (position 0)
+                document.getElementById('view-slider').value = '0';
+                document.getElementById('dependencies-view').style.display = 'block';
+                document.getElementById('bia-view').style.display = 'none';
+                document.getElementById('process-view').style.display = 'none';
+                document.getElementById('view-label').textContent = 'Application Dependencies';
+            }
+        });
+        
+        if (appName) {
+            document.getElementById('app-selector').value = appName;
+            loadAppData(appName);
+        }
+        
+        // Gestionnaire d'événement pour le sélecteur
+        document.getElementById('app-selector').addEventListener('change', function() {
+            const selectedApp = this.value;
+            loadAppData(selectedApp);
+            loadDependenciesHeatmap(selectedApp);
+            
+            // Optionnel : mettre à jour l'URL sans recharger la page
+            if (selectedApp) {
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('app', selectedApp);
+                window.history.pushState({}, '', newUrl);
+            }
+        });
+        
+        // Gestion du slider de vue
+        const viewSlider = document.getElementById('view-slider');
+        const viewLabel = document.getElementById('view-label');
+        const dependenciesView = document.getElementById('dependencies-view');
+        const biaView = document.getElementById('bia-view');
+        const processView = document.getElementById('process-view');
+        
+        viewSlider.oninput = function() {
+            if (viewSlider.value == '0') {
+                // Vue Application Dependencies
+                dependenciesView.style.display = 'block';
+                biaView.style.display = 'none';
+                processView.style.display = 'none';
+                viewLabel.textContent = 'Application Dependencies';
+            } else if (viewSlider.value == '1') {
+                // Vue BIA (par défaut)
+                dependenciesView.style.display = 'none';
+                biaView.style.display = 'block';
+                processView.style.display = 'none';
+                viewLabel.textContent = 'BIA';
+            } else if (viewSlider.value == '2') {
+                // Vue Impact on Process
+                dependenciesView.style.display = 'none';
+                biaView.style.display = 'none';
+                processView.style.display = 'block';
+                viewLabel.textContent = 'Impact on Process';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Concaténation de Listes</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h2 { text-align: center; color: #333; }
+        .section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 5px; }
+        .section h3 { margin-top: 0; color: #1976d2; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #1976d2; color: white; }
+        .count { font-weight: bold; color: #43a047; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Concaténation de Listes</h2>
+        
+        <div class="section">
+            <h3>Résultat Concaténé (<span class="count" id="countResult">0</span> éléments)</h3>
+            <textarea id="concatLine" style="width:100%;height:40px;margin-bottom:10px;" readonly></textarea>
+            <button id="copyLineBtn">Copier la ligne concaténée</button>
+            <table id="resultTable" style="margin-top:20px;">
+                <thead><tr><th>Code</th><th>Source</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>Liste 1 (<span class="count" id="count1">0</span> éléments)</h3>
+            <table id="table1">
+                <thead><tr><th>Code</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>Liste 2 (<span class="count" id="count2">0</span> éléments)</h3>
+            <table id="table2">
+                <thead><tr><th>Code</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Liste 1
+        const list1 = [
+    "CMAC1_4;2","PPQ1_1;3","CPC1_1;2","CPC1_2;2","CPC1_3;2","CPC1_4;0","CPC1_5;2",
+    "CPC3_1;2","CPC3_2;2","CPC3_3;2","CPC3_4;2",
+    "MOS4_1;3","MOS4_2;2","MOS4_3;1","MOS4_4;0",
+    "CCCO1_1;2","CCCO1_2;2","CCCO1_3;2",
+    "CCCO3_1;2","CCCO3_2;2","CCCO3_3;2","CCCO3_5;2",
+    "CCCO4_1;3","CCCO4_2;3","CCCO4_3;2","CCCO4_4;1","CCCO4_5;2",
+    "CCCO5_1;1","CCCO5_2;1","CCCO5_3;1","CCCO5_4;1","CCCO5_5;1",
+    "CCCO6_1;2","CCCO6_2;3","CCCO6_3;2","CCCO6_4;2",
+    "CCCO7_1;2","CCCO7_2;1","CCCO7_3;3","CCCO7_4;1",
+    "CCCO8_1;3","CCCO8_2;3","CCCO8_3;0","CCCO8_4;2","CCCO8_5;2",
+    "CCCO9_1;3","CCCO9_2;1","CCCO9_3;1","CCCO9_4;1",
+    "CCCO10_1;3","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1",
+    "CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1",
+    "CCCO12_1;2","CCCO12_2;2","CCCO12_3;1","CCCO12_4;0","CCCO12_5;2",
+    "CCCO14_1;3","CCCO14_2;3","CCCO14_3;3","CCCO14_4;3","CCCO14_5;3",
+    "CCCO15_1;2","CCCO15_2","CCCO15_3;1","CCCO15_4;2","CCCO15_5;1",
+    "CCCO16_1;3","CCCO16_2;3","CCCO16_3;3","CCCO16_4;3","CCCO16_5;3",
+    "MBC1_1;2","MBC1_2;1","MBC1_3;1","MBC2_1;2","MBC2_2;2","MBC2_3;2","MBC2_4;1",
+    "MBC3_1;2","MBC3_2;2","MBC3_3;2","MBC3_4;2","MBC3_5;2","MBC4_1;1","MBC4_2;1","MBC4_3;1","MBC4_4;1","MBC4_5;1",
+    "MPD1_1;1","MPD1_2;2","MPD1_3;2","MPD1_4;2","MPD1_5;0","MPD2_1;2","MPD2_2;2","MPD2_3;2","MPD2_4;2","MPD2_5;2",
+    "MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;2","MPD4_3;2","MPD4_4;2","MPD4_5;2","MPD5_1;2","MPD5_2;2","MPD5_3;2","MPD5_4;2","MPD5_5;2",
+    "MTTFO1_1;3","MTTFO1_2;3","MTTFO1_3;3","MTTFO1_4;3","MTTFO1_5;3","MTTFO2_1;3","MTTFO2_2;3","MTTFO2_3;3","MTTFO2_4;3","MTTFO3_1;3","MTTFO3_2;3","MTTFO3_3;3","MTTFO3_4;3",
+    "MTTFO5_1;2","MTTFO5_2;2","MTTFO5_3;2","MTTFO5_4;2","MTTFO5_5;2","MTTFO6_1;2","MTTFO6_2;2","MTTFO6_3;2","MTTFO6_4;2","MTTFO6_5;2","MTTFO7_1;3","MTTFO7_2;3","MTTFO7_3;3","MTTFO7_4;3","MTTFO7_5;3",
+    "MTTFO8_1;1","MTTFO8_2;1","MTTFO8_3;1","MTTFO8_4;1","MTTFO8_5;1","MTTFO9_1;2","MTTFO9_2;2","MTTFO9_3;2","MTTFO9_4;2","MTTFO9_5;2","MTTFO11_1;2","MTTFO11_2;2","MTTFO11_3;2","MTTFO11_4;2","MTTFO11_5;2","MTTFO12_1;1","MTTFO12_2;1","MTTFO12_3;1","MTTFO12_4;1","MTTFO12_5;1","MTTFO13_1;1","MTTFO13_2;1","MTTFO13_3;1","MTTFO13_4;1","MTTFO13_5;1",
+    "MCCRR1_1;2","MCCRR1_2;2","MCCRR1_3;2","MCCRR1_4;2","MCCRR1_5;2","MCCRR2_1;2","MCCRR2_2;2","MCCRR2_3;2","MCCRR2_4;2","MCCRR2_5;2","MCCRR3_1;2","MCCRR3_2;2","MCCRR3_3;2","MCCRR3_4;2","MCCRR3_5;2",
+    "TSE1_1;2","TSE2_1;3","TSE2_2;3","TSE2_3;3","TSE2_4;3","TSE2_5;3","TSE3_1;3","TSE3_2;3","TSE3_3;3","TSE3_4;3","TSE3_5;3","TSE4_1;2","TSE4_2;1","TSE4_3;2","TSE4_4;1","TSE5_1;3","TSE5_2;3","TSE5_3;3","TSE5_4;3","TSE5_5;3","TSE8_1;2","TSE8_2;2","TSE8_3;1","TSE8_4;1","TSE8_5;2",
+    "MPC1_1;1","MPC1_2;1","MPC1_3;1","MPC1_4;1","MPC1_5;1","PCS1_1;1","PCS1_2;1","PCS1_3;1","PCS1_4;1","PCS1_5;1","PCS2_1;2","PCS2_2;2","PCS2_3;2","PCS2_4;2","PCS2_5;2",
+    "IC1_1;3","IC1_2;3","IC1_3;3","IC1_4;3","IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;2","IC2_5;2","PTC1_1;2","PTC1_2;2","PTC1_3;2","PTC1_4;2","PTC2_1;2","PTC2_2;2","PTC2_3;2","PTC2_4;2","PTC3_1;2","PTC3_2;2","PTC3_3;2","PTC3_4;2","PTC3_5;2","PTC4_1;2","PTC4_2;2","PTC4_3;2","PTC4_4;2","PTC4_5;2","PTC5_1;2","PTC5_2;2","PTC5_3;2","PTC5_4;2","PTC5_5;2","PTC6_1;2","PTC6_2;2","PTC6_3;2","PTC6_4;2","PTC6_5;2",
+    "DTNSP3_1;2","DTNSP3_2;2","DTNSP3_3;2;4","DTNSP3_4;2;4","DTNSP3_5;2;4","DMPRICING_1;2","DMPRICING_2;2","DMPRICING_3;2","DMPRICING_4;2"
+        ];
+
+        // Liste 2
+        const list2 = [
+    "CMAC1_4;1","PPQ1_1;2","CPC1_1;1","CPC1_2;2","CPC1_3;1","CPC1_5;2",
+    "CPC3_1;2","CPC3_2;1","CPC3_3;2","CPC3_4;1",
+    "MOS4_1;2","MOS4_2;1","MOS4_3;1","MOS4_4;0",
+    "CCCO1_1;1","CCCO1_2;2","CCCO1_3;1",
+    "CCCO3_1;2","CCCO3_2;1","CCCO3_3;2","CCCO3_5;1",
+    "CCCO4_1;2","CCCO4_2;2","CCCO4_3;1","CCCO4_4;1","CCCO4_5;2",
+    "CCCO5_1;1","CCCO5_2;1","CCCO5_3;1","CCCO5_4;1","CCCO5_5;1",
+    "CCCO6_1;1","CCCO6_2;2","CCCO6_3;1","CCCO6_4;2",
+    "CCCO7_1;2","CCCO7_2;1","CCCO7_3;2","CCCO7_4;1",
+    "CCCO8_1;2","CCCO8_3","CCCO8_3;0","CCCO8_4;1","CCCO8_5;2",
+    "CCCO9_1;2","CCCO9_2;1","CCCO9_3;1","CCCO9_4;1",
+    "CCCO10_1","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1",
+    "CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1",
+    "CCCO12_1;2","CCCO12_2;1","CCCO12_3;1","CCCO12_4;0","CCCO12_5;2",
+    "CCCO14_1;2","CCCO14_2;2","CCCO14_3;2","CCCO14_4;2","CCCO14_5;2",
+    "CCCO15_1;1","CCCO15_2","CCCO15_3;1","CCCO15_4;2","CCCO15_5;1",
+    "CCCO16_1;2","CCCO16_2;2","CCCO16_3;2","CCCO16_4;2","CCCO16_5;2",
+    "MBC1_1;3","MBC1_2;2","MBC1_3;3","MBC2_1;3","MBC2_2;3","MBC2_3;2","MBC2_4;3",
+    "MBC3_1;3","MBC3_2;3","MBC3_3;2","MBC3_4;3","MBC3_5;2","MBC4_1;3","MBC4_2;2","MBC4_3;3","MBC4_4;2","MBC4_5;3",
+    "MPD1_1;3","MPD1_2;2","MPD1_3;3","MPD1_4;2","MPD1_5;3","MPD2_1;2","MPD2_2;3","MPD2_3;2","MPD2_4;3","MPD2_5;2",
+    "MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;3","MPD4_3;2","MPD4_4;3","MPD4_5;2","MPD5_1;3","MPD5_2;2","MPD5_3;3","MPD5_4;2","MPD5_5;3",
+    "MTTFO1_1;3","MTTFO1_2;3","MTTFO1_3;2","MTTFO1_4;3","MTTFO1_5;2","MTTFO2_1;3","MTTFO2_2;2","MTTFO2_3;3","MTTFO2_4;3","MTTFO3_1;3","MTTFO3_2;2","MTTFO3_3;3","MTTFO3_4;2",
+    "MTTFO5_1;3","MTTFO5_2;2","MTTFO5_3;3","MTTFO5_4;2","MTTFO5_5;3","MTTFO6_1;2","MTTFO6_2;3","MTTFO6_3;2","MTTFO6_4;3","MTTFO6_5;2","MTTFO7_1;3","MTTFO7_2;2","MTTFO7_3;3","MTTFO7_4;3","MTTFO7_5;2",
+    "MTTFO8_1;3","MTTFO8_2;2","MTTFO8_3;3","MTTFO8_4;2","MTTFO8_5;3","MTTFO9_1;2","MTTFO9_2;3","MTTFO9_3;2","MTTFO9_4;3","MTTFO9_5;2","MTTFO11_1;3","MTTFO11_2;2","MTTFO11_3;3","MTTFO11_4;2","MTTFO11_5;3","MTTFO12_1;3","MTTFO12_2;2","MTTFO12_3;3","MTTFO12_4;2","MTTFO12_5;3","MTTFO13_1;2","MTTFO13_2;3","MTTFO13_3;2","MTTFO13_4;3","MTTFO13_5;2",
+    "MCCRR1_1;3","MCCRR1_2;2","MCCRR1_3;3","MCCRR1_4;2","MCCRR1_5;3","MCCRR2_1;2","MCCRR2_2;3","MCCRR2_3;2","MCCRR2_4;3","MCCRR2_5;2","MCCRR3_1;3","MCCRR3_2;2","MCCRR3_3;3","MCCRR3_4;2","MCCRR3_5;3",
+    "TSE1_1;3","TSE2_1;3","TSE2_2;2","TSE2_3;3","TSE2_4;2","TSE2_5;3","TSE3_1;2","TSE3_2;3","TSE3_3;2","TSE3_4;3","TSE3_5;2","TSE4_1;3","TSE4_2;2","TSE4_3;3","TSE4_4;2","TSE5_1;3","TSE5_2;2","TSE5_3;3","TSE5_4;2","TSE5_5;3","TSE8_1;2","TSE8_2;3","TSE8_3;2","TSE8_4;3","TSE8_5;2",
+    "MPC1_1;3","MPC1_2;2","MPC1_3;3","MPC1_4;2","MPC1_5;3","PCS1_1;2","PCS1_2;3","PCS1_3;2","PCS1_4;3","PCS1_5;2","PCS2_1;3","PCS2_2;2","PCS2_3;3","PCS2_4;2","PCS2_5;3",
+    "IC1_1;2","IC1_2;2","IC1_3;2","IC1_4;2","IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;1","IC2_5;1","PTC1_1;2","PTC1_2;2","PTC1_3;2","PTC1_4;2","PTC2_1;2","PTC2_2;2","PTC2_3;2","PTC2_4;2","PTC3_1;2","PTC3_2;2","PTC3_3;2","PTC3_4;2","PTC3_5;1","PTC4_1;2","PTC4_2;2","PTC4_3;2","PTC4_4;2","PTC4_5;1","PTC5_1;2","PTC5_2;2","PTC5_3;2","PTC5_4;1","PTC5_5;1","PTC6_1;2","PTC6_2;2","PTC6_3;2","PTC6_4;1","PTC6_5;1",
+    "DTNSP3_1;1","DTNSP3_2;1","DTNSP3_3;1;4","DTNSP3_4;0;4","DTNSP3_5;1;4","DMPRICING_1;2","DMPRICING_2;2","DMPRICING_3;2","DMPRICING_4;3"
+
+        ];
+
+        // Fonction utilitaire pour parser un item "clé;statut" ou "clé;statut;4"
+        function parseItem(item) {
+            const parts = item.split(';');
+            return {
+                key: parts[0],
+                status: parts.slice(1).map(Number).filter(n => !isNaN(n)),
+                raw: item
+            };
+        }
+
+        // Fusion intelligente des deux listes
+        function mergeLists(l1, l2) {
+            const map = new Map(); // key -> {status, source, raw}
+            const keysWith4 = new Set();
+
+            function addToMap(item, source) {
+                const parsed = parseItem(item);
+                const key = parsed.key;
+                // Si plusieurs statuts (ex: ;2;4), on traite chaque statut
+                parsed.status.forEach(st => {
+                    if (st === 4) keysWith4.add(key);
+                });
+                // On ne garde que le plus élevé des statuts 1,2,3
+                const maxStat = parsed.status.filter(s => s >= 1 && s <= 3).sort((a,b) => b-a)[0];
+                const has4 = parsed.status.includes(4);
+                if (!map.has(key)) {
+                    map.set(key, {status: maxStat, has4, raw: item, source});
+                } else {
+                    const current = map.get(key);
+                    // Si doublon exact, on ignore
+                    if (current.raw === item) return;
+                    // Si l'un des deux a statut 4, on garde trace
+                    if (has4 || current.has4) keysWith4.add(key);
+                    // Sinon, on garde le plus élevé des statuts 1,2,3
+                    if ((maxStat || 0) > (current.status || 0)) {
+                        map.set(key, {status: maxStat, has4: has4 || current.has4, raw: item, source});
+                    }
+                }
+            }
+
+            l1.forEach(item => addToMap(item, 'Liste 1'));
+            l2.forEach(item => addToMap(item, 'Liste 2'));
+
+            return {result: Array.from(map.entries()).map(([key, val]) => ({key, ...val})), keysWith4: Array.from(keysWith4)};
+        }
+
+        const {result: mergedList, keysWith4} = mergeLists(list1, list2);
+
+        // Fonction d'affichage
+        function displayList(data, tableId, source = null) {
+            const tbody = document.querySelector(`#${tableId} tbody`);
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const row = document.createElement("tr");
+                const cell1 = document.createElement("td");
+                cell1.textContent = item;
+                row.appendChild(cell1);
+                if (source) {
+                    const cell2 = document.createElement("td");
+                    cell2.textContent = source;
+                    cell2.style.color = source === "Liste 1" ? "#1976d2" : "#43a047";
+                    row.appendChild(cell2);
+                }
+                tbody.appendChild(row);
+            });
+        }
+
+        // Afficher Liste 1
+        displayList(list1, "table1");
+        document.getElementById("count1").textContent = list1.length;
+
+        // Afficher Liste 2
+        displayList(list2, "table2");
+        document.getElementById("count2").textContent = list2.length;
+
+        // Afficher le résultat fusionné
+        const tbody = document.querySelector("#resultTable tbody");
+        tbody.innerHTML = '';
+
+        const concatLineArr = [];
+        mergedList.forEach(item => {
+            // On ne garde que le plus haut statut 1,2,3 (statut 4 supprimé)
+            let code = item.key;
+            if (item.status && item.status >= 1 && item.status <= 3) {
+                code += ";" + item.status;
+            }
+            concatLineArr.push('"' + code + '"');
+            const row = document.createElement("tr");
+            const cell1 = document.createElement("td");
+            cell1.textContent = code;
+            const cell2 = document.createElement("td");
+            cell2.textContent = item.source;
+            cell2.style.color = item.source === "Liste 1" ? "#1976d2" : "#43a047";
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            tbody.appendChild(row);
+        });
+        document.getElementById("countResult").textContent = mergedList.length;
+
+        // Afficher la ligne concaténée dans le textarea
+        // Ajoute un saut de ligne tous les 30 éléments
+        let concatLine = '';
+        for (let i = 0; i < concatLineArr.length; i++) {
+            concatLine += concatLineArr[i];
+            if (i < concatLineArr.length - 1) {
+                concatLine += ',';
+                if ((i + 1) % 30 === 0) {
+                    concatLine += '\n';
+                }
+            }
+        }
+        document.getElementById("concatLine").value = concatLine;
+
+        // Copier dans le presse-papier
+        document.getElementById("copyLineBtn").onclick = function() {
+            document.getElementById("concatLine").select();
+            document.execCommand('copy');
+        };
+
+        // Signaler les clés avec statut 4
+        if (keysWith4.length > 0) {
+            alert("Attention : les clés suivantes ont un statut 4 :\n" + keysWith4.join(", "));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,730 @@
+[
+  {
+    "name": "Apolo",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "tco": 47000.0
+  },
+  {
+    "name": "Digital Archive",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "replace_by": "INES",
+    "category": "Documents & Collaboration"
+  },
+  {
+    "name": "ECCO",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "tco": 60480.0
+  },
+  {
+    "name": "FordEdi",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr"
+  },
+  {
+    "name": "FordReturn",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr"
+  },
+  {
+    "name": "HONDABARSAN",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr"
+  },
+  {
+    "name": "INCI WEB PORTAL",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr"
+  },
+  {
+    "name": "INCI WEB SERVICE",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr"
+  },
+  {
+    "name": "IsuzuEDI",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr"
+  },
+  {
+    "name": "Omprompt",
+    "region": "Global",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "tco": 89000.0,
+    "category": "Integration & Middleware",
+    "application_code": "APP04865"
+  },
+  {
+    "name": "OVL_INES_BATCH",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "oct",
+    "replace_by": ""
+  },
+  {
+    "name": "PTV Route Optimizer",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "oct",
+    "tco": 29227.57,
+    "category": "Route & Planning Optimization",
+    "application_code": "APP05560"
+  },
+  {
+    "name": "Trucker Tools",
+    "region": "NORTAM",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025"
+  },
+  {
+    "name": "Winroute",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "tco": 21681.8
+  },
+  {
+    "name": "CEVA YMS",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "replace_by": "Matrix TMS",
+    "category": "YMS",
+    "application_code": "APP05195"
+  },
+  {
+    "name": "ELO DE",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "replace_by": "INES for DEU",
+    "tco": 27371.85
+  },
+  {
+    "name": "i2 replacement",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "replace_by": "Matrix FSS",
+    "category": "Financial & Settlement Systems",
+    "application_code": "APP06991"
+  },
+  {
+    "name": "InfoPortal",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "replace_by": "INES",
+    "tco": 16072.09
+  },
+  {
+    "name": "LOAD SAPX",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "replace_by": "ORION Brazil"
+  },
+  {
+    "name": "Observer",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "replace_by": "INES",
+    "tco": 17219.27
+  },
+  {
+    "name": "Omnitracs",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "replace_by": "samsara"
+  },
+  {
+    "name": "ReturnPool",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "may",
+    "replace_by": "Matrix TMS",
+    "tco": 15000.0
+  },
+  {
+    "name": "Vision +",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "sept",
+    "replace_by": "Project 44",
+    "tco": 162613.5
+  },
+  {
+    "name": "Car-O",
+    "region": "EUROPE",
+    "7R_analysis": "In production to be replaced",
+    "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "replace_by": "INES",
+    "tco": 101798.0,
+    "category": "TMS",
+    "application_code": "APP04744"
+  },
+  {
+    "name": "Gefcopack",
+    "region": "EUROPE",
+    "7R_analysis": "In production to be replaced",
+    "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "replace_by": "BAXTER (trackonline)",
+    "tco": 118550.0,
+    "category": "Asset & Fleet Management",
+    "application_code": "APP05524"
+  },
+  {
+    "name": "Jasper Reports",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "",
+    "tco": 23414.0,
+    "category": "Financial & Settlement Systems",
+    "application_code": "APP04746"
+  },
+  {
+    "name": "Sub-It",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "",
+    "category": "Financial & Settlement Systems",
+    "application_code": "APP04645"
+  },
+  {
+    "name": "ACTUATE",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Matrix TMS",
+    "category": "Reporting & BI",
+    "application_code": "APP06989"
+  },
+  {
+    "name": "ADT TMS",
+    "region": "LATAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "mar",
+    "replace_by": "ORION Brazil",
+    "tco": 10000.0,
+    "category": "TMS",
+    "application_code": "APP05653"
+  },
+  {
+    "name": "Canada Reporting",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Matrix SCM",
+    "tco": 26554.0,
+    "category": "Reporting & BI",
+    "application_code": "APP05246"
+  },
+  {
+    "name": "Canada scanning",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Matrix",
+    "tco": 20022.0,
+    "category": "Track & Trace",
+    "application_code": "APP08726"
+  },
+  {
+    "name": "Canada Shipping System",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "MyCeva",
+    "tco": 21636.0,
+    "category": "Customer Portal",
+    "application_code": "APP08739"
+  },
+  {
+    "name": "Canada track",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Matrix",
+    "category": "Track & Trace",
+    "application_code": "APP08742"
+  },
+  {
+    "name": "CEVA Smart",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "mar",
+    "replace_by": "INES",
+    "tco": 24689.19,
+    "category": "Customer Portal",
+    "application_code": "APP04584"
+  },
+  {
+    "name": "Cevatrack-Responsive",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "CEVACONNECT / myCeva",
+    "tco": 18209.47,
+    "category": "Customer Portal",
+    "application_code": "APP04634"
+  },
+  {
+    "name": "CMS",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "TRANSPOREON ANIE",
+    "tco": 57475.0,
+    "category": "Carriers Portal",
+    "application_code": "APP05506"
+  },
+  {
+    "name": "CrossDock - iSeries",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "Matrix TMS",
+    "category": "Control & Quality",
+    "application_code": "APP05203"
+  },
+  {
+    "name": "EGL Scan Executive",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "Matrix TMS",
+    "tco": 4000.0,
+    "category": "Track & Trace",
+    "application_code": "APP05223"
+  },
+  {
+    "name": "EGL Scan Shuttles",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "Matrix TMS",
+    "tco": 4000.0,
+    "category": "Track & Trace",
+    "application_code": "APP05199"
+  },
+  {
+    "name": "Galactica",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Clearsight",
+    "category": "Documents & Collaboration",
+    "application_code": "APP06830"
+  },
+  {
+    "name": "Genio",
+    "region": "Global",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "tco": 134428.0,
+    "category": "Integration & Middleware",
+    "application_code": "APP05492"
+  },
+  {
+    "name": "GLT",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "INES",
+    "tco": 4583.27,
+    "category": "TMS",
+    "application_code": "APP05526"
+  },
+  {
+    "name": "Home Delivery",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "MyCeva",
+    "tco": 20556.0,
+    "category": "Customer Portal",
+    "application_code": "APP04597"
+  },
+  {
+    "name": "Inter Site Journaling",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Qlick sense",
+    "category": "Reporting & BI",
+    "application_code": "APP05100"
+  },
+  {
+    "name": "LA",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Matrix TMS + DAGITI",
+    "tco": 29369.49,
+    "category": "TMS",
+    "application_code": "APP04678"
+  },
+  {
+    "name": "Map&Guide",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "sept",
+    "replace_by": "Map & Guide Internet",
+    "tco": 56898.52,
+    "category": "Track & Trace",
+    "application_code": "APP05541"
+  },
+  {
+    "name": "Metis",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "tco": 58516.83,
+    "category": "Financial & Settlement Systems",
+    "application_code": "APP05543"
+  },
+  {
+    "name": "MiQuest",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "CEVASSETS (BEXTEE)",
+    "tco": 90599.32,
+    "category": "Asset & Fleet Management",
+    "application_code": "APP04747"
+  },
+  {
+    "name": "MPO eTMS",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "MPO SCOS",
+    "tco": 255200.0,
+    "category": "TMS",
+    "application_code": "APP05180"
+  },
+  {
+    "name": "Nike Scanning",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "INES",
+    "tco": 4552.37,
+    "category": "Track & Trace",
+    "application_code": "APP04748"
+  },
+  {
+    "name": "Oplus",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "replace_by": "INES",
+    "tco": 36611.22,
+    "category": "Route & Planning Optimization",
+    "application_code": "APP05555"
+  },
+  {
+    "name": "PTV Xserver",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "sept",
+    "replace_by": "Map & Guide Internet",
+    "tco": 48764.02,
+    "category": "Route & Planning Optimization",
+    "application_code": "APP05560"
+  },
+  {
+    "name": "Sharenet",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "jun",
+    "replace_by": "INES",
+    "tco": 67749.13,
+    "category": "Asset & Fleet Management",
+    "application_code": "APP04752"
+  },
+  {
+    "name": "Speed TMS",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "INES",
+    "tco": 16261.35,
+    "category": "TMS",
+    "application_code": "APP07079"
+  },
+  {
+    "name": "TransNET",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "7R_action_month": "jun",
+    "replace_by": "INES",
+    "tco": 494664.86,
+    "category": "TMS",
+    "application_code": "APP06332"
+  },
+  {
+    "name": "Xcargo",
+    "region": "EUROPE",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2026",
+    "7R_action_month": "jul",
+    "tco": 17644.0,
+    "category": "Route & Planning Optimization",
+    "application_code": "APP05591"
+  },
+  {
+    "name": "YMS 3M",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "replace_by": "Matrix TMS (YMS)",
+    "category": "YMS",
+    "application_code": "APP05216"
+  },
+  {
+    "name": "2IC Pallet",
+    "region": "LATAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Orion ANZ",
+    "tco": 42000.0,
+    "category": "Asset & Fleet Management",
+    "application_code": "APP05313"
+  },
+  {
+    "name": "C-Portal",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Possibly INES Long term",
+    "tco": 26786.82,
+    "category": "Customer Portal",
+    "application_code": "APP04621"
+  },
+  {
+    "name": "Digital agency",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Ceva Spot Module",
+    "category": "TMS",
+    "application_code": "APP08943"
+  },
+  {
+    "name": "Docsweb",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "replace_by": "INES",
+    "tco": 95270.0,
+    "category": "Documents & Collaboration",
+    "application_code": "APP04625"
+  },
+  {
+    "name": "ELO ANZ",
+    "region": "APAC",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "mar",
+    "replace_by": "INES for DEU and OFA",
+    "tco": 28185.0,
+    "category": "Documents & Collaboration",
+    "application_code": "APP05303"
+  },
+  {
+    "name": "Leopard",
+    "region": "LATAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Orion ANZ",
+    "tco": 32400.0,
+    "category": "Track & Trace",
+    "application_code": "APP06389"
+  },
+  {
+    "name": "MDC Smartphone app",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "CADIS?",
+    "tco": 87031.0,
+    "category": "Last Mile Distribution",
+    "application_code": "APP04630"
+  },
+  {
+    "name": "MSN 2.0",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "replace_by": "INES",
+    "tco": 1720690.04,
+    "category": "TMS",
+    "application_code": "APP04622"
+  },
+  {
+    "name": "Paragon US",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Route Max",
+    "tco": 10000.0,
+    "category": "Route & Planning Optimization",
+    "application_code": "APP08993"
+  },
+  {
+    "name": "PARTS",
+    "region": "LATAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "mar",
+    "replace_by": "Orion ANZ",
+    "tco": 953477.41,
+    "category": "TMS",
+    "application_code": "APP05306"
+  },
+  {
+    "name": "PCSTrac",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Matrix TMS",
+    "tco": 3708.0,
+    "category": "Track & Trace",
+    "application_code": "APP05225"
+  },
+  {
+    "name": "Piattaforma SMS",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "replace_by": "Retarus",
+    "tco": 13318.0,
+    "category": "Documents & Collaboration",
+    "application_code": "APP04628"
+  },
+  {
+    "name": "Sertifi",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "DocuSign",
+    "category": "Track & Trace",
+    "application_code": "APP06992"
+  },
+  {
+    "name": "Strategi",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Matrix TMS",
+    "category": "Track & Trace",
+    "application_code": "APP05229"
+  },
+  {
+    "name": "TMS Portal",
+    "region": "LATAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "replace_by": "Orion ANZ",
+    "category": "Customer Portal",
+    "application_code": "APP05309"
+  },
+  {
+    "name": "TraspoJ",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "replace_by": "INES",
+    "tco": 130091.0,
+    "category": "Financial & Settlement Systems",
+    "application_code": "APP04624"
+  },
+  {
+    "name": "Worldport",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "replace_by": "Matrix TMS",
+    "tco": 1264134.0,
+    "category": "TMS",
+    "application_code": "APP06375"
+  },
+  {
+    "name": "Dispatch",
+    "region": "EUROPE",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2028",
+    "7R_action_month": "mar",
+    "replace_by": "INES / Ceva Spot Module",
+    "tco": 248518.0,
+    "category": "TMS",
+    "application_code": "APP05509"
+  },
+  {
+    "name": "TIBCO SCM",
+    "region": "NORTAM",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2028",
+    "7R_action_month": "mar",
+    "replace_by": "TIBCO Group",
+    "tco": 219135.0,
+    "category": "Integration & Middleware",
+    "application_code": "APP08810"
+  }
+]

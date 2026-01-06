@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Comparateur Applications - L1/L2/L3</title>
+  <link rel="stylesheet" href="comparator-styles.css">
+</head>
+<body>
+  <div id="banner">
+    <img src="CEVA_BlueRed.jpg" alt="CEVA Logistics" id="banner-logo">
+    <h1>Applications Assessment Tool</h1>
+  </div>
+  <div class="container">
+    <div class="header">
+      <h1 style="color:#e30613;">Application Assessment</h1>
+      <p>Compare the business capabilities of your applications</p>
+      <div class="detail-level-container" style="margin-bottom:1em;">
+        <div id="selected-apps-info" style="margin-bottom:0.5em; font-style:italic; color:#666;"></div>
+        <label style="margin-left:2em;">Application 1 <select id="app1" class="search-input"></select></label>
+        <label style="margin-left:1em;">Application 2 <select id="app2" class="search-input"></select></label>
+        <button id="toggle-app2-btn" style="margin-left:1em; padding:6px 12px; background:#1976d2; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Remove App2</button>
+      </div>
+      
+      <!-- Slider de niveau de détail -->
+      <div class="detail-level-slider">
+        <span class="level-label">Level of Business Capabilities:</span>
+        <div class="level-indicator">
+          <div class="level-step active" data-level="1" id="level-1">1</div>
+          <div class="level-step" data-level="2" id="level-2">2</div>
+          <div class="level-step" data-level="3" id="level-3">3</div>
+        </div>
+      </div>
+    </div>
+    <div class="comparison-area" style="margin-top:1.5em;">
+      <div style="display:flex; align-items:center; gap:18px; margin-bottom:10px;">
+          <input type="range" id="toggle-slider" min="0" max="2" value="0" style="width:120px;">
+          <span id="slider-label" style="font-weight:bold; color:#1976d2;">Table</span>
+      </div>
+      <div id="result" style="display:block;"></div>
+      <div id="radar-charts" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; background:#fff; border:1px solid #ddd; border-radius:16px; box-shadow:0 2px 12px #0002; padding:40px 20px; margin:auto; max-width:1500px;">
+        <canvas id="radar-app-combo" width="1400" height="1400"></canvas>
+        <div id="radar-legend" style="display:none; margin-top:15px; padding:20px; background:#f9f9f9; border-radius:8px; width:fit-content;">
+          <h4 style="margin:0 0 15px 0; text-align:center; color:#333; font-size:1.1em;">L1 Categories Legend</h4>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:20px; height:20px; background:#1976d2; border-radius:4px;"></div>
+              <span style="font-size:0.95em; color:#333;">Transport Management</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:20px; height:20px; background:#d32f2f; border-radius:4px;"></div>
+              <span style="font-size:0.95em; color:#333;">Order Management</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:20px; height:20px; background:#43a047; border-radius:4px;"></div>
+              <span style="font-size:0.95em; color:#333;">Carrier Management</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:20px; height:20px; background:#ff9800; border-radius:4px;"></div>
+              <span style="font-size:0.95em; color:#333;">Asset and Network Management</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:20px; height:20px; background:#8e24aa; border-radius:4px;"></div>
+              <span style="font-size:0.95em; color:#333;">From Offering to Pricing</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:20px; height:20px; background:#00bcd4; border-radius:4px;"></div>
+              <span style="font-size:0.95em; color:#333;">Finance Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div id="bar-chart-container" style="display:none; flex-direction:column; align-items:center; justify-content:center; min-width:900px; background:#fff; border:1px solid #ddd; border-radius:16px; box-shadow:0 2px 12px #0002; padding:40px 20px; margin:auto;">
+          <canvas id="bar-app-combo" width="900" height="500"></canvas>
+          <div id="bar-chart-details" style="width:100%; max-width:900px; margin-top:20px; padding:15px; background:#f5f5f5; border-radius:8px; display:none;">
+            <div id="bar-chart-details-content"></div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script src="radarChart.js"></script>
+  <script>
+  // Enregistrer le plugin datalabels
+  Chart.register(ChartDataLabels);
+  
+  let data, bc, level=1, l1Tab=null;
+    let l2Tab=null;
+    const app1 = document.getElementById('app1');
+    const app2 = document.getElementById('app2');
+
+  let bcdefs = {};
+  let l3Descriptions = {};
+
+  // Fonction d'initialisation du mapping pour le bar chart
+  let globalBcMapping = null;
+  function setBcMapping(mapping) {
+    globalBcMapping = mapping;
+  }
+
+
+  fetch('bc-definitions.json').then(r=>r.json()).then(d=>{ bcdefs=d; maybeInit(); });
+  fetch('app-capabilities-unified.json').then(r=>r.json()).then(d=>{ data=d; maybeInit(); });
+  fetch('bc-mapping.json').then(r=>r.json()).then(d=>{ bc=d._hierarchy; maybeInit(); });
+  fetch('l3-descriptions.json').then(r=>r.json()).then(d=>{ l3Descriptions=d.L3_DESCRIPTIONS||{}; maybeInit(); });
+  fetch('expectedL4ByCategory.json').then(r=>r.json()).then(d=>{ window.expectedL4ByCategory=d; });
+
+  document.addEventListener('DOMContentLoaded', function() {
+  });
+
+  function maybeInit() {
+    if (data && bc && bcdefs && Object.keys(bcdefs).length > 0) fillSelects();
+  }
+    function fillSelects() {
+      let apps=Object.keys(data);
+      app1.innerHTML = app2.innerHTML = '<option value=""></option>' + apps.map(a=>`<option>${a}</option>`).join('');
+      const infoDiv = document.getElementById('selected-apps-info');
+
+      // Gestion des paramètres URL pour présélection
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlApp1 = urlParams.get('app1');
+      const urlApp2 = urlParams.get('app2');
+      
+      if (urlApp1 && apps.includes(urlApp1)) {
+        app1.value = urlApp1;
+      } else {
+        app1.value = apps[0];
+      }
+      
+      if (urlApp2 !== null) {
+        // Si app2 est présent dans l'URL (même vide), utiliser cette valeur
+        app2.value = (urlApp2 && apps.includes(urlApp2)) ? urlApp2 : '';
+      } else {
+        // Sinon, comportement par défaut
+        app2.value = apps.includes('INES') ? 'INES' : '';
+      }
+      
+      infoDiv.innerHTML = '';
+
+      app1.onchange=app2.onchange=show;
+      
+      // Gestion du bouton pour ajouter/retirer app2
+      const toggleApp2Btn = document.getElementById('toggle-app2-btn');
+      let app2Saved = app2.value; // Sauvegarder la valeur actuelle
+      
+      function updateToggleButton() {
+        if (app2.value) {
+          toggleApp2Btn.textContent = 'Remove App2';
+          toggleApp2Btn.style.background = '#d32f2f';
+          app2.disabled = false;
+        } else {
+          toggleApp2Btn.textContent = 'Add App2';
+          toggleApp2Btn.style.background = '#43a047';
+          app2.disabled = true;
+        }
+      }
+      
+      updateToggleButton();
+      
+      // Appeler show() après updateToggleButton() pour afficher le tableau au chargement
+      if (app1.value) {
+        setTimeout(function() {
+          show();
+        }, 0);
+      }
+      
+      toggleApp2Btn.onclick = function() {
+        if (app2.value) {
+          // Retirer app2
+          app2Saved = app2.value;
+          app2.value = '';
+          app2.disabled = true;
+        } else {
+          // Ajouter app2
+          app2.value = app2Saved || apps[1] || apps[0];
+          app2.disabled = false;
+        }
+        updateToggleButton();
+        show();
+      };
+      
+      // Mettre à jour le bouton quand on change app2 manuellement
+      const originalApp2Change = app2.onchange;
+      app2.onchange = function() {
+        if (app2.value) {
+          app2Saved = app2.value;
+        }
+        updateToggleButton();
+        originalApp2Change();
+      };
+      
+      // Gestionnaires d'événements pour le slider de niveau
+      document.getElementById('level-1').onclick = function() {
+        l1Tab = null;
+        l2Tab = null;
+        show();
+      };
+      
+      document.getElementById('level-2').onclick = function() {
+        if (l1Tab) {
+          // Si on a déjà un L1 sélectionné, on revient au niveau 2
+          l2Tab = null;
+          show();
+        }
+        // Si aucun L1 n'est sélectionné, on ne peut pas aller au niveau 2
+      };
+      
+      document.getElementById('level-3').onclick = function() {
+        // On ne peut aller au niveau 3 que si on a déjà L1 et L2
+        // Cette fonctionnalité est gérée par les clics sur les L2
+      };
+      
+      show();
+    }
+    function getDef(code, level) {
+      if(!bcdefs) return code;
+      if(level===1 && bcdefs.L1 && bcdefs.L1[code]) return bcdefs.L1[code];
+      if(level===2 && bcdefs.L2 && bcdefs.L2[code]) return bcdefs.L2[code];
+      if(level===3 && bcdefs.L3 && bcdefs.L3[code]) return bcdefs.L3[code];
+      if(level===4 && bcdefs.L4 && bcdefs.L4[code]) return bcdefs.L4[code];
+      return code;
+    }
+    
+    // Mapping entre codes L1 courts (bc-mapping.json) et noms complets (expectedL4ByCategory.json)
+    const l1Mapping = {
+      'TM': 'Transport Management',
+      'OM': 'Order Management',
+      'CM': 'Carrier Management',
+      'ANM': 'Asset & Network Management',
+      'FM': 'Finance Management',
+      'OP': 'From Offering to Pricing'
+    };
+    
+    // Fonction pour extraire les L4 attendues pour un axe donné
+    function getExpectedL4(axe, niveau, expectedL4, categoryL4) {
+      let l4List = [];
+      if (niveau === 1) {
+        // axe = L1 code court (ex: "TM") -> convertir en nom complet
+        const l1Full = l1Mapping[axe] || axe;
+        
+        // Si une catégorie est fournie, chercher dans expectedL4[categoryL4][l1Full]
+        if (categoryL4) {
+          const categoryData = expectedL4[categoryL4];
+          if (categoryData && categoryData[l1Full]) {
+            Object.values(categoryData[l1Full]).forEach(l3s => {
+              Object.values(l3s).forEach(l4s => {
+                l4List.push(...l4s.map(l4 => l4.split(';')[0]));
+              });
+            });
+          }
+        } else {
+          // Ancienne logique sans catégorie (pour compatibilité)
+          const l2s = expectedL4[l1Full];
+          if (l2s) {
+            Object.values(l2s).forEach(l3s => {
+              Object.values(l3s).forEach(l4s => {
+                l4List.push(...l4s.map(l4 => l4.split(';')[0]));
+              });
+            });
+          }
+        }
+      } else if (niveau === 2) {
+        // axe = L2 (ex: "OM1")
+        if (categoryL4) {
+          const categoryData = expectedL4[categoryL4];
+          if (categoryData) {
+            Object.values(categoryData).forEach(l2s => {
+              if (l2s[axe]) {
+                Object.values(l2s[axe]).forEach(l4s => {
+                  l4List.push(...l4s.map(l4 => l4.split(';')[0]));
+                });
+              }
+            });
+          }
+        } else {
+          Object.values(expectedL4).forEach(l2s => {
+            if (l2s[axe]) {
+              Object.values(l2s[axe]).forEach(l4s => {
+                l4List.push(...l4s.map(l4 => l4.split(';')[0]));
+              });
+            }
+          });
+        }
+      } else if (niveau === 3) {
+        // axe = L3 (ex: "CMAC1")
+        if (categoryL4) {
+          const categoryData = expectedL4[categoryL4];
+          if (categoryData) {
+            Object.values(categoryData).forEach(l2s => {
+              Object.values(l2s).forEach(l3s => {
+                if (l3s[axe]) {
+                  l4List.push(...l3s[axe].map(l4 => l4.split(';')[0]));
+                }
+              });
+            });
+          }
+        } else {
+          Object.values(expectedL4).forEach(l2s => {
+            Object.values(l2s).forEach(l3s => {
+              if (l3s[axe]) {
+                l4List.push(...l3s[axe].map(l4 => l4.split(';')[0]));
+              }
+            });
+          });
+        }
+      }
+      return Array.from(new Set(l4List)); // Sans doublons
+    }
+    
+    // Fonction pour déterminer la classe de couleur basée sur le pourcentage
+    function getColorClass(percentage) {
+      if (percentage < 20) return 'coverage coverage-red';
+      if (percentage < 50) return 'coverage coverage-orange';
+      if (percentage < 80) return 'coverage coverage-black';
+      return 'coverage coverage-green';
+    }
+    
+    // Fonction pour mettre à jour le slider de niveau
+    function updateLevelSlider() {
+      const level1 = document.getElementById('level-1');
+      const level2 = document.getElementById('level-2');
+      const level3 = document.getElementById('level-3');
+      
+      // Reset all levels
+      [level1, level2, level3].forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Determine current level and update slider
+      if (!l1Tab) {
+        // Niveau 1: Vue d'ensemble
+        level1.classList.add('active');
+      } else if (l1Tab && !l2Tab) {
+        // Niveau 2: Détail L1 avec L2s
+        level2.classList.add('active');
+      } else if (l1Tab && l2Tab) {
+        // Niveau 3: Détail L2 avec L3s/L4s
+        level3.classList.add('active');
+      }
+    }
+    
+    function show() {
+  if(!data||!bc||!bcdefs) return;
+  let a1=data[app1.value];
+  // Si app2 n'est pas sélectionnée, créer un objet vide pour éviter les erreurs
+  let a2 = app2.value ? data[app2.value] : {l3: [], l4: [], categoryL4: null};
+  let hasApp2 = !!app2.value;
+  
+      let html='<div class="comparison-table"><div class="table-header">';
+        if(l1Tab){
+        html += `<h3>${getDef(l1Tab,1)}</h3>`;
+        } else {
+          html += '<h3>Assessment Transport Applications</h3>';
+        }
+        html+='</div>';
+      // Afficher une ou deux colonnes selon si app2 est sélectionnée
+      const thApp2 = hasApp2 ? `<th style="text-align:center;">${app2.value}</th>` : '';
+      html+='<table class="capability-table"><thead><tr><th>Business Capabilities</th><th style="text-align:center;">'+app1.value+'</th>' + thApp2 + '</tr></thead><tbody>';
+        // Onglets L1
+        let l1s = Object.keys(bc);
+        if(l1Tab && l2Tab){
+  html += `<button id="btn-back-l2" class="btn btn-secondary" style="margin-bottom:1em;">&larr; Retour</button>`;
+  // Boutons horizontaux L2
+  let l2s = Object.keys(bc[l1Tab]);
+  let l2Buttons = l2s.map(l2 => `<button class="btn l2btn${l2Tab===l2?' selected':''}" data-l2="${l2}" style="margin-right:0.5em;">${getDef(l2,2)}</button>`).join('');
+  html += `<div id="l2-buttons" style="margin-bottom:1em;">${l2Buttons}</div>`;
+        // Tableau L3/L4 pour la L2 sélectionnée
+        Object.keys(bc[l1Tab][l2Tab]).forEach(l3=>{
+          const l3Def = getDef(l3,3);
+          // Vérifier la categoryL4 depuis unified.json (app1 ou app2)
+          let currentCategoryL4 = (a1 && a1.categoryL4) ? a1.categoryL4 : (a2 && a2.categoryL4) ? a2.categoryL4 : null;
+          // Récupérer la liste des L4 attendues pour ce L3
+          const l4sAttendue = getExpectedL4(l3, 3, window.expectedL4ByCategory, currentCategoryL4);
+          // Lookup statut L4 pour chaque app
+          function getL4StatusLookup(appL4List) {
+            const lookup = {};
+            (appL4List||[]).forEach(entry => {
+              if (typeof entry === 'string' && entry.includes(';')) {
+                const parts = entry.split(';');
+                const l4 = parts[0];
+                const statuses = parts.slice(1);
+                lookup[l4] = statuses;
+              } else if (typeof entry === 'string') {
+                lookup[entry] = ['3']; // compatibilité ascendante
+              }
+            });
+            return lookup;
+          }
+          const a1L4Status = getL4StatusLookup(a1.l4);
+          const a2L4Status = getL4StatusLookup(a2.l4);
+          // Statuts considérés comme couverts : 1,2,3
+          const coveredStatus = ['1','2','3'];
+          // Calcul du ratio L3 pour chaque app (seulement sur les L4 attendues)
+          const a1L4Count = l4sAttendue.filter(l4 => {
+            const statuses = a1L4Status[l4] || [];
+            return statuses.some(s => coveredStatus.includes(s));
+          }).length;
+          const a2L4Count = l4sAttendue.filter(l4 => {
+            const statuses = a2L4Status[l4] || [];
+            return statuses.some(s => coveredStatus.includes(s));
+          }).length;
+          const a1L3Display = l4sAttendue.length > 0 ? `${a1L4Count}/${l4sAttendue.length}` : '-';
+          const a2L3Display = l4sAttendue.length > 0 ? `${a2L4Count}/${l4sAttendue.length}` : '-';
+          // Récupérer la description L3 pour le tooltip
+          const l3Description = l3Descriptions[l3] || '';
+          const tooltipAttr = l3Description ? ` title="${l3Description.replace(/"/g, '&quot;').replace(/<br><br>/g, '\n\n').replace(/<br>/g, '\n')}"` : '';
+          const tdApp2L3 = hasApp2 ? `<td class="coverage app-column">${a2L3Display}</td>` : '';
+          html+=`<tr class="l3-row"${tooltipAttr}><td><b>${l3Def}</b></td><td class="coverage app-column">${a1L3Display}</td>${tdApp2L3}</tr>`;
+          // Afficher uniquement les L4 attendues
+          if(Array.isArray(l4sAttendue) && l4sAttendue.length > 0){
+            // Mapping des intégrations externes
+            const externalIntegrations = {
+              '4': 'External Integration : Several',
+              '5': 'External Integration : Adapt',
+              '6': 'External Integration : Cadis',
+              '7': 'External Integration : INES',
+              '8': 'External Integration : OMS',
+              '9': 'External Integration : SAP, JDE'
+              
+              // Ajouter d'autres intégrations ici si besoin : '5': 'SAP', '6': 'Oracle', etc.
+            };
+            // Mapping des statuts L4 (numérique -> couleur/label)
+            const l4StatusMap = {
+              undefined: { label: "Indéfini", color: "#bbb" },
+              0: { label: "Absent", color: "#e53935" },
+              1: { label: "Manuel", color: "#ff9800" },
+              2: { label: "Semi-auto", color: "#66bb6a" },
+              3: { label: "Automatique", color: "#2e7d32" },
+              4: { label: "Externe", color: null } // couleur dynamique
+            };
+            l4sAttendue.forEach(l4=>{
+              const l4Def = getDef(l4,4);
+              const statuses1 = a1L4Status[l4] || [];
+              const statuses2 = a2L4Status[l4] || [];
+              function getPastille(statuses, otherStatuses) {
+                let color = l4StatusMap[undefined].color;
+                let label = l4StatusMap[undefined].label;
+                let showAsterix = false;
+                let externalName = '';
+                if (Array.isArray(statuses)) {
+                  // Détecter les intégrations externes
+                  const externalCodes = statuses.filter(s => externalIntegrations[s]);
+                  if (externalCodes.length > 0) {
+                    externalName = externalCodes.map(code => externalIntegrations[code]).join(', ');
+                    showAsterix = true;
+                  }
+                  
+                  // Vérifier si un code externe existe (4,5,6,7,8,9...)
+                  const hasExternal = externalCodes.length > 0;
+                  
+                  if (hasExternal && statuses.includes('3')) {
+                    color = l4StatusMap['3'].color;
+                    label = l4StatusMap['3'].label + '\n' + externalName;
+                  } else if (hasExternal && statuses.includes('2')) {
+                    color = l4StatusMap['2'].color;
+                    label = l4StatusMap['2'].label + '\n' + externalName;
+                  } else if (hasExternal && statuses.includes('1')) {
+                    color = l4StatusMap['1'].color;
+                    label = l4StatusMap['1'].label + '\n' + externalName;
+                  } else if (hasExternal && otherStatuses.some(s=>!externalIntegrations[s] && s!=='0')) {
+                    const other = otherStatuses.find(s=>!externalIntegrations[s] && s!=='0');
+                    color = l4StatusMap[other]?.color || l4StatusMap[undefined].color;
+                    label = (l4StatusMap[other]?.label || l4StatusMap[undefined].label) + '\n' + externalName;
+                  } else if (statuses.length>0) {
+                    const prio = ['3','2','1','0'];
+                    const found = prio.find(s=>statuses.includes(s));
+                    color = l4StatusMap[found]?.color || l4StatusMap[undefined].color;
+                    label = l4StatusMap[found]?.label || l4StatusMap[undefined].label;
+                  }
+                }
+                return `<span title="${label}" style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${color};border:1px solid #bbb;vertical-align:middle;position:relative;">${showAsterix?'<span style="position:absolute;top:-6px;right:-6px;font-size:12px;color:#000;">*</span>':''}</span>`;
+              }
+              let pastille1 = getPastille(statuses1, statuses2);
+              let pastille2 = getPastille(statuses2, statuses1);
+              const tdApp2L4 = hasApp2 ? `<td class="tick app-column">${pastille2}</td>` : '';
+              html+=`<tr class="l4-row"><td style='padding-left:2em;'>${l4Def}</td><td class="tick app-column">${pastille1}</td>${tdApp2L4}</tr>`;
+            });
+          }
+        });
+        } else if(l1Tab){
+          html += `<button id="btn-back-l1" class="btn btn-secondary" style="margin-bottom:1em;">&larr; Retour</button>`;
+          // Boutons horizontaux L1 - ne montrer que ceux avec des capabilities L3
+          let l1Buttons = Object.keys(bc).filter(l1 => {
+            // Vérifier si au moins une des deux applications a des L3 dans ce L1
+            let hasApp1L3 = false;
+            let hasApp2L3 = false;
+            
+            Object.keys(bc[l1]).forEach(l2 => {
+              Object.keys(bc[l1][l2]).forEach(l3 => {
+                if (a1.l3 && a1.l3.includes(l3)) hasApp1L3 = true;
+                if (a2.l3 && a2.l3.includes(l3)) hasApp2L3 = true;
+              });
+            });
+            
+            return hasApp1L3 || hasApp2L3;
+          }).map(l1 => `<button class="btn l1btn${l1Tab===l1?' selected':''}" data-l1="${l1}" style="margin-right:0.5em;">${getDef(l1,1)}</button>`).join('');
+          html += `<div id="l1-buttons" style="margin-bottom:1em;">${l1Buttons}</div>`;
+          Object.keys(bc[l1Tab]).forEach(l2=>{
+            const l2Def = getDef(l2,2);
+            // Vérifier la categoryL4 depuis unified.json (app1 ou app2)
+            let currentCategoryL4 = (a1 && a1.categoryL4) ? a1.categoryL4 : (a2 && a2.categoryL4) ? a2.categoryL4 : null;
+            
+            // Récupérer les L3 attendus pour cette L2 depuis expectedL4
+            const l1Full = l1Mapping[l1Tab] || l1Tab;
+            let l3Attendus = [];
+            if (currentCategoryL4 && window.expectedL4ByCategory && window.expectedL4ByCategory[currentCategoryL4] && window.expectedL4ByCategory[currentCategoryL4][l1Full] && window.expectedL4ByCategory[currentCategoryL4][l1Full][l2]) {
+              l3Attendus = Object.keys(window.expectedL4ByCategory[currentCategoryL4][l1Full][l2]);
+            }
+            
+            const totalL3 = l3Attendus.length;
+            let a1L3Above20 = 0;
+            let a2L3Above20 = 0;
+            // Vérifier si au moins une des deux applications a des L3 dans cette L2
+            // Afficher la L2 uniquement si elle est attendue pour au moins une des deux applications
+            let isL2ExpectedApp1 = false;
+            let isL2ExpectedApp2 = false;
+            if (a1 && a1.categoryL4 && window.expectedL4ByCategory && window.expectedL4ByCategory[a1.categoryL4] && window.expectedL4ByCategory[a1.categoryL4][l1Full] && window.expectedL4ByCategory[a1.categoryL4][l1Full][l2]) {
+              isL2ExpectedApp1 = Object.keys(window.expectedL4ByCategory[a1.categoryL4][l1Full][l2]).length > 0;
+            }
+            if (a2 && a2.categoryL4 && window.expectedL4ByCategory && window.expectedL4ByCategory[a2.categoryL4] && window.expectedL4ByCategory[a2.categoryL4][l1Full] && window.expectedL4ByCategory[a2.categoryL4][l1Full][l2]) {
+              isL2ExpectedApp2 = Object.keys(window.expectedL4ByCategory[a2.categoryL4][l1Full][l2]).length > 0;
+            }
+            if (isL2ExpectedApp1 || isL2ExpectedApp2) {
+              // Calcul X/Y pour chaque app : X = nb de L3 attendues ayant au moins une L4 couverte, Y = total L3 attendues
+              let a1L3Covered = 0;
+              let a2L3Covered = 0;
+              l3Attendus.forEach(l3 => {
+                // Récupérer la liste des L4 attendues pour ce L3
+                const l4sAttendue = getExpectedL4(l3, 3, window.expectedL4ByCategory, a1 && a1.categoryL4 ? a1.categoryL4 : null);
+                // Lookup statut L4 pour chaque app
+                function getL4StatusLookup(appL4List) {
+                  const lookup = {};
+                  (appL4List||[]).forEach(entry => {
+                    if (typeof entry === 'string' && entry.includes(';')) {
+                      const parts = entry.split(';');
+                      const l4 = parts[0];
+                      const statuses = parts.slice(1);
+                      lookup[l4] = statuses;
+                    } else if (typeof entry === 'string') {
+                      lookup[entry] = ['3'];
+                    }
+                  });
+                  return lookup;
+                }
+                if (isL2ExpectedApp1 && a1) {
+                  const a1L4Status = getL4StatusLookup(a1.l4);
+                  const coveredStatus = ['1','2','3'];
+                  const covered = l4sAttendue.some(l4 => {
+                    const statuses = a1L4Status[l4] || [];
+                    return statuses.some(s => coveredStatus.includes(s));
+                  });
+                  if (covered) a1L3Covered++;
+                }
+                if (isL2ExpectedApp2 && a2) {
+                  const l4sAttendue2 = getExpectedL4(l3, 3, window.expectedL4ByCategory, a2.categoryL4);
+                  const a2L4Status = getL4StatusLookup(a2.l4);
+                  const coveredStatus = ['1','2','3'];
+                  const covered = l4sAttendue2.some(l4 => {
+                    const statuses = a2L4Status[l4] || [];
+                    return statuses.some(s => coveredStatus.includes(s));
+                  });
+                  if (covered) a2L3Covered++;
+                }
+              });
+              let a1L2Display = isL2ExpectedApp1 ? `${a1L3Covered}/${totalL3}` : '';
+              let a2L2Display = isL2ExpectedApp2 ? `${a2L3Covered}/${totalL3}` : '';
+              const tdApp2L2 = hasApp2 ? `<td class="coverage app-column" style="font-size:1.6em;">${a2L2Display}</td>` : '';
+              html+=`<tr class="l2-row l2-clickable" data-l2="${l2}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.2em;"><b>${l2Def}</b></td><td class="coverage app-column" style="font-size:1.6em;">${a1L2Display}</td>${tdApp2L2}</tr>`;
+              
+              // Récupérer les L3 attendus pour cette L2 depuis expectedL4
+              if (currentCategoryL4 && window.expectedL4ByCategory && window.expectedL4ByCategory[currentCategoryL4]) {
+                const l1Full = l1Mapping[l1Tab] || l1Tab;
+                const l3AttendusPourL2 = window.expectedL4ByCategory[currentCategoryL4][l1Full] && window.expectedL4ByCategory[currentCategoryL4][l1Full][l2] 
+                  ? Object.keys(window.expectedL4ByCategory[currentCategoryL4][l1Full][l2]) 
+                  : [];
+                
+                l3AttendusPourL2.forEach((l3, l3Index)=>{
+                  const l3Def = getDef(l3,3);
+                  // Récupérer la liste des L4 attendues pour ce L3
+                  const l4sAttendue = getExpectedL4(l3, 3, window.expectedL4ByCategory, currentCategoryL4);
+                  
+                  // Ne pas afficher si aucune L4 attendue
+                  if (l4sAttendue.length === 0) return;
+                  
+                  // Lookup statut L4 pour chaque app
+                  function getL4StatusLookup(appL4List) {
+                    const lookup = {};
+                    (appL4List||[]).forEach(entry => {
+                      if (typeof entry === 'string' && entry.includes(';')) {
+                        const parts = entry.split(';');
+                        const l4 = parts[0];
+                        const statuses = parts.slice(1);
+                        lookup[l4] = statuses;
+                      } else if (typeof entry === 'string') {
+                        lookup[entry] = ['3'];
+                      }
+                    });
+                    return lookup;
+                  }
+                  const a1L4Status = getL4StatusLookup(a1.l4);
+                  const a2L4Status = getL4StatusLookup(a2.l4);
+                  
+                  // Calcul de la moyenne pondérée pour chaque app
+                  function getWeightedAverage(l4List, statusLookup) {
+                    let sum = 0;
+                    l4List.forEach(l4 => {
+                      const statuses = statusLookup[l4] || [];
+                      if (statuses.includes('3')) {
+                        sum += 1;
+                      } else if (statuses.includes('2')) {
+                        sum += 0.66;
+                      } else if (statuses.includes('1')) {
+                        sum += 0.33;
+                      }
+                      // sinon 0 (L4 absente ou non définie)
+                    });
+                    return l4List.length > 0 ? Math.round((sum / l4List.length) * 100) : 0;
+                  }
+                  
+                  const a1Percentage = getWeightedAverage(l4sAttendue, a1L4Status);
+                  const a2Percentage = getWeightedAverage(l4sAttendue, a2L4Status);
+                  const a1ColorClass = getColorClass(a1Percentage);
+                  const a2ColorClass = getColorClass(a2Percentage);
+                  const l3Description = l3Descriptions[l3] || '';
+                  const tooltipAttr = l3Description ? ` title="${l3Description.replace(/"/g, '&quot;').replace(/<br><br>/g, '\n\n').replace(/<br>/g, '\n')}"` : '';
+                  
+                  // Ajouter un style pour espacer après la dernière L3 de chaque L2
+                  const isLastL3 = l3Index === l3AttendusPourL2.length - 1;
+                  const spacingStyle = isLastL3 ? 'border-bottom: 15px solid #f5f5f5;' : '';
+                  
+                  const tdApp2L3 = hasApp2 ? `<td class="tick app-column ${a2ColorClass}">${a2Percentage}%</td>` : '';
+                  html+=`<tr class="l3-row" style="background:#f0f4ff; ${spacingStyle}"${tooltipAttr}><td style="padding-left: 30px;">${l3Def}</td><td class="tick app-column ${a1ColorClass}">${a1Percentage}%</td>${tdApp2L3}</tr>`;
+                });
+              }
+            }
+          });
+        } else {
+          // Vue niveau 1 : partir de expectedL4 pour déterminer les L1>L2>L3>L4 attendus
+          let currentCategoryL4 = (a1 && a1.categoryL4) ? a1.categoryL4 : (a2 && a2.categoryL4) ? a2.categoryL4 : null;
+          let expectedL4 = window.expectedL4ByCategory;
+          
+          if (expectedL4 && currentCategoryL4 && expectedL4[currentCategoryL4]) {
+            Object.keys(expectedL4[currentCategoryL4]).forEach(l1Full => {
+              const l1Def = l1Full; // Nom complet déjà présent dans expectedL4
+              
+              // Récupérer les L2 attendus pour ce L1
+              const l2Attendus = Object.keys(expectedL4[currentCategoryL4][l1Full]);
+              const totalL2 = l2Attendus.length;
+              let a1L2Couverts = 0;
+              let a2L2Couverts = 0;
+              
+              l2Attendus.forEach(l2 => {
+                // Pour chaque L2 attendu, récupérer les L3 attendus
+                const l3Attendus = Object.keys(expectedL4[currentCategoryL4][l1Full][l2]);
+                let a1L3Couverte = false;
+                let a2L3Couverte = false;
+                
+                l3Attendus.forEach(l3 => {
+                  // Récupérer les L4 attendues pour ce L3
+                  const l4sAttendue = expectedL4[currentCategoryL4][l1Full][l2][l3].map(l4 => l4.split(';')[0]);
+                  
+                  // Lookup statut L4 pour chaque app
+                  function getL4StatusLookup(appL4List) {
+                    const lookup = {};
+                    (appL4List||[]).forEach(entry => {
+                      if (typeof entry === 'string' && entry.includes(';')) {
+                        const parts = entry.split(';');
+                        const l4 = parts[0];
+                        const statuses = parts.slice(1);
+                        lookup[l4] = statuses;
+                      } else if (typeof entry === 'string') {
+                        lookup[entry] = ['3'];
+                      }
+                    });
+                    return lookup;
+                  }
+                  
+                  const a1L4Status = getL4StatusLookup(a1.l4);
+                  const a2L4Status = getL4StatusLookup(a2.l4);
+                  const coveredStatus = ['1','2','3'];
+                  
+                  // Calcul du ratio de couverture pour chaque app
+                  const a1L4Count = l4sAttendue.filter(l4 => {
+                    const statuses = a1L4Status[l4] || [];
+                    return statuses.some(s => coveredStatus.includes(s));
+                  }).length;
+                  const a2L4Count = l4sAttendue.filter(l4 => {
+                    const statuses = a2L4Status[l4] || [];
+                    return statuses.some(s => coveredStatus.includes(s));
+                  }).length;
+                  
+                  const a1Percentage = l4sAttendue.length > 0 ? Math.round((a1L4Count / l4sAttendue.length) * 100) : 0;
+                  const a2Percentage = l4sAttendue.length > 0 ? Math.round((a2L4Count / l4sAttendue.length) * 100) : 0;
+                  
+                  if (a1Percentage > 20) a1L3Couverte = true;
+                  if (a2Percentage > 20) a2L3Couverte = true;
+                });
+                
+                // Si au moins une L3 attendue est couverte, on considère la L2 comme couverte
+                if (a1L3Couverte) a1L2Couverts++;
+                if (a2L3Couverte) a2L2Couverts++;
+              });
+              
+              // Trouver le code court L1 correspondant pour data-l1
+              const l1Code = Object.keys(l1Mapping).find(k => l1Mapping[k] === l1Full) || l1Full;
+              
+              // Affichage du ratio pour chaque L1
+              const tdApp2L1 = hasApp2 ? `<td class="coverage app-column" style="font-size:1.6em;">${a2L2Couverts}/${totalL2}</td>` : '';
+              html += `<tr class="l1-row" data-l1="${l1Code}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.2em;"><b>${l1Def}</b></td><td class="coverage app-column" style="font-size:1.6em;">${a1L2Couverts}/${totalL2}</td>${tdApp2L1}</tr>`;
+              
+              // Afficher les L2 attendus
+              l2Attendus.forEach((l2, l2Index) => {
+                const l2Def = getDef(l2, 2);
+                const l3Attendus = Object.keys(expectedL4[currentCategoryL4][l1Full][l2]);
+                
+                // Collecter toutes les L4 attendues pour cette L2
+                let allL4ForL2 = [];
+                l3Attendus.forEach(l3 => {
+                  const l4sAttendue = expectedL4[currentCategoryL4][l1Full][l2][l3].map(l4 => l4.split(';')[0]);
+                  allL4ForL2.push(...l4sAttendue);
+                });
+                
+                // Lookup statut L4 pour chaque app
+                function getL4StatusLookup(appL4List) {
+                  const lookup = {};
+                  (appL4List||[]).forEach(entry => {
+                    if (typeof entry === 'string' && entry.includes(';')) {
+                      const parts = entry.split(';');
+                      const l4 = parts[0];
+                      const statuses = parts.slice(1);
+                      lookup[l4] = statuses;
+                    } else if (typeof entry === 'string') {
+                      lookup[entry] = ['3'];
+                    }
+                  });
+                  return lookup;
+                }
+                
+                const a1L4Status = getL4StatusLookup(a1.l4);
+                const a2L4Status = getL4StatusLookup(a2.l4);
+                
+                // Calcul de la moyenne pondérée pour chaque app
+                function getWeightedAverage(l4List, statusLookup) {
+                  let sum = 0;
+                  l4List.forEach(l4 => {
+                    const statuses = statusLookup[l4] || [];
+                    if (statuses.includes('3')) {
+                      sum += 1;
+                    } else if (statuses.includes('2')) {
+                      sum += 0.66;
+                    } else if (statuses.includes('1')) {
+                      sum += 0.33;
+                    }
+                    // sinon 0 (L4 absente ou non définie)
+                  });
+                  return l4List.length > 0 ? Math.round((sum / l4List.length) * 100) : 0;
+                }
+                
+                const a1L2Percentage = getWeightedAverage(allL4ForL2, a1L4Status);
+                const a2L2Percentage = getWeightedAverage(allL4ForL2, a2L4Status);
+                
+                const a1ColorClass = getColorClass(a1L2Percentage);
+                const a2ColorClass = getColorClass(a2L2Percentage);
+                
+                // Ajouter un style pour espacer après le dernier L2 de chaque L1
+                const isLastL2 = l2Index === l2Attendus.length - 1;
+                const spacingStyle = isLastL2 ? 'border-bottom: 15px solid #f5f5f5;' : '';
+                
+                const tdApp2L2 = hasApp2 ? `<td class="app-column ${a2ColorClass}">${a2L2Percentage}%</td>` : '';
+                html += `<tr class="l2-row l2-clickable" data-l1="${l1Code}" data-l2="${l2}" style="background:#e3f2fd; ${spacingStyle}"><td style="padding-left: 30px;">${l2Def}</td>`
+                      + `<td class="app-column ${a1ColorClass}">${a1L2Percentage}%</td>`
+                      + tdApp2L2 + `</tr>`;
+              });
+            });
+          }
+        }
+      html+='</tbody></table></div>';
+      document.getElementById('result').innerHTML=html;
+      // Ajoute les handlers pour les boutons et le bouton retour
+      if(l1Tab && l2Tab){
+        let btnBack = document.getElementById('btn-back-l2');
+        if(btnBack) btnBack.onclick = function(){ l2Tab = null; show(); };
+        Array.from(document.querySelectorAll('#l2-buttons button')).forEach(btn => {
+          btn.onclick = function() {
+            l2Tab = this.getAttribute('data-l2');
+            show();
+          };
+        });
+      } else if(l1Tab){
+        let btnBack = document.getElementById('btn-back-l1');
+        if(btnBack) btnBack.onclick = function(){ l1Tab = null; show(); };
+        Array.from(document.querySelectorAll('#l1-buttons button')).forEach(btn => {
+          btn.onclick = function() {
+            l1Tab = this.getAttribute('data-l1');
+            l2Tab = null;
+            show();
+          };
+        });
+        // L2 cliquables
+        Array.from(document.querySelectorAll('.l2-row.l2-clickable')).forEach((row) => {
+          row.style.cursor = 'pointer';
+          row.onclick = function() {
+            l2Tab = this.getAttribute('data-l2');
+            show();
+          };
+        });
+      } else {
+        // En niveau 1, chaque L1 est cliquable (ligne du tableau)
+        Array.from(document.querySelectorAll('.l1-row')).forEach(row => {
+          row.style.cursor = 'pointer';
+          row.onclick = function() {
+            l1Tab = this.getAttribute('data-l1');
+            l2Tab = null;
+            show();
+          };
+        });
+        // L2 cliquables
+        Array.from(document.querySelectorAll('.l2-row.l2-clickable')).forEach(row => {
+          row.style.cursor = 'pointer';
+          row.onclick = function() {
+            l1Tab = this.getAttribute('data-l1');
+            l2Tab = this.getAttribute('data-l2');
+            show();
+          };
+        });
+      }
+      
+      // Mettre à jour le slider de niveau
+      updateLevelSlider();
+      // --- RADAR CHART ---
+      
+      // Vérification des categoryL4 pour déterminer la catégorie à utiliser
+      let radarCategoryL4 = null;
+      const app1CategoryL4 = a1.categoryL4;
+      const app2CategoryL4 = a2.categoryL4;
+      
+      // Si app1 n'a pas de categoryL4 -> erreur
+      if (!app1CategoryL4) {
+        const radarContainer = document.getElementById('radar-charts');
+        radarContainer.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Erreur : L\'application ' + app1.value + ' doit avoir une categoryL4 définie pour afficher le radar chart.<br>App1 categoryL4: NON DÉFINIE</div>';
+        // On continue quand même pour ne pas bloquer le reste
+      } else {
+        // Si app2 est sélectionnée mais n'a pas de categoryL4 -> erreur
+        if (hasApp2 && !app2CategoryL4) {
+          const radarContainer = document.getElementById('radar-charts');
+          radarContainer.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Erreur : L\'application ' + app2.value + ' doit avoir une categoryL4 définie pour afficher le radar chart.<br>App2 categoryL4: NON DÉFINIE</div>';
+        } else if (!hasApp2) {
+          // App2 non sélectionnée -> utiliser uniquement app1
+          radarCategoryL4 = app1CategoryL4;
+        } else {
+          // Les deux ont une categoryL4
+          // Déterminer quelle catégorie utiliser
+          if (app1CategoryL4 === app2CategoryL4) {
+            radarCategoryL4 = app1CategoryL4; // Même catégorie pour les deux
+          } else {
+            radarCategoryL4 = app1CategoryL4; // Catégories différentes -> utiliser app1
+          }
+        }
+      }
+      
+      let radarLabels = [];
+      let app1Data = [];
+      let app2Data = [];
+      let radarTitle = '';
+      // Couleurs fixes pour chaque L1
+      const l1Colors = {
+        'TM': '#1976d2',
+        'OM': '#d32f2f',
+        'CM': '#43a047',
+        'ANM': '#ff9800',
+        'OP': '#8e24aa',
+        'FM': '#00bcd4'
+      };
+      
+      // Ne générer le radar que si radarCategoryL4 est définie
+      if (radarCategoryL4 && !l1Tab && !l2Tab) {
+        // Axes = tous les L1 du mapping
+  let l1List = Object.keys(bc);
+  radarLabels = l1List;
+  // Palette de couleurs pour niveau 1 : chaque L1 reçoit sa couleur
+  var axisColors = l1List.map(l1 => l1Colors[l1] || '#888');
+        function getL4StatusLookup(appL4List) {
+          const lookup = {};
+          (appL4List||[]).forEach(entry => {
+            if (typeof entry === 'string' && entry.includes(';')) {
+              const parts = entry.split(';');
+              const l4 = parts[0];
+              let coverageStatus = null;
+              let hasExternal = false;
+              parts.slice(1).forEach(s => {
+                if (s === '4') hasExternal = true;
+                if (['1','2','3'].includes(s)) coverageStatus = s;
+              });
+              lookup[l4] = coverageStatus || (hasExternal ? '4' : '0');
+            } else if (typeof entry === 'string') {
+              lookup[entry] = '3';
+            }
+          });
+          return lookup;
+        }
+        const a1L4Status = getL4StatusLookup(a1.l4);
+        const a2L4Status = getL4StatusLookup(a2.l4);
+        // Pour chaque L1, regrouper tous les L4 attendus (depuis expectedL4ByCategory.json avec la catégorie)
+        function getAllL4ForL1(l1) {
+          if (!window.expectedL4ByCategory) return [];
+          return getExpectedL4(l1, 1, window.expectedL4ByCategory, radarCategoryL4);
+        }
+        function getWeightedRatio(l4List, statusLookup) {
+          let sum = 0;
+          l4List.forEach(l4 => {
+            const s = statusLookup[l4];
+            if (s === '1') sum += 0.33;
+            else if (s === '2') sum += 0.66;
+            else if (s === '3') sum += 1;
+          });
+          return l4List.length > 0 ? Math.round((sum / l4List.length) * 100) : 0;
+        }
+        // Filtrer les L1 qui ont au moins des L4 attendus dans expectedL4ByCategory
+        let filteredL1 = l1List.filter(l1 => {
+          const l4s = getAllL4ForL1(l1);
+          return l4s.length > 0;  // Afficher tous les axes qui ont des L4 attendus, même à 0%
+        });
+        app1Data = filteredL1.map(l1 => getWeightedRatio(getAllL4ForL1(l1), a1L4Status));
+        app2Data = filteredL1.map(l1 => getWeightedRatio(getAllL4ForL1(l1), a2L4Status));
+        // Remplacer les codes L1 par leur nom complet
+        let l1Defs = {};
+        try {
+          l1Defs = bcdefs && bcdefs.L1 ? bcdefs.L1 : {};
+        } catch(e) {
+          l1Defs = {};
+        }
+        radarLabels = filteredL1.map(l1 => l1Defs[l1] || l1);
+        radarTitle = 'Radar Chart Level 1';
+        // Mettre à jour les couleurs pour les axes filtrés
+        axisColors = filteredL1.map(l1 => l1Colors[l1] || '#888');
+          } else if (l1Tab && !l2Tab) {
+            // Radar chart niveau 2 : axes = tous les L2 du mapping
+            let l2List = [];
+            let l2ToL1 = {};
+            Object.keys(bc).forEach(l1 => {
+              Object.keys(bc[l1]).forEach(l2 => {
+                if (!l2List.includes(l2)) l2List.push(l2);
+                l2ToL1[l2] = l1; // Associe chaque L2 à son L1 parent (le dernier trouvé si plusieurs)
+              });
+            });
+            // Lookup statuts L4
+            function getL4StatusLookup(appL4List) {
+              const lookup = {};
+              (appL4List||[]).forEach(entry => {
+                if (typeof entry === 'string' && entry.includes(';')) {
+                  const parts = entry.split(';');
+                  const l4 = parts[0];
+                  let coverageStatus = null;
+                  let hasExternal = false;
+                  parts.slice(1).forEach(s => {
+                    if (s === '4') hasExternal = true;
+                    if (['1','2','3'].includes(s)) coverageStatus = s;
+                  });
+                  lookup[l4] = coverageStatus || (hasExternal ? '4' : '0');
+                } else if (typeof entry === 'string') {
+                  lookup[entry] = '3';
+                }
+              });
+              return lookup;
+            }
+            const a1L4Status = getL4StatusLookup(a1.l4);
+            const a2L4Status = getL4StatusLookup(a2.l4);
+            // Pour chaque L2, regrouper tous les L4 attendus (depuis expectedL4ByCategory.json avec la catégorie)
+            function getL4ForL2(l2) {
+              if (!window.expectedL4ByCategory) return [];
+              return getExpectedL4(l2, 2, window.expectedL4ByCategory, radarCategoryL4);
+            }
+            function getWeightedRatio(l4List, statusLookup) {
+              let sum = 0;
+              l4List.forEach(l4 => {
+                const s = statusLookup[l4];
+                if (s === '1') sum += 0.33;
+                else if (s === '2') sum += 0.66;
+                else if (s === '3') sum += 1;
+              });
+              return l4List.length > 0 ? Math.round((sum / l4List.length) * 100) : 0;
+            }
+            // Filtrer les L2 à afficher : tous ceux qui ont des L4 attendus dans expectedL4ByCategory
+            let filteredL2 = l2List.filter(l2 => {
+              const l4s = getL4ForL2(l2);
+              return l4s.length > 0;  // Afficher même à 0%
+            });
+            radarLabels = filteredL2.map(l2 => getDef(l2,2));
+            // Palette de couleurs pour niveau 2 : chaque L2 reçoit la couleur de son parent L1
+            var axisColors = filteredL2.map(l2 => l1Colors[l2ToL1[l2]] || '#888');
+            app1Data = filteredL2.map(l2 => getWeightedRatio(getL4ForL2(l2), a1L4Status));
+            app2Data = filteredL2.map(l2 => getWeightedRatio(getL4ForL2(l2), a2L4Status));
+            radarTitle = 'Radar Chart Level 2';
+      } else if (l1Tab && l2Tab) {
+        // Radar chart niveau 3 : axes = tous les L3 du mapping
+        let l3List = [];
+        Object.keys(bc).forEach(l1 => {
+          Object.keys(bc[l1]).forEach(l2 => {
+            Object.keys(bc[l1][l2]).forEach(l3 => {
+              if (!l3List.includes(l3)) l3List.push(l3);
+            });
+          });
+        });
+        // Lookup statuts L4
+        function getL4StatusLookup(appL4List) {
+          const lookup = {};
+          (appL4List||[]).forEach(entry => {
+            if (typeof entry === 'string' && entry.includes(';')) {
+              const parts = entry.split(';');
+              const l4 = parts[0];
+              let coverageStatus = null;
+              let hasExternal = false;
+              parts.slice(1).forEach(s => {
+                if (s === '4') hasExternal = true;
+                if (['1','2','3'].includes(s)) coverageStatus = s;
+              });
+              lookup[l4] = coverageStatus || (hasExternal ? '4' : '0');
+            } else if (typeof entry === 'string') {
+              lookup[entry] = '3';
+            }
+          });
+          return lookup;
+        }
+        const a1L4Status = getL4StatusLookup(a1.l4);
+        const a2L4Status = getL4StatusLookup(a2.l4);
+        // Pour chaque L3, regrouper tous les L4 attendus (depuis expectedL4ByCategory.json avec la catégorie)
+        function getL4ForL3(l3) {
+          if (!window.expectedL4ByCategory) return [];
+          return getExpectedL4(l3, 3, window.expectedL4ByCategory, radarCategoryL4);
+        }
+        function getWeightedRatio(l4List, statusLookup) {
+          let sum = 0;
+          l4List.forEach(l4 => {
+            const s = statusLookup[l4];
+            if (s === '1') sum += 0.33;
+            else if (s === '2') sum += 0.66;
+            else if (s === '3') sum += 1;
+          });
+          return l4List.length > 0 ? Math.round((sum / l4List.length) * 100) : 0;
+        }
+        // Filtrer les L3 à afficher : tous ceux qui ont des L4 attendus dans expectedL4ByCategory
+        let filteredL3 = l3List.filter(l3 => {
+          const l4s = getL4ForL3(l3);
+          return l4s.length > 0;  // Afficher même à 0%
+        });
+        radarLabels = filteredL3.map(l3 => getDef(l3,3));
+        // Palette de couleurs pour niveau 3 : gris par défaut
+        var axisColors = filteredL3.map(() => '#888');
+        app1Data = filteredL3.map(l3 => getWeightedRatio(getL4ForL3(l3), a1L4Status));
+        app2Data = filteredL3.map(l3 => getWeightedRatio(getL4ForL3(l3), a2L4Status));
+        radarTitle = 'Radar Chart Level 3';
+      }
+      // Afficher les radars seulement si radarCategoryL4 est définie ou si on est aux niveaux 2/3
+      if (window.Chart && (radarCategoryL4 || l1Tab)) {
+        // Affichage radar chart avec axe max dynamique
+        if (window.radarChartInstance) window.radarChartInstance.destroy();
+        const ctx = document.getElementById('radar-app-combo').getContext('2d');
+        
+        // Créer les datasets selon si app2 est sélectionnée ou non
+        let datasets = [];
+        let allRadarValues = [];
+        
+        if (hasApp2) {
+          // Mode comparaison : 2 datasets
+          allRadarValues = [...app1Data, ...app2Data];
+          datasets = [
+            {
+              label: app1.value,
+              data: app1Data,
+              backgroundColor: 'rgba(25, 118, 210, 0.2)',
+              borderColor: '#1976d2',
+              pointBackgroundColor: '#1976d2',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: '#1976d2',
+              datalabels: {
+                align: 'end',
+                anchor: 'end',
+                color: '#1976d2',
+                font: { weight: 'bold', size: 12 },
+                formatter: function(value) {
+                  return value + '%';
+                }
+              }
+            },
+            {
+              label: app2.value,
+              data: app2Data,
+              backgroundColor: 'rgba(211, 47, 47, 0.2)',
+              borderColor: '#d32f2f',
+              pointBackgroundColor: '#d32f2f',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: '#d32f2f',
+              datalabels: {
+                align: 'end',
+                anchor: 'end',
+                color: '#d32f2f',
+                font: { weight: 'bold', size: 12 },
+                formatter: function(value) {
+                  return value + '%';
+                }
+              }
+            }
+          ];
+        } else {
+          // Mode app1 seule : 1 dataset, ne pas afficher 0%
+          allRadarValues = app1Data;
+          datasets = [
+            {
+              label: app1.value,
+              data: app1Data,
+              backgroundColor: 'rgba(25, 118, 210, 0.2)',
+              borderColor: '#1976d2',
+              pointBackgroundColor: '#1976d2',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: '#1976d2',
+              datalabels: {
+                align: 'end',
+                anchor: 'end',
+                color: '#1976d2',
+                font: { weight: 'bold', size: 12 },
+                formatter: function(value) {
+                  // Ne pas afficher 0% en mode solo
+                  if (value === 0) return '';
+                  return value + '%';
+                }
+              }
+            }
+          ];
+        }
+        
+        let maxRadarValue = Math.max(...allRadarValues, 20); // minimum 20 pour éviter un axe à 0
+        if (maxRadarValue < 20) maxRadarValue = 20;
+        // arrondir à 10 supérieur
+        maxRadarValue = Math.ceil(maxRadarValue / 10) * 10;
+        window.radarChartInstance = new Chart(ctx, {
+          type: 'radar',
+          data: {
+            labels: radarLabels,
+            datasets: datasets
+          },
+          options: {
+            responsive: false,
+            maintainAspectRatio: true,
+            onClick: function(event, activeElements) {
+              // Navigation au niveau suivant quand on clique sur le radar
+              if (!l1Tab) {
+                // Niveau 1: sélectionner le premier L1 (Transport Management)
+                const firstL1 = Object.keys(bc)[0];
+                l1Tab = firstL1;
+                l2Tab = null;
+                show();
+                // Changer le slider pour afficher le radar
+                document.getElementById('toggle-slider').value = 1;
+                document.getElementById('toggle-slider').oninput();
+              } else if (l1Tab && !l2Tab) {
+                // Niveau 2: sélectionner le premier L2 du L1
+                const firstL2 = Object.keys(bc[l1Tab])[0];
+                l2Tab = firstL2;
+                show();
+                // Changer le slider pour afficher le radar
+                document.getElementById('toggle-slider').value = 1;
+                document.getElementById('toggle-slider').oninput();
+              }
+              // Niveau 3: ne rien faire
+            },
+            plugins: {
+              legend: { position: 'top' },
+              title: { 
+                display: true, 
+                text: radarTitle,
+                font: {
+                  size: 20,
+                  weight: 'bold'
+                }
+              },
+              datalabels: {
+                display: true
+              }
+            },
+            scales: {
+              r: {
+                min: 0,
+                max: 100,
+                ticks: { stepSize: 20 },
+                pointLabels: {
+                  font: { size: 14 },
+                  callback: function(label, idx) {
+                    return label;
+                  },
+                  color: function(context) {
+                    // Utilise la palette axisColors calculée selon le niveau
+                    return axisColors[context.index % axisColors.length];
+                  }
+                }
+              }
+            }
+          }
+        });
+        
+        // Afficher la légende seulement au niveau 2
+        const legendElement = document.getElementById('radar-legend');
+        if (l1Tab && !l2Tab) {
+          legendElement.style.display = 'block';
+        } else {
+          legendElement.style.display = 'none';
+        }
+      }
+      // --- FIN RADAR ---
+      // --- ETAPE 7 : Agrégation des statuts L4 par L1 pour le bar chart ---
+      // Préparer les données pour le bar chart
+      let barChartStats = {};
+      // Extraire la liste des L4 différenciateurs à partir de expectedL4ByCategory.json
+      let differentiatorL4 = [];
+      let expectedL4 = window.expectedL4ByCategory || {};
+      // Parcourir toutes les catégories pour extraire les différenciateurs
+      Object.values(expectedL4).forEach(categoryData => {
+        Object.values(categoryData).forEach(l2s => {
+          Object.values(l2s).forEach(l3s => {
+            Object.values(l3s).forEach(l4Arr => {
+              l4Arr.forEach(l4 => {
+                if (typeof l4 === 'string' && l4.includes(';1')) {
+                  // Scroll automatique vers le panneau de détails
+                  setTimeout(() => {
+                    // Scroll pour que le panneau de détails soit collé en haut de la page (plus de barres visibles)
+                    const rect = detailsDiv.getBoundingClientRect();
+                    const absoluteY = window.scrollY + rect.top;
+                    window.scrollTo({ top: absoluteY, behavior: 'smooth' });
+                  }, 50);
+                  differentiatorL4.push(l4.split(';')[0]);
+                }
+              });
+            });
+          });
+        });
+      });
+      function getL4StatusLookup(appL4List) {
+        const lookup = {};
+        (appL4List||[]).forEach(entry => {
+          if (typeof entry === 'string' && entry.includes(';')) {
+            const parts = entry.split(';');
+            const l4 = parts[0];
+            const statuses = parts.slice(1);
+            lookup[l4] = statuses;
+          } else if (typeof entry === 'string') {
+            lookup[entry] = ['3'];
+          }
+        });
+        return lookup;
+      }
+      const a1L4Status = getL4StatusLookup(a1.l4);
+      const a2L4Status = getL4StatusLookup(a2.l4);
+      // Statuts possibles
+      const statusLabels = {
+        'diff_absent': 'Differentiating Capability Missing',
+        'non_diff_absent': 'Capability Missing',
+        '1': 'Manual Process',
+        '2': 'Semi-Automated',
+        '3': 'Fully Automated'
+      };
+      // Pour chaque L1, compter les statuts pour chaque app
+      barChartStats[app1.value] = {};
+      barChartStats[app2.value] = {};
+      Object.keys(bc).forEach(l1 => {
+        // Utiliser getExpectedL4 pour obtenir les L4 attendus pour ce L1
+        const l4List = getExpectedL4(l1, 1, expectedL4);
+        let counts1 = { diff_absent:0, non_diff_absent:0, '1':0, '2':0, '3':0 };
+        let counts2 = { diff_absent:0, non_diff_absent:0, '1':0, '2':0, '3':0 };
+        l4List.forEach(l4 => {
+          // App1
+          let statuses1 = a1L4Status[l4];
+          if (!statuses1) {
+            statuses1 = ['0'];
+          }
+          if (statuses1.includes('0')) {
+            if (differentiatorL4.includes(l4)) counts1.diff_absent++;
+            else counts1.non_diff_absent++;
+          } else {
+            if (statuses1.includes('1')) counts1['1']++;
+            if (statuses1.includes('2')) counts1['2']++;
+            if (statuses1.includes('3')) counts1['3']++;
+          }
+          // App2
+          let statuses2 = a2L4Status[l4];
+          if (!statuses2) {
+            statuses2 = ['0'];
+          }
+          if (statuses2.includes('0')) {
+            if (differentiatorL4.includes(l4)) counts2.diff_absent++;
+            else counts2.non_diff_absent++;
+          } else {
+            if (statuses2.includes('1')) counts2['1']++;
+            if (statuses2.includes('2')) counts2['2']++;
+            if (statuses2.includes('3')) counts2['3']++;
+          }
+        });
+        barChartStats[app1.value][l1] = counts1;
+        barChartStats[app2.value][l1] = counts2;
+      });
+      // --- FIN ETAPE 7 ---
+      // --- ETAPE 8 : Affichage du bar chart avec Chart.js ---
+      function showBarChart() {
+        const container = document.getElementById('bar-chart-container');
+        
+        if (!window.Chart || !barChartStats || !Object.keys(barChartStats).length) {
+          container.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Aucune donnée à afficher pour le bar chart.<br>Vérifiez la sélection des applications et la présence des données L4 attendues.</div>';
+          return;
+        }
+        
+        // Vérification des categoryL4 pour tous les niveaux
+        let categoryL4ToUse = null;
+        const app1CategoryL4 = a1.categoryL4;
+        const app2CategoryL4 = a2.categoryL4;
+        
+        // Vérifier app1
+        if (!app1CategoryL4) {
+          const niveau = !l1Tab && !l2Tab ? '1' : (l1Tab && !l2Tab ? '2' : '3');
+          container.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Erreur : L\'application ' + app1.value + ' doit avoir une categoryL4 définie pour afficher le bar chart niveau ' + niveau + '.<br>App1 categoryL4: NON DÉFINIE</div>';
+          return;
+        }
+        
+        // Si app2 est sélectionnée, vérifier aussi sa categoryL4
+        if (hasApp2 && !app2CategoryL4) {
+          const niveau = !l1Tab && !l2Tab ? '1' : (l1Tab && !l2Tab ? '2' : '3');
+          container.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Erreur : L\'application ' + app2.value + ' doit avoir une categoryL4 définie pour afficher le bar chart niveau ' + niveau + '.<br>App2 categoryL4: NON DÉFINIE</div>';
+          return;
+        }
+        
+        // Déterminer quelle catégorie utiliser
+        if (hasApp2) {
+          if (app1CategoryL4 === app2CategoryL4) {
+            categoryL4ToUse = app1CategoryL4; // Même catégorie pour les deux
+          } else {
+            categoryL4ToUse = app1CategoryL4; // Catégories différentes -> utiliser app1
+          }
+        } else {
+          categoryL4ToUse = app1CategoryL4; // App2 non sélectionnée -> utiliser app1
+        }
+        
+        // Détruire l'ancien graphique si présent
+        if (window.barChartInstance) window.barChartInstance.destroy();
+        // Toujours réinitialiser le container avant de récupérer le canvas
+        container.innerHTML = '<canvas id="bar-app-combo" width="900" height="500"></canvas>';
+        const canvas = document.getElementById('bar-app-combo');
+        if (!canvas) {
+          container.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Canvas bar-app-combo introuvable.</div>';
+          return;
+        }
+        const ctx = canvas.getContext('2d');
+        
+        // Déterminer le niveau et préparer les données en conséquence
+        let axisLevel = 1; // par défaut niveau 1 (L1)
+        let axisList = [];
+        let axisLabel = 'L1';
+        
+        if (!l1Tab && !l2Tab) {
+          // Niveau 1 : axes = L1
+          axisLevel = 1;
+          axisLabel = 'L1';
+          axisList = Object.keys(barChartStats[app1.value] || {});
+        } else if (l1Tab && !l2Tab) {
+          // Niveau 2 : axes = tous les L2 du mapping
+          axisLevel = 2;
+          axisLabel = 'L2';
+          // Récupérer tous les L2 de tous les L1
+          let l2ToL1 = {};
+          Object.keys(bc).forEach(l1 => {
+            Object.keys(bc[l1]).forEach(l2 => {
+              if (!axisList.includes(l2)) axisList.push(l2);
+              l2ToL1[l2] = l1;
+            });
+          });
+        } else if (l1Tab && l2Tab) {
+          // Niveau 3 : axes = tous les L3 du mapping
+          axisLevel = 3;
+          axisLabel = 'L3';
+          // Récupérer tous les L3 de tous les L1/L2
+          Object.keys(bc).forEach(l1 => {
+            Object.keys(bc[l1]).forEach(l2 => {
+              Object.keys(bc[l1][l2]).forEach(l3 => {
+                if (!axisList.includes(l3)) axisList.push(l3);
+              });
+            });
+          });
+        }
+        
+        // Recalculer les stats pour le niveau actuel
+        let barChartStatsLevel = {};
+        barChartStatsLevel[app1.value] = {};
+        barChartStatsLevel[app2.value] = {};
+        
+        axisList.forEach(axis => {
+          // Utiliser getExpectedL4 pour obtenir les L4 attendus pour cet axe
+          // Au niveau 1, passer la categoryL4ToUse
+          const l4List = getExpectedL4(axis, axisLevel, expectedL4, categoryL4ToUse);
+          
+          let counts1 = { diff_absent:0, non_diff_absent:0, '1':0, '2':0, '3':0 };
+          let counts2 = { diff_absent:0, non_diff_absent:0, '1':0, '2':0, '3':0 };
+          
+          l4List.forEach(l4 => {
+            // App1
+            let statuses1 = a1L4Status[l4];
+            if (!statuses1) {
+              statuses1 = ['0'];
+            }
+            if (statuses1.includes('0')) {
+              if (differentiatorL4.includes(l4)) counts1.diff_absent++;
+              else counts1.non_diff_absent++;
+            } else {
+              if (statuses1.includes('1')) counts1['1']++;
+              if (statuses1.includes('2')) counts1['2']++;
+              if (statuses1.includes('3')) counts1['3']++;
+            }
+            // App2
+            let statuses2 = a2L4Status[l4];
+            if (!statuses2) {
+              statuses2 = ['0'];
+            }
+            if (statuses2.includes('0')) {
+              if (differentiatorL4.includes(l4)) counts2.diff_absent++;
+              else counts2.non_diff_absent++;
+            } else {
+              if (statuses2.includes('1')) counts2['1']++;
+              if (statuses2.includes('2')) counts2['2']++;
+              if (statuses2.includes('3')) counts2['3']++;
+            }
+          });
+          
+          barChartStatsLevel[app1.value][axis] = counts1;
+          barChartStatsLevel[app2.value][axis] = counts2;
+        });
+        
+        // Filtrer les axes qui n'ont aucune donnée pour les deux applications
+        axisList = axisList.filter(axis => {
+          const app1Counts = barChartStatsLevel[app1.value][axis];
+          const app2Counts = barChartStatsLevel[app2.value][axis];
+          
+          const app1Total = app1Counts ? (app1Counts.diff_absent + app1Counts.non_diff_absent + app1Counts['1'] + app1Counts['2'] + app1Counts['3']) : 0;
+          const app2Total = app2Counts ? (app2Counts.diff_absent + app2Counts.non_diff_absent + app2Counts['1'] + app2Counts['2'] + app2Counts['3']) : 0;
+          
+          return app1Total > 0 || app2Total > 0;
+        });
+        
+        let labels = axisList.map(axis => getDef(axis, axisLevel));
+        
+        // Pour le niveau 2, construire un mapping L2 -> L1 pour les couleurs
+        let l2ToL1Colors = {};
+        if (axisLevel === 2) {
+          Object.keys(bc).forEach(l1 => {
+            Object.keys(bc[l1]).forEach(l2 => {
+              l2ToL1Colors[l2] = l1Colors[l1] || '#888';
+            });
+          });
+        }
+        
+        // Pour le niveau 3, tous les L3 auront la même couleur (gris)
+        let l3Color = '#888';
+        
+        // Statuts à afficher
+        const statusOrder = ['diff_absent','non_diff_absent','1','2','3'];
+        const statusColors = {
+          diff_absent: '#d32f2f',      // Rouge foncé
+          non_diff_absent: '#e57373',  // Rouge clair
+          '1': '#ff9800',              // Orange
+          '2': '#66bb6a',              // Vert clair
+          '3': '#2e7d32'               // Vert foncé
+        };
+        
+        // Fonction d'arrondi proportionnel pour garantir que la somme = 100%
+        function proportionalRound(percentages) {
+          const rounded = percentages.map(p => Math.floor(p));
+          const decimals = percentages.map((p, i) => ({ index: i, decimal: p - rounded[i] }));
+          decimals.sort((a, b) => b.decimal - a.decimal);
+          
+          let sum = rounded.reduce((acc, val) => acc + val, 0);
+          let i = 0;
+          while (sum < 100 && i < decimals.length) {
+            rounded[decimals[i].index]++;
+            sum++;
+            i++;
+          }
+          return rounded;
+        }
+        
+        // Préparer les datasets pour chaque application et chaque statut (en pourcentages)
+        let datasets = [];
+        
+        // Liste des applications à afficher
+        const appsToDisplay = hasApp2 ? [app1.value, app2.value] : [app1.value];
+        
+        if (axisLevel === 2) {
+          // Pour chaque application, créer un dataset par statut
+          appsToDisplay.forEach(appName => {
+            // Calculer les pourcentages pour chaque axe
+            const percentagesByAxis = axisList.map(axis => {
+              if (!barChartStatsLevel[appName][axis]) return statusOrder.map(() => 0);
+              const counts = barChartStatsLevel[appName][axis];
+              const total = counts.diff_absent + counts.non_diff_absent + counts['1'] + counts['2'] + counts['3'];
+              if (total === 0) return statusOrder.map(() => 0);
+              const rawPercentages = statusOrder.map(status => (counts[status] / total) * 100);
+              return proportionalRound(rawPercentages);
+            });
+            
+            statusOrder.forEach((status, sIdx) => {
+              const absoluteValues = axisList.map(axis => (barChartStatsLevel[appName][axis] ? barChartStatsLevel[appName][axis][status] : 0));
+              datasets.push({
+                label: statusLabels[status],
+                appName: appName,
+                data: percentagesByAxis.map((percentages, idx) => absoluteValues[idx] === 0 ? null : percentages[sIdx]),
+                absoluteData: absoluteValues,
+                appNames: axisList.map(() => appName),
+                backgroundColor: statusColors[status],
+                borderWidth: 1,
+                barPercentage: 0.7,
+                categoryPercentage: 0.8
+              });
+            });
+          });
+        } else {
+          // Pour les niveaux 1 et 3 : créer des datasets séparés par app et par statut
+          appsToDisplay.forEach(appName => {
+            // Calculer les pourcentages pour chaque axe
+            const percentagesByAxis = axisList.map(axis => {
+              if (!barChartStatsLevel[appName][axis]) return statusOrder.map(() => 0);
+              const counts = barChartStatsLevel[appName][axis];
+              const total = counts.diff_absent + counts.non_diff_absent + counts['1'] + counts['2'] + counts['3'];
+              if (total === 0) return statusOrder.map(() => 0);
+              const rawPercentages = statusOrder.map(status => (counts[status] / total) * 100);
+              return proportionalRound(rawPercentages);
+            });
+            
+            statusOrder.forEach((status, sIdx) => {
+              const absoluteValues = axisList.map(axis => (barChartStatsLevel[appName][axis] ? barChartStatsLevel[appName][axis][status] : 0));
+              datasets.push({
+                label: statusLabels[status],
+                appName: appName,
+                data: percentagesByAxis.map((percentages, idx) => absoluteValues[idx] === 0 ? null : percentages[sIdx]),
+                absoluteData: absoluteValues,
+                appNames: axisList.map(() => appName),
+                backgroundColor: statusColors[status],
+                borderWidth: 1,
+                barPercentage: 0.7,
+                categoryPercentage: 0.8
+              });
+            });
+          });
+        }
+        // Vérification des données
+        const hasData = labels.length > 0 && datasets.some(ds => ds.data.some(val => val > 0));
+        if (!hasData) {
+          container.innerHTML = '<div style="color:#d32f2f;font-weight:bold;padding:2em;text-align:center;">Aucune donnée exploitable pour le bar chart.<br>Vérifiez la configuration des statuts L4 et la correspondance des catégories métiers.</div>';
+          return;
+        }
+        
+        // Préparer le HTML selon si app2 est sélectionnée ou non
+        let legendHtml = '';
+        if (hasApp2) {
+          legendHtml = `
+            <div style="margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+              <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
+                <div id="legend-app1" style="cursor: pointer; padding: 8px 16px; background: #1976d2; color: white; border-radius: 4px; font-weight: bold; transition: all 0.3s;">
+                  ${app1.value}
+                </div>
+                <div id="legend-app2" style="cursor: pointer; padding: 8px 16px; background: #9e9e9e; color: white; border-radius: 4px; font-weight: bold; transition: all 0.3s;">
+                  ${app2.value}
+                </div>
+              </div>
+              <div style="text-align: center; margin-top: 8px; font-size: 12px; color: #666;">
+                Cliquez sur une application pour afficher ses barres
+              </div>
+            </div>`;
+        }
+        
+        // Agrandir la taille du bar chart avec légendes d'applications cliquables (si app2 présent)
+        container.innerHTML = legendHtml + `
+          <canvas id="bar-app-combo" width="1200" height="700"></canvas>
+          <div id="bar-chart-details" style="width:100%; max-width:1200px; margin-top:20px; padding:15px; background:#f5f5f5; border-radius:8px; display:none;">
+            <div id="bar-chart-details-content"></div>
+          </div>
+        `;
+        let xLabels = [];
+        if (axisLevel === 1) {
+          // Pour le niveau 1, afficher les noms des L1
+          xLabels = axisList.map(axis => getDef(axis, 1));
+        } else if (axisLevel === 2) {
+          // Pour le niveau 2, afficher les noms des L2
+          xLabels = axisList.map(axis => getDef(axis, 2));
+        } else if (axisLevel === 3) {
+          // Pour le niveau 3, afficher les noms des L3
+          xLabels = axisList.map(axis => getDef(axis, 3));
+        } else {
+          // Par défaut, garder l'affichage app1/app2 pour chaque axe
+          axisList.forEach(axis => {
+            xLabels.push(app1.value);
+            xLabels.push(app2.value);
+          });
+        }
+        
+        const ctx2 = document.getElementById('bar-app-combo').getContext('2d');
+        window.barChartInstance = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+            labels: xLabels,
+            datasets: datasets
+          },
+          options: {
+            indexAxis: 'y', // Affichage horizontal
+            responsive: false,
+            plugins: {
+              datalabels: {
+                anchor: 'center',
+                align: 'center',
+                color: '#222',
+                font: {
+                  weight: 'bold',
+                  size: 14
+                },
+                formatter: function(value, context) {
+                  // Ne pas afficher si value est vraiment 0 ou null
+                  if (value === null || value === undefined || value === 0) {
+                    return '';
+                  }
+                  return value + '%';
+                }
+              }
+            },
+            onClick: function(event, activeElements) {
+              // Gérer le clic sur une barre aux niveaux 1, 2 et 3
+              if ((axisLevel === 1 || axisLevel === 2 || axisLevel === 3) && activeElements.length > 0) {
+                const clickedElement = activeElements[0];
+                const datasetIndex = clickedElement.datasetIndex;
+                const dataIndex = clickedElement.index;
+                
+                const dataset = datasets[datasetIndex];
+                
+                // Pour tous les niveaux maintenant, axisIndex = dataIndex directement
+                const axisIndex = dataIndex;
+                const axisCode = axisList[axisIndex];
+                const axisName = labels[axisIndex];
+                const appName = dataset.appNames[dataIndex];
+                
+                // Le statut est le label du dataset
+                const statusLabel = dataset.label;
+                
+                // Déterminer le code du statut
+                let statusCode = null;
+                Object.keys(statusLabels).forEach(code => {
+                  if (statusLabels[code] === statusLabel) {
+                    statusCode = code;
+                  }
+                });
+                
+                // Récupérer les L4 pour cet axe
+                const l4List = getExpectedL4(axisCode, axisLevel, expectedL4, categoryL4ToUse);
+                
+                // Récupérer le lookup des statuts pour l'application
+                const appData = data[appName];
+                const appL4Status = getL4StatusLookup(appData.l4);
+                
+                // Filtrer les L4 selon le statut cliqué
+                let filteredL4 = [];
+                l4List.forEach(l4 => {
+                  let statuses = appL4Status[l4];
+                  if (!statuses) {
+                    statuses = ['0'];
+                  }
+                  
+                  if (statusCode === 'diff_absent' && statuses.includes('0') && differentiatorL4.includes(l4)) {
+                    filteredL4.push(l4);
+                  } else if (statusCode === 'non_diff_absent' && statuses.includes('0') && !differentiatorL4.includes(l4)) {
+                    filteredL4.push(l4);
+                  } else if (statusCode === '1' && statuses.includes('1')) {
+                    filteredL4.push(l4);
+                  } else if (statusCode === '2' && statuses.includes('2')) {
+                    filteredL4.push(l4);
+                  } else if (statusCode === '3' && statuses.includes('3')) {
+                    filteredL4.push(l4);
+                  }
+                });
+                
+                // Afficher les détails
+                const detailsDiv = document.getElementById('bar-chart-details');
+                const detailsContent = document.getElementById('bar-chart-details-content');
+                
+                if (filteredL4.length > 0) {
+                  detailsDiv.style.display = 'block';
+                  let html = `<p style="margin-bottom:10px;"><strong>${appName}</strong> - ${statusLabel} in <strong>${axisName}</strong> (${filteredL4.length} L4)</p>`;
+                  detailsContent.innerHTML = html; // Set initial content for scroll height
+                  // Scroll the details panel to the top after it is shown and content is set
+                  requestAnimationFrame(() => {
+                    const rect = detailsDiv.getBoundingClientRect();
+                    const absoluteY = window.scrollY + rect.top;
+                    window.scrollTo({ top: absoluteY, behavior: 'smooth' });
+                  });
+                  // Continue building the rest of the HTML
+                  html = detailsContent.innerHTML;
+                  
+                  if (axisLevel === 1) {
+                    // Niveau 1: Organiser les L4 par L2 et L3
+                    let l4ByL2L3 = {};
+                    filteredL4.forEach(l4 => {
+                      // Trouver la L2 et L3 parent de cette L4
+                      let foundL2 = null;
+                      let foundL3 = null;
+                      
+                      Object.keys(bc[axisCode] || {}).forEach(l2 => {
+                        Object.keys(bc[axisCode][l2] || {}).forEach(l3 => {
+                          if ((bc[axisCode][l2][l3] || []).includes(l4)) {
+                            foundL2 = l2;
+                            foundL3 = l3;
+                          }
+                        });
+                      });
+                      
+                      if (foundL2 && foundL3) {
+                        if (!l4ByL2L3[foundL2]) l4ByL2L3[foundL2] = {};
+                        if (!l4ByL2L3[foundL2][foundL3]) l4ByL2L3[foundL2][foundL3] = [];
+                        l4ByL2L3[foundL2][foundL3].push(l4);
+                      }
+                    });
+                    
+                    // Afficher les L4 organisées par L2 et L3
+                    Object.keys(l4ByL2L3).forEach(l2 => {
+                      html += `<div style=\"margin-bottom:28px; margin-top:18px; padding:18px 14px 12px 14px; background:#e3f2fd; border-left:6px solid #0d47a1; border-radius:8px; box-shadow:0 2px 8px #1976d220;\">`;
+                      html += `<div class=\"clickable-l2\" data-l2=\"${l2}\" data-l1=\"${axisCode}\" style=\"font-weight:bold; color:#0d47a1; background:transparent; font-size:1.18em; padding:0 0 6px 0; border-radius:4px; margin-bottom:10px; cursor:pointer; text-decoration:underline; letter-spacing:0.5px;\">L2 : ${getDef(l2, 2)}</div>`;
+                      
+                      Object.keys(l4ByL2L3[l2]).forEach(l3 => {
+                        html += `<div style=\"margin-left:10px; margin-bottom:14px; background:#f5f5f5; border:1.5px solid #b0bec5; border-radius:6px; padding:10px 10px 6px 10px; box-shadow:0 1px 4px #1976d210;\">`;
+                        html += `<div class=\"clickable-l3\" data-l3=\"${l3}\" data-l2=\"${l2}\" data-l1=\"${axisCode}\" style=\"font-weight:600; color:#1976d2; background:transparent; font-size:1.05em; padding:0 0 4px 0; border-radius:4px; margin-bottom:6px; cursor:pointer; text-decoration:underline; letter-spacing:0.2px;\">L3 : ${getDef(l3, 3)}</div>`;
+                        html += '<ul style=\"margin:0; padding-left:18px;\">';
+                        l4ByL2L3[l2][l3].forEach(l4 => {
+                          const isDiff = differentiatorL4.includes(l4);
+                          html += `<li style=\\"margin-bottom:3px; color:#555;\\">${isDiff ? '⭐ ' : ''}${getDef(l4, 4)}</li>`;
+                        });
+                        html += '</ul>';
+                        html += '</div>';
+                      });
+                      
+                      html += '</div>';
+                    });
+                  } else if (axisLevel === 2) {
+                    // Niveau 2: Organiser les L4 par L3 uniquement
+                    let l4ByL3 = {};
+                    filteredL4.forEach(l4 => {
+                      // Trouver la L3 parent de cette L4
+                      let foundL3 = null;
+                      
+                      // Trouver le L1 parent du L2
+                      let l1Code = null;
+                      Object.keys(bc).forEach(l1 => {
+                        if (bc[l1][axisCode]) {
+                          l1Code = l1;
+                        }
+                      });
+                      
+                      if (l1Code) {
+                        Object.keys(bc[l1Code][axisCode] || {}).forEach(l3 => {
+                          if ((bc[l1Code][axisCode][l3] || []).includes(l4)) {
+                            foundL3 = l3;
+                          }
+                        });
+                      }
+                      
+                      if (foundL3) {
+                        if (!l4ByL3[foundL3]) l4ByL3[foundL3] = [];
+                        l4ByL3[foundL3].push(l4);
+                      }
+                    });
+                    
+                    // Afficher les L4 organisées par L3
+                    Object.keys(l4ByL3).forEach(l3 => {
+                      html += `<div style="margin-bottom:15px; padding:10px; background:#fff; border-left:4px solid #0d47a1; border-radius:4px;">`;
+                      html += `<div class="clickable-l3-level2" data-l3="${l3}" data-l2="${axisCode}" style="font-weight:bold; color:#000; background:#f5f5f5; padding:8px 12px; border-radius:4px; margin-bottom:8px; cursor:pointer; text-decoration:underline;">L3: ${getDef(l3, 3)}</div>`;
+                      html += '<ul style="margin:0; padding-left:20px;">';
+                      l4ByL3[l3].forEach(l4 => {
+                        const isDiff = differentiatorL4.includes(l4);
+                        html += `<li style=\"margin-bottom:3px; color:#555;\">${isDiff ? '⭐ ' : ''}${getDef(l4, 4)}</li>`;
+                      });
+                      html += '</ul>';
+                      html += '</div>';
+                    });
+                  } else if (axisLevel === 3) {
+                    // Niveau 3: Afficher uniquement les L4
+                    html += '<ul style="margin:0; padding-left:20px; columns:2; column-gap:20px;">';
+                    filteredL4.forEach(l4 => {
+                      const isDiff = differentiatorL4.includes(l4);
+                      html += `<li style=\"margin-bottom:5px; color:#555;\">${isDiff ? '⭐ ' : ''}${getDef(l4, 4)}</li>`;
+                    });
+                    html += '</ul>';
+                  }
+                  
+                  detailsContent.innerHTML = html;
+                  
+                  // Ajouter les gestionnaires d'événements pour les L2 et L3 cliquables
+                  if (axisLevel === 1) {
+                    document.querySelectorAll('.clickable-l2').forEach(el => {
+                      el.onclick = function() {
+                        const l2Code = this.getAttribute('data-l2');
+                        const l1Code = this.getAttribute('data-l1');
+                        l1Tab = l1Code;
+                        l2Tab = null;
+                        show();
+                        // Changer le slider pour afficher le bar chart
+                        document.getElementById('toggle-slider').value = 2;
+                        document.getElementById('toggle-slider').oninput();
+                      };
+                    });
+                    
+                    document.querySelectorAll('.clickable-l3').forEach(el => {
+                      el.onclick = function() {
+                        const l3Code = this.getAttribute('data-l3');
+                        const l2Code = this.getAttribute('data-l2');
+                        const l1Code = this.getAttribute('data-l1');
+                        l1Tab = l1Code;
+                        l2Tab = l2Code;
+                        show();
+                        // Changer le slider pour afficher le bar chart
+                        document.getElementById('toggle-slider').value = 2;
+                        document.getElementById('toggle-slider').oninput();
+                      };
+                    });
+                  }
+                  
+                  // Ajouter les gestionnaires pour les L3 au niveau 2
+                  if (axisLevel === 2) {
+                    document.querySelectorAll('.clickable-l3-level2').forEach(el => {
+                      el.onclick = function() {
+                        const l3Code = this.getAttribute('data-l3');
+                        const l2Code = this.getAttribute('data-l2');
+                        // Trouver le L1 parent du L2
+                        let l1Code = null;
+                        Object.keys(bc).forEach(l1 => {
+                          if (bc[l1][l2Code]) {
+                            l1Code = l1;
+                          }
+                        });
+                        if (l1Code) {
+                          l1Tab = l1Code;
+                          l2Tab = l2Code;
+                          show();
+                          // Changer le slider pour afficher le bar chart
+                          document.getElementById('toggle-slider').value = 2;
+                          document.getElementById('toggle-slider').oninput();
+                        }
+                      };
+                    });
+                  }
+                } else {
+                  detailsDiv.style.display = 'none';
+                }
+              }
+            },
+            plugins: {
+              legend: { 
+                position: 'top',
+                onClick: null,  // Désactiver le clic sur les légendes
+                labels: {
+                  generateLabels: function(chart) {
+                    const original = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                    // Filtrer les doublons en ne gardant qu'un label par statut
+                    const seen = new Set();
+                    const filtered = original.filter(item => {
+                      if (seen.has(item.text)) {
+                        return false;
+                      }
+                      seen.add(item.text);
+                      return true;
+                    });
+                    // Forcer tous les labels à ne pas être barrés
+                    filtered.forEach(item => {
+                      item.hidden = false;
+                      item.fontColor = '#666';
+                      item.lineWidth = 0;
+                    });
+                    return filtered;
+                  }
+                }
+              },
+              title: { display: true, text: 'Process Automation Bar Chart' },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    const dataset = context.dataset;
+                    const percentage = context.parsed.x; // Utiliser x car indexAxis est 'y' (horizontal)
+                    const absolute = dataset.absoluteData[context.dataIndex];
+                    const appName = dataset.appNames[context.dataIndex];
+                    // Si la valeur est null (pas de L4), ne pas afficher ce statut
+                    if (percentage === null || percentage === undefined || absolute === 0) {
+                      return null;
+                    }
+                    return `${appName} - ${dataset.label}: ${percentage}% (${absolute} L4)`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                stacked: true,
+                title: { display: true, text: 'Applications par ' + axisLabel },
+                ticks: {
+                  color: function(context) {
+                    if (axisLevel === 2) {
+                      // Pour le niveau 2, colorier chaque label selon son L1 parent
+                      const axisCode = axisList[context.index];
+                      return l2ToL1Colors[axisCode] || '#000';
+                    }
+                    return '#000';
+                  }
+                }
+              },
+              y: {
+                stacked: true,
+                title: { display: true, text: 'Pourcentage (%)' },
+                beginAtZero: true,
+                max: 100,
+                ticks: { stepSize: 10 }
+              }
+            }
+          }
+        });
+        
+        // Ajouter les gestionnaires de clics sur les légendes d'applications (seulement si app2 est sélectionnée)
+        if (hasApp2) {
+          const legendApp1 = document.getElementById('legend-app1');
+          const legendApp2 = document.getElementById('legend-app2');
+          
+          // Par défaut, seul app1 est visible
+          let currentApp = 'app1';
+          
+          // Masquer app2 au démarrage
+          window.barChartInstance.data.datasets.forEach((dataset, idx) => {
+            if (dataset.appName === app2.value) {
+              const meta = window.barChartInstance.getDatasetMeta(idx);
+              meta.hidden = true;
+            }
+          });
+          window.barChartInstance.update();
+          
+          legendApp1.onclick = function() {
+            if (currentApp === 'app1') return; // Déjà actif
+            
+            currentApp = 'app1';
+            
+            // Afficher app1, masquer app2
+            window.barChartInstance.data.datasets.forEach((dataset, idx) => {
+              const meta = window.barChartInstance.getDatasetMeta(idx);
+              if (dataset.appName === app1.value) {
+                meta.hidden = false;
+              } else if (dataset.appName === app2.value) {
+                meta.hidden = true;
+              }
+            });
+            
+            // Mettre à jour les styles des boutons
+            legendApp1.style.background = '#1976d2';
+            legendApp2.style.background = '#9e9e9e';
+            
+            window.barChartInstance.update();
+          };
+          
+          legendApp2.onclick = function() {
+            if (currentApp === 'app2') return; // Déjà actif
+            
+            currentApp = 'app2';
+            
+            // Masquer app1, afficher app2
+            window.barChartInstance.data.datasets.forEach((dataset, idx) => {
+              const meta = window.barChartInstance.getDatasetMeta(idx);
+              if (dataset.appName === app1.value) {
+                meta.hidden = true;
+              } else if (dataset.appName === app2.value) {
+                meta.hidden = false;
+              }
+            });
+            
+            // Mettre à jour les styles des boutons
+            legendApp1.style.background = '#9e9e9e';
+            legendApp2.style.background = '#1976d2';
+            
+            window.barChartInstance.update();
+          };
+        }
+      }
+      // --- FIN ETAPE 8 ---
+      // Affichage par défaut : tableau visible, radar caché
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('radar-charts').style.display = 'none';
+      document.getElementById('bar-chart-container').style.display = 'none';
+      // Gestion du slider
+      const slider = document.getElementById('toggle-slider');
+      const sliderLabel = document.getElementById('slider-label');
+      slider.value = 0;
+      slider.oninput = function() {
+        if (slider.value == '0') {
+          document.getElementById('result').style.display = 'block';
+          document.getElementById('radar-charts').style.display = 'none';
+          document.getElementById('bar-chart-container').style.display = 'none';
+          sliderLabel.textContent = 'Table';
+        } else if (slider.value == '1') {
+          document.getElementById('result').style.display = 'none';
+          document.getElementById('radar-charts').style.display = 'flex';
+          document.getElementById('bar-chart-container').style.display = 'none';
+          sliderLabel.textContent = 'Radar';
+        } else if (slider.value == '2') {
+          document.getElementById('result').style.display = 'none';
+          document.getElementById('radar-charts').style.display = 'none';
+          document.getElementById('bar-chart-container').style.display = 'flex';
+          sliderLabel.textContent = 'Bar chart';
+          showBarChart();
+        }
+      };
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+{"TMS": 
+  {"Order Management": {
+    "OM1": {
+      "CMAC1": ["CMAC1_4;1"]
+    },
+    "OM2": {
+      "PPQ1": ["PPQ1_1"]
+    },
+    "OM3": {
+      "CPC1": ["CPC1_1","CPC1_2","CPC1_3","CPC1_4","CPC1_5"],
+      "CPC3": ["CPC3_1;1","CPC3_2;1","CPC3_3;1","CPC3_4;1"]
+    },
+    "OM4": {
+      "MOS4": ["MOS4_1;1", "MOS4_2;1", "MOS4_3;1", "MOS4_4"]
+    },
+    "OM5": {
+      "CCCO1": ["CCCO1_1", "CCCO1_2", "CCCO1_3"],
+      "CCCO3": ["CCCO3_1", "CCCO3_2", "CCCO3_3", "CCCO3_5"],
+      "CCCO4": ["CCCO4_1;1", "CCCO4_2;1", "CCCO4_3;1", "CCCO4_4", "CCCO4_5;1"],
+      "CCCO5": ["CCCO5_1", "CCCO5_2;1", "CCCO5_3;1", "CCCO5_4", "CCCO5_5;1"],
+      "CCCO6": ["CCCO6_1;1", "CCCO6_2;1", "CCCO6_3;1", "CCCO6_4"],
+      "CCCO7": ["CCCO7_1;1", "CCCO7_2;1", "CCCO7_3;1", "CCCO7_4;1"],
+      "CCCO8": ["CCCO8_1;1", "CCCO8_2", "CCCO8_3", "CCCO8_4;1", "CCCO8_5"],
+      "CCCO9": ["CCCO9_1;1", "CCCO9_2;1", "CCCO9_3;1", "CCCO9_4"],
+      "CCCO10": ["CCCO10_1", "CCCO10_2;1", "CCCO10_3;1", "CCCO10_4;1", "CCCO10_5;1"],
+      "CCCO11": ["CCCO11_1;1", "CCCO11_2;1", "CCCO11_3;1", "CCCO11_4;1", "CCCO11_5;1"],
+      "CCCO12": ["CCCO12_1;1", "CCCO12_2;1", "CCCO12_3;1", "CCCO12_4", "CCCO12_5;1"],
+      "CCCO14": ["CCCO14_1;1", "CCCO14_2;1", "CCCO14_3;1", "CCCO14_4;1", "CCCO14_5;1"],
+      "CCCO15": ["CCCO15_1", "CCCO15_2", "CCCO15_3", "CCCO15_4", "CCCO15_5"],
+      "CCCO16": ["CCCO16_1", "CCCO16_2", "CCCO16_3", "CCCO16_4", "CCCO16_5"]
+    }
+  },
+  "Transport Management": {
+    "TM1": {
+      "MBC1": ["MBC1_1;1", "MBC1_2;1", "MBC1_3;1"],
+      "MBC2": ["MBC2_1;1", "MBC2_2;1", "MBC2_3;1", "MBC2_4;1"],
+      "MBC3": ["MBC3_1;1", "MBC3_2;1", "MBC3_3;1", "MBC3_4;1", "MBC3_5;1"],
+      "MBC4": ["MBC4_1;1", "MBC4_2;1", "MBC4_3;1", "MBC4_4;1", "MBC4_5;1"]
+    },
+    "TM2": {
+      "MPD1": ["MPD1_1;1", "MPD1_2;1", "MPD1_3;1", "MPD1_4;1", "MPD1_5;1"],
+      "MPD2": ["MPD2_1", "MPD2_2", "MPD2_3", "MPD2_4", "MPD2_5"],
+      "MPD3": ["MPD3_1", "MPD3_2", "MPD3_3", "MPD3_4"],
+      "MPD4": ["MPD4_1;1", "MPD4_2;1", "MPD4_3;1", "MPD4_4;1", "MPD4_5;1"],
+      "MPD5": ["MPD5_1;1", "MPD5_2;1", "MPD5_3;1", "MPD5_4;1", "MPD5_5;1"]
+    },
+    "TM3": {
+      "MTTFO1": ["MTTFO1_1", "MTTFO1_2", "MTTFO1_3", "MTTFO1_4", "MTTFO1_5"],
+      "MTTFO2": ["MTTFO2_1", "MTTFO2_2", "MTTFO2_3", "MTTFO2_4"],
+      "MTTFO3": ["MTTFO3_1", "MTTFO3_2", "MTTFO3_3", "MTTFO3_4"],
+      "MTTFO5": ["MTTFO5_1", "MTTFO5_2", "MTTFO5_3", "MTTFO5_4;1", "MTTFO5_5;1"],
+      "MTTFO6": ["MTTFO6_1;1", "MTTFO6_2;1", "MTTFO6_3", "MTTFO6_4", "MTTFO6_5"],
+      "MTTFO7": ["MTTFO7_1", "MTTFO7_2", "MTTFO7_3", "MTTFO7_4", "MTTFO7_5"],
+      "MTTFO8": ["MTTFO8_1;1", "MTTFO8_2;1", "MTTFO8_3;1", "MTTFO8_4;1", "MTTFO8_5;1"],
+      "MTTFO9": ["MTTFO9_1;1", "MTTFO9_2;1", "MTTFO9_3;1", "MTTFO9_4;1", "MTTFO9_5;1"],
+      "MTTFO11": ["MTTFO11_1;1", "MTTFO11_2;1", "MTTFO11_3;1", "MTTFO11_4;1", "MTTFO11_5;1"],
+      "MTTFO12": ["MTTFO12_1;1", "MTTFO12_2;1", "MTTFO12_3;1", "MTTFO12_4;1", "MTTFO12_5;1"],
+      "MTTFO13": ["MTTFO13_1;1", "MTTFO13_2;1", "MTTFO13_3;1", "MTTFO13_4;1", "MTTFO13_5;1"]
+    },
+    "TM4": {
+      "MCCRR1": ["MCCRR1_1;1", "MCCRR1_2;1", "MCCRR1_3;1", "MCCRR1_4;1", "MCCRR1_5;1"],
+      "MCCRR2": ["MCCRR2_1", "MCCRR2_2", "MCCRR2_3", "MCCRR2_4", "MCCRR2_5"],
+      "MCCRR3": ["MCCRR3_1;1", "MCCRR3_2;1", "MCCRR3_3;1", "MCCRR3_4;1", "MCCRR3_5;1"]
+    },
+    "TM5": {
+      "TSE1": ["TSE1_1;1"],
+      "TSE2": ["TSE2_1", "TSE2_2", "TSE2_3", "TSE2_4", "TSE2_5"],
+      "TSE3": ["TSE3_1;1", "TSE3_2;1", "TSE3_3;1", "TSE3_4;1", "TSE3_5;1"],
+      "TSE4": ["TSE4_1;1", "TSE4_2;1", "TSE4_3;1", "TSE4_4;1"],
+      "TSE5": ["TSE5_1", "TSE5_2", "TSE5_3", "TSE5_4", "TSE5_5"],
+      "TSE8": ["TSE8_1;1", "TSE8_2;1", "TSE8_3;1", "TSE8_4;1", "TSE8_5;1"]
+    },
+    "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    },
+    "TM7": {
+      "PCS1": ["PCS1_1;1", "PCS1_2;1", "PCS1_3;1", "PCS1_4;1", "PCS1_5;1"],
+      "PCS2": ["PCS2_1", "PCS2_2", "PCS2_3", "PCS2_4", "PCS2_5"]
+    }
+  },
+  "Carrier Management": {
+    "CM2": {
+      "IC1": ["IC1_1", "IC1_2", "IC1_3", "IC1_4"],
+      "IC2": ["IC2_1", "IC2_2;1", "IC2_3;1", "IC2_4;1", "IC2_5"]
+    },
+    "CM4": {
+      "PTC1": ["PTC1_1", "PTC1_2", "PTC1_3", "PTC1_4"],
+      "PTC2": ["PTC2_1", "PTC2_2", "PTC2_3", "PTC2_4"],
+      "PTC3": ["PTC3_1;1", "PTC3_2;1", "PTC3_3;1", "PTC3_4;1", "PTC3_5;1"],
+      "PTC4": ["PTC4_1", "PTC4_2", "PTC4_3", "PTC4_4", "PTC4_5"],
+      "PTC5": ["PTC5_1", "PTC5_2", "PTC5_3", "PTC5_4", "PTC5_5"],
+      "PTC6": ["PTC6_1", "PTC6_2", "PTC6_3", "PTC6_4", "PTC6_5"]
+    }
+  },
+  "Asset & Network Management": {
+    "ANM1": {
+      "DTNSP3": ["DTNSP3_1;1", "DTNSP3_2;1", "DTNSP3_3;1", "DTNSP3_4;1", "DTNSP3_5;1"]
+    }
+  },
+  "From Offering to Pricing": {
+      "OP2": {
+        "DMPRICING": ["DMPRICING_1", "DMPRICING_2", "DMPRICING_3", "DMPRICING_4"]
+      }
+    }
+},
+"Asset & Fleet Management" :
+{ "Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Track & Trace": 
+  {"Transport Management": { 
+ "TM5": {
+      "TSE2": ["TSE2_1", "TSE2_2", "TSE2_3", "TSE2_4", "TSE2_5"],
+      "TSE3": ["TSE3_1", "TSE3_2", "TSE3_3", "TSE3_4", "TSE3_5;1"],
+      "TSE4": ["TSE4_1", "TSE4_2;1", "TSE4_3;1", "TSE4_4;1"],
+      "TSE6": ["TSE6_1", "TSE6_2", "TSE6_3;1", "TSE6_4;1", "TSE6_5;1"],
+      "TSE7": ["TSE7_1;1", "TSE7_2;1", "TSE7_3;1", "TSE7_4;1", "TSE7_5;1"],
+      "TSE8": ["TSE8_1", "TSE8_2", "TSE8_3", "TSE8_4", "TSE8_5"]
+    }
+  }
+  },
+"Integration & Middleware" : 
+  {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1", "MPC1_2", "MPC1_3", "MPC1_4", "MPC1_5"]
+    }
+  }
+  },
+"Financial & Settlement Systems" : 
+  {"Finance Management": { 
+  "FM1": {
+      "MOF1": ["MOF1_1","MOF1_2","MOF1_3","MOF1_4","MOF1_5"],
+      "MOF2": ["MOF2_1","MOF2_2","MOF2_3","MOF2_4","MOF2_5"],
+      "MOF3": ["MOF3_1","MOF3_2","MOF3_3","MOF3_4","MOF3_5"],
+      "MOF4": ["MOF4_1","MOF4_2","MOF4_3","MOF4_4","MOF4_5"],
+      "MOF5": ["MOF5_1","MOF5_2","MOF5_3","MOF5_4","MOF5_5"]
+    }
+  }
+  },
+"Reporting & BI" : 
+  {"Finance Management": { 
+  "FM1": {
+      "MOF1": ["MOF1_1","MOF1_2","MOF1_3","MOF1_4","MOF1_5"],
+      "MOF2": ["MOF2_1","MOF2_2","MOF2_3","MOF2_4","MOF2_5"],
+      "MOF3": ["MOF3_1","MOF3_2","MOF3_3","MOF3_4","MOF3_5"],
+      "MOF4": ["MOF4_1","MOF4_2","MOF4_3","MOF4_4","MOF4_5"],
+      "MOF5": ["MOF5_1","MOF5_2","MOF5_3","MOF5_4","MOF5_5"]
+    }
+  }
+  },
+"Route & Planning Optimization": 
+  {"Transport Management": { 
+ "TM5": {
+      "TSE2": ["TSE2_1", "TSE2_2", "TSE2_3", "TSE2_4", "TSE2_5"],
+      "TSE3": ["TSE3_1", "TSE3_2", "TSE3_3", "TSE3_4", "TSE3_5;1"],
+      "TSE4": ["TSE4_1", "TSE4_2;1", "TSE4_3;1", "TSE4_4;1"],
+      "TSE6": ["TSE6_1", "TSE6_2", "TSE6_3;1", "TSE6_4;1", "TSE6_5;1"],
+      "TSE7": ["TSE7_1;1", "TSE7_2;1", "TSE7_3;1", "TSE7_4;1", "TSE7_5;1"],
+      "TSE8": ["TSE8_1", "TSE8_2", "TSE8_3", "TSE8_4", "TSE8_5"]
+    }
+  }
+  },
+  "Customs": 
+  {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+  "Freight Marketplace": 
+  {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Customer Portal": 
+  {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Documents & Collaboration": 
+  {"Finance Management": { 
+  "FM1": {
+      "MOF1": ["MOF1_1","MOF1_2","MOF1_3","MOF1_4","MOF1_5"],
+      "MOF2": ["MOF2_1","MOF2_2","MOF2_3","MOF2_4","MOF2_5"],
+      "MOF3": ["MOF3_1","MOF3_2","MOF3_3","MOF3_4","MOF3_5"],
+      "MOF4": ["MOF4_1","MOF4_2","MOF4_3","MOF4_4","MOF4_5"],
+      "MOF5": ["MOF5_1","MOF5_2","MOF5_3","MOF5_4","MOF5_5"]
+    }
+  }
+  },
+"Digital Forwarding" : 
+  {"Transport Management": 
+  {  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"YMS" : 
+    {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  }, 
+"Warehouse Management Systems (WMS)" :
+  {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Customer Relationship Management (CRM)" : 
+    {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Order Management System (OMS)" : 
+{"Order Management": {
+    "OM3": {
+      "CPC3": ["CPC3_1;1","CPC3_2;1","CPC3_3;1","CPC3_4;1"]
+    },
+    "OM5": {
+      "CCCO4": ["CCCO4_1;1", "CCCO4_2;1", "CCCO4_3;1"],
+      "CCCO7": ["CCCO7_1;1", "CCCO7_2;1", "CCCO7_3;1", "CCCO7_4;1"],
+      "CCCO9": ["CCCO9_1;1", "CCCO9_2;1", "CCCO9_3;1", "CCCO9_4"],
+      "CCCO10": ["CCCO10_1", "CCCO10_2;1", "CCCO10_3;1", "CCCO10_4;1", "CCCO10_5;1"],
+      "CCCO11": ["CCCO11_1;1", "CCCO11_2;1", "CCCO11_3;1", "CCCO11_4;1", "CCCO11_5;1"]
+    }
+  },
+  "Transport Management": {
+    "TM2": {
+      "MPD1": ["MPD1_1;1", "MPD1_2;1", "MPD1_3;1", "MPD1_4;1", "MPD1_5;1"],
+      "MPD2": ["MPD2_1", "MPD2_2", "MPD2_3", "MPD2_4", "MPD2_5"],
+      "MPD3": ["MPD3_1", "MPD3_2", "MPD3_3", "MPD3_4"],
+      "MPD4": ["MPD4_1;1", "MPD4_2;1", "MPD4_3;1", "MPD4_4;1", "MPD4_5;1"],
+      "MPD5": ["MPD5_1;1", "MPD5_2;1", "MPD5_3;1", "MPD5_4;1", "MPD5_5;1"]
+    },
+    "TM3": {
+      "MTTFO5": ["MTTFO5_1", "MTTFO5_2", "MTTFO5_3", "MTTFO5_4", "MTTFO5_5"],
+      "MTTFO8": ["MTTFO8_1;1", "MTTFO8_2;1", "MTTFO8_3;1", "MTTFO8_4;1", "MTTFO8_5;1"],
+      "MTTFO9": ["MTTFO9_1;1", "MTTFO9_2;1", "MTTFO9_3;1", "MTTFO9_4;1", "MTTFO9_5;1"],
+      "MTTFO11": ["MTTFO11_1;1", "MTTFO11_2;1", "MTTFO11_3;1", "MTTFO11_4;1", "MTTFO11_5;1"],
+      "MTTFO12": ["MTTFO12_1;1", "MTTFO12_2;1", "MTTFO12_3;1", "MTTFO12_4;1", "MTTFO12_5;1"]
+      },
+    "TM5": {
+      "TSE1": ["TSE1_1;1"],
+      "TSE2": ["TSE2_1", "TSE2_2", "TSE2_3", "TSE2_4", "TSE2_5"],
+      "TSE3": ["TSE3_1;1", "TSE3_2;1", "TSE3_3;1", "TSE3_4;1", "TSE3_5;1"],
+      "TSE4": ["TSE4_1;1", "TSE4_2;1", "TSE4_3;1", "TSE4_4;1"],
+      "TSE5": ["TSE5_1", "TSE5_2", "TSE5_3", "TSE5_4", "TSE5_5"],
+      "TSE6": ["TSE6_1;1", "TSE6_2;1", "TSE6_3;1", "TSE6_4;1", "TSE6_5;1"],
+      "TSE8": ["TSE8_1;1", "TSE8_2;1", "TSE8_3;1", "TSE8_4;1", "TSE8_5;1"]
+    },
+    "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    },
+    "TM7": {
+      "PCS1": ["PCS1_1;1", "PCS1_2;1", "PCS1_3;1", "PCS1_4;1", "PCS1_5;1"],
+      "PCS2": ["PCS2_1", "PCS2_2", "PCS2_3", "PCS2_4", "PCS2_5"]
+    }
+  },
+  "Carrier Management": {
+    "CM2": {
+      "IC2": ["IC2_1", "IC2_2;1", "IC2_3;1", "IC2_4;1", "IC2_5;1"]
+    },
+    "CM4": {
+      "PTC1": ["PTC1_1", "PTC1_2", "PTC1_3", "PTC1_4"]
+    }
+  },
+  "Asset & Network Management": {
+    "ANM1": {
+      "DTNSP3": ["DTNSP3_1;1", "DTNSP3_2;1", "DTNSP3_3;1", "DTNSP3_4;1", "DTNSP3_5;1"]
+    }
+  }
+  },
+"Last Mile Distribution" : 
+  {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Claims & Damages" : 
+   {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Carriers Portal" : 
+    {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+"Control & Quality" : 
+    {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+  "Mobile App" :
+    {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  },
+  "Legal Compliance" : 
+    {"Transport Management": { 
+  "TM6": {
+      "MPC1": ["MPC1_1;1", "MPC1_2;1", "MPC1_3;1", "MPC1_4;1", "MPC1_5;1"]
+    }
+  }
+  }
+}

@@ -1,0 +1,1000 @@
+{
+"2IC Pallet": {
+"l4": [],
+"l3": [],
+"categoryL4": "Asset & Fleet Management"
+},
+"4flow": {
+"l4": [],
+"l3": [],
+"categoryL4": "Integration & Middleware"
+},
+"ACTUATE": {
+  "l4": ["MOF1_1;3","MOF1_2;3","MOF1_3;3","MOF1_4;3","MOF1_5;2","MOF4_4;2","MOF5_4;2","MOF6_3;1"],
+  "l3": ["MOF1","MOF4","MOF5","MOF6"],
+  "categoryL4": "Reporting & BI"
+},
+"ADT TMS": {
+  "l4": [],
+  "l3": [],
+   "categoryL4": "TMS"
+},
+"Allo": {
+"l4": [],
+"l3": ["MOS1","TSE3","MME1"],
+ "categoryL4": "Route & Planning Optimization"
+},
+"Alpega": {
+  "l4": [],
+  "l3": ["CCCO1","MPC1","MME1"],
+  "categoryL4": "Freight Marketplaces & Tendering"
+},
+"ASTAG GU (Ground)": {
+  "l4": [],
+  "l3": ["CMAC1","MTTFO1","MME1"],
+  "categoryL4": "Customs"
+},
+"B2P": {
+  "l4": [],
+  "l3": ["PPQ1","MCCRR1","MME1"],
+  "categoryL4": "Freight Marketplaces & Tendering"
+},
+"Boreus": {
+  "l4": [],
+  "l3": ["MOS1","MPC1","MME1"],
+  "categoryL4": "Track & Trace"
+},
+"Brazil Logic": {
+  "l4": ["TSE3_1;2","TSE3_2;0","TSE3_3;3","TSE3_4;1","TSE3_5;2","TSE6_1;0","TSE6_2;1"],
+  "l3": ["TSE3","TSE6"],
+  "categoryL4": "Track & Trace"
+},
+"Byzaneo": {
+  "l4": [],
+  "l3": ["MOS1","MPC1","MME1"],
+  "categoryL4": "Integration & Middleware"
+},
+"CADIS (R4)": {
+  "l4": [],
+  "l3": ["CCCO1","MBC1","MME1"],
+  "categoryL4": "Route & Planning Optimization"
+},
+"Canada reporting": {
+  "l4": ["MOF1_1;3","MOF1_2;3","MOF1_3;3","MOF1_4;3","MOF1_5;2","MOF4_4;2","MOF5_4;2","MOF6_3;1"],
+  "l3": ["MOF1","MOF4","MOF5","MOF6"],
+  "categoryL4": "Reporting & BI"
+},
+"Canada scanning": {
+  "l4": ["TSE3_1;1","TSE3_2;3","TSE3_3;0","TSE3_4;2","TSE3_5;1","TSE6_1;2","TSE6_2;0"],
+  "l3": ["TSE3","TSE6"],
+  "categoryL4": "Track & Trace"
+},
+"Canada Shipping System": {
+  "l4": [],
+  "l3": ["CPC1","MPC1","MME1"],
+  "categoryL4": "Customer Portal"
+},
+"Canada track": {
+  "l4": ["TSE3_1;2","TSE3_2;1","TSE3_3;3","TSE3_4;0","TSE3_5;2","TSE6_1;1","TSE6_2;3"],
+  "l3": ["TSE3","TSE6"],
+  "categoryL4": "Track & Trace"
+},
+"Car-O": {
+  "l4": [],
+  "l3": ["CCCO1","MPD1","MME1"],
+  "categoryL4": "TMS"
+},
+"Centiro (CLL)": {
+  "l4": [],
+  "l3": ["CMAC1","TSE3","MME1"],
+  "categoryL4": "Integration & Middleware"
+},
+"CEVA IOD": {
+  "l4": [],
+  "l3": ["PPQ1","MPC1","MME1"],
+  "categoryL4": "Mobile Applications"
+},
+"CEVA Smart": {
+  "l4": [],
+  "l3": ["CPC1","MBC1","MME1"],
+  "categoryL4": "Customer Portal"
+},
+"CEVA SPOT MODULE": {
+  "l4": [],
+  "l3": ["MOS1","MPD1","MME1"],
+  "categoryL4": "Digital Forwarding"
+},
+"CEVA YMS": {
+  "l4": [],
+  "l3": ["CCCO1","MTTFO1","MME1"],
+  "categoryL4": "YMS"
+},
+"CEVACONNECT (PFS)": {
+  "l4": [],
+  "l3": ["CPC1","MPC1","MME1"],
+  "categoryL4": "Customer Portal"
+},
+"Cevalution": {
+  "l4": ["TSE3_1;0","TSE3_2;2","TSE3_3;1","TSE3_4;3","TSE3_5;0","TSE6_1;2","TSE6_2;1"],
+  "l3": ["TSE3","TSE6"],
+  "categoryL4": "Track & Trace"
+
+},
+"CEVASSETS (BEXTER Trackonline)": {
+  "l4": [],
+  "l3": ["CPC1","MPC1","MME1"],
+  "categoryL4": "Asset & Fleet Management"
+},
+"CEVATrack mailing": {
+  "l4": [],
+  "l3": ["MOS1","MTTFO1","MME1"],
+  "categoryL4": "Documents&Collaboration"
+},
+"Cevatrack-Responsive": {
+  "l4": [],
+  "l3": ["CCCO1","MCCRR1","MME1"],
+  "categoryL4": "Customer Portal"
+},
+"Chronotruck": {
+  "l4": [],
+  "l3": ["CMAC1","MPD1","MME1"],
+  "categoryL4": "Digital Forwarding"
+},
+"ClaimOVL": {
+  "l4": [],
+  "l3": ["PPQ1","MTTFO1","MME1"],
+  "categoryL4": "Claims & Damages"
+},
+"CMS": {
+  "l4": [],
+  "l3": ["CPC1","MCCRR1","MME1"],
+  "categoryL4": "Carriers Portal"
+},
+"Comdata": {
+  "l4": [],
+  "l3": ["MOF1","MOF2","MOF3"],
+  "categoryL4": "Financial & Settlement Systems"
+
+},
+"Control Tower": {
+  "l4": [],
+  "l3": ["CCCO1","MPC1","MME1"],
+  "categoryL4": "Track & Trace"
+},
+"C-Portal": {
+  "l4": [],
+  "l3": ["CMAC1","MTTFO1","MME1"],
+  "categoryL4": "Customer Portal"
+},
+"CrossDock - iSeries": {
+  "l4": [],
+  "l3": ["PPQ1","MCCRR1","MME1"],
+  "categoryL4": "Control & Quality"
+},
+"CUBE IQ": {
+  "l4": [],
+  "l3": ["CPC1","TSE3","MME1"],
+  "categoryL4": "Route & Planning Optimization"
+},
+"Customer Billing": {
+  "l4": [],
+  "l3": [],
+  "categoryL4": "Financial & Settlement Systems"
+},
+"DAGITIM": {
+  "l4": [],
+  "l3": ["MOS1","MPC1","MME1"],
+  "categoryL4": "TMS"
+},
+"DAR AL BETA - Tech consulting": {
+  "l4": [],
+  "l3": ["CCCO1","MBC1","MME1"],
+  "categoryL4": "Integration & Middleware"
+},
+"Datascope DMS": {
+  "l4": [],
+  "l3": ["CMAC1","MCCRR1","MME1"],
+  "categoryL4": "Customer Portal"
+},
+"DC BRAIN": {
+  "l4": [],
+  "l3": ["PPQ1","MTTFO1","MME1"],
+  "categoryL4": "Route & Planning Optimization"
+},
+"DEEWAN - SMS": {
+  "l4": [],
+  "l3": ["MOS1","TSE3","MME1"],
+  "categoryL4": "Documents & Collaboration"
+},
+"Descartes GLN (Ground)": {
+  "l4": [],
+  "l3": ["CCCO1","MPC1","MME1"],
+  "categoryL4": "Integration & Middleware"
+},
+"Agence digitale": {
+"l4": [],
+  "l3": ["CPC1","MCCRR1","MME1"],
+  "categoryL4": "TMS"
+},
+"Dispatch": {
+  "l4": [],
+  "l3": ["MOS1","MPD1","MME1"],
+  "categoryL4": "TMS"
+},
+"DMS": {
+  "l4": [],
+  "l3": ["PPQ1","MPC1","MME1"],
+  "categoryL4": "Documents & Collaboration"
+},
+"E2Open Booking": {
+  "l4": [],
+  "l3": ["CPC1","MBC1","MME1"],
+  "categoryL4": "Documents & Collaboration"
+},
+"Docsweb": {
+  "l4": [],
+  "l3": ["CCCO1","MPD1","MME1"],
+  "categoryL4": "Asset & Fleet Management"
+},
+"EDICOM iPaaS": {
+  "l4": [],
+  "l3": [],
+  "categoryL4": "Integration & Middleware"
+},
+"Ediel Portale Collaborativo": {
+  "l4": [],
+  "l3": ["MOS1","MCCRR1"],
+  "categoryL4": "Customer Portal"
+},
+"EGL Scan Executive": {
+  "l4": [],
+  "l3": ["PPQ1","MTTFO1"],
+  "categoryL4": "Track & Trace"
+},
+"EGL Scan Shuttles": {
+  "l4": [],
+  "l3": ["CCCO1","MPC1"],
+  "categoryL4": "Track & Trace"
+},
+"ELO ANZ": {
+  "l4": [],
+  "l3": ["CPC1","MBC1"],
+  "categoryL4": "Documents & Collaboration"
+},
+"Fleetwave": {
+  "l4": [],
+  "l3": ["MOS1","MPD1"],
+  "categoryL4": "Asset & Fleet Management"
+},
+"Fleetzy": {
+  "l4": ["TSE3_1;3","TSE3_2;1","TSE3_3;0","TSE3_4;2","TSE3_5;1","TSE6_1;2","TSE6_2;0"],
+  "l3": ["TSE3","TSE6"],
+  "categoryL4": "Track & Trace"
+},
+"Forecast & Adapt": {
+  "l4": [],
+  "l3": [],
+  "categoryL4": "Route & Planning Optimization"
+},
+"FM May": {
+  "l4": [],
+  "l3": ["PPQ1","MME1"],
+  "categoryL4": "TMS"
+},
+"Galactica": {
+  "l4": [],
+  "l3": ["MPD1","CCCO1"],
+  "categoryL4": "Documents & Collaboration"
+},
+"Gefcopack": {
+  "l4": [],
+  "l3": ["MME1","MTTFO1"],
+  "categoryL4": "Asset & Fleet Management"
+},
+"Genio": {
+  "l4": [],
+  "l3": [],
+  "categoryL4": "Integration & Middleware"
+  },
+  "Geoserver": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Track & Trace"
+  },
+  "GLT": {
+    "l4": [],
+    "l3": ["TSE3","CPC1"],
+    "categoryL4": "TMS"
+  },
+  "GM Customs Webportal": {
+    "l4": [],
+    "l3": ["MOS1","MPC1"],
+    "categoryL4": "Customer Portal"
+  },
+  "GoComet Tracking": {
+    "l4": [],
+    "l3": ["CCCO1","MBC1"],
+    "categoryL4": "Track & Trace"
+  },
+  "GS1": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Integration & Middleware"
+  },
+  "Home Delivery": {
+    "l4": [],
+    "l3": ["PPQ1","MTTFO1"],
+    "categoryL4": "Customer Portal"
+  },
+  "i2 replacement": {
+    "l4": [],
+    "l3": ["MOF1","MOF2","MOF3"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+"INES":{ 
+  "categoryL4": "TMS",
+  "l4": [
+    "CMAC1_4;2","PPQ1_1;3","CPC1_1;2","CPC1_2;2","CPC1_3;2","CPC1_4;0","CPC1_5;2",
+    "CPC3_1;2","CPC3_2;2","CPC3_3;2","CPC3_4;2",
+    "MOS4_1;3","MOS4_2;2","MOS4_3;1","MOS4_4;0",
+    "CCCO1_1;2","CCCO1_2;2","CCCO1_3;2",
+    "CCCO3_1;2","CCCO3_2;2","CCCO3_3;2","CCCO3_5;2",
+    "CCCO4_1;3","CCCO4_2;3","CCCO4_3;2","CCCO4_4;1","CCCO4_5;2",
+    "CCCO5_1;1","CCCO5_2;1","CCCO5_3;1","CCCO5_4;1","CCCO5_5;1",
+    "CCCO6_1;2","CCCO6_2;3","CCCO6_3;2","CCCO6_4;2",
+    "CCCO7_1;2","CCCO7_2;1","CCCO7_3;3","CCCO7_4;1",
+    "CCCO8_1;3","CCCO8_2;3","CCCO8_3;0","CCCO8_4;2","CCCO8_5;2",
+    "CCCO9_1;3","CCCO9_2;1","CCCO9_3;1","CCCO9_4;1",
+    "CCCO10_1;3","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1",
+    "CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1",
+    "CCCO12_1;2","CCCO12_2;2","CCCO12_3;1","CCCO12_4;0","CCCO12_5;2",
+    "CCCO14_1;3","CCCO14_2;3","CCCO14_3;3","CCCO14_4;3","CCCO14_5;3",
+    "CCCO15_1;2","CCCO15_2","CCCO15_3;1","CCCO15_4;2","CCCO15_5;1",
+    "CCCO16_1;3","CCCO16_2;3","CCCO16_3;3","CCCO16_4;3","CCCO16_5;3",
+    "MBC1_1;2","MBC1_2;1","MBC1_3;1","MBC2_1;2","MBC2_2;2","MBC2_3;2","MBC2_4;1",
+    "MBC3_1;2","MBC3_2;2","MBC3_3;2","MBC3_4;2","MBC3_5;2","MBC4_1;1","MBC4_2;1","MBC4_3;1","MBC4_4;1","MBC4_5;1",
+    "MPD1_1;1","MPD1_2;2","MPD1_3;2","MPD1_4;2","MPD1_5;0","MPD2_1;2","MPD2_2;2","MPD2_3;2","MPD2_4;2","MPD2_5;2",
+    "MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;2","MPD4_3;2","MPD4_4;2","MPD4_5;2","MPD5_1;2","MPD5_2;2","MPD5_3;2","MPD5_4;2","MPD5_5;2",
+    "MTTFO1_1;3;6","MTTFO1_2;3;6","MTTFO1_3;3;6","MTTFO1_4;3;6","MTTFO1_5;3;6","MTTFO2_1;3","MTTFO2_2;3","MTTFO2_3;3","MTTFO2_4;3","MTTFO3_1;3","MTTFO3_2;3","MTTFO3_3;3","MTTFO3_4;3",
+    "MTTFO5_1;2","MTTFO5_2;2","MTTFO5_3;2","MTTFO5_4;2","MTTFO5_5;2","MTTFO6_1;2","MTTFO6_2;2","MTTFO6_3;2","MTTFO6_4;2","MTTFO6_5;2","MTTFO7_1;3","MTTFO7_2;3","MTTFO7_3;3","MTTFO7_4;3","MTTFO7_5;3",
+    "MTTFO8_1;1","MTTFO8_2;1","MTTFO8_3;1","MTTFO8_4;1","MTTFO8_5;1","MTTFO9_1;2","MTTFO9_2;2","MTTFO9_3;2","MTTFO9_4;2","MTTFO9_5;2","MTTFO11_1;2;5","MTTFO11_2;2;5","MTTFO11_3;2;5","MTTFO11_4;2;5","MTTFO11_5;2;5","MTTFO12_1;1","MTTFO12_2;1","MTTFO12_3;1","MTTFO12_4;1","MTTFO12_5;1","MTTFO13_1;1","MTTFO13_2;1","MTTFO13_3;1","MTTFO13_4;1","MTTFO13_5;1",
+    "MCCRR1_1;2","MCCRR1_2;2","MCCRR1_3;2","MCCRR1_4;2","MCCRR1_5;2","MCCRR2_1;2","MCCRR2_2;2","MCCRR2_3;2","MCCRR2_4;2","MCCRR2_5;2","MCCRR3_1;2","MCCRR3_2;2","MCCRR3_3;2","MCCRR3_4;2","MCCRR3_5;2",
+    "TSE1_1;2","TSE2_1;3","TSE2_2;3","TSE2_3;3","TSE2_4;3","TSE2_5;3","TSE3_1;3;8","TSE3_2;3;8","TSE3_3;3;8","TSE3_4;3;8","TSE3_5;3;8","TSE4_1;2;8","TSE4_2;1;8","TSE4_3;2;8","TSE4_4;1;8","TSE5_1;3","TSE5_2;3","TSE5_3;3","TSE5_4;3","TSE5_5;3","TSE8_1;2;8","TSE8_2;2;8","TSE8_3;1;8","TSE8_4;1;8","TSE8_5;2;8",
+    "MPC1_1;1;8","MPC1_2;1;8","MPC1_3;1;8","MPC1_4;1;8","MPC1_5;1;8","PCS1_1;1;8","PCS1_2;1;8","PCS1_3;1;8","PCS1_4;1;8","PCS1_5;1;8","PCS2_1;2;4","PCS2_2;2;4","PCS2_3;2;4","PCS2_4;2;4","PCS2_5;2;4",
+    "IC1_1;3","IC1_2;3","IC1_3;3","IC1_4;3","IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;2","IC2_5;2","PTC1_1;2;4","PTC1_2;2;4","PTC1_3;2;4","PTC1_4;2;4","PTC2_1;2","PTC2_2;2","PTC2_3;2","PTC2_4;2","PTC3_1;2","PTC3_2;2","PTC3_3;2","PTC3_4;2","PTC3_5;2","PTC4_1;2","PTC4_2;2","PTC4_3;2","PTC4_4;2","PTC4_5;2","PTC5_1;2;9","PTC5_2;2;9","PTC5_3;2;9","PTC5_4;2;9","PTC5_5;2;9","PTC6_1;2;9","PTC6_2;2;9","PTC6_3;2;9","PTC6_4;2;9","PTC6_5;2;9",
+    "DTNSP3_1;2;4","DTNSP3_2;2;4","DTNSP3_3;2;4","DTNSP3_4;2;4","DTNSP3_5;2;4","DMPRICING_1;2","DMPRICING_2;2","DMPRICING_3;2","DMPRICING_4;2"
+  ],
+  "l3": ["CMAC1","PPQ1","CPC1","CPC3","MOS4","CCCO1","CCCO3","CCCO4","CCCO5","CCCO6","CCCO7","CCCO8","CCCO9","CCCO10","CCCO11","CCCO12","CCCO14","CCCO15","CCCO16","MBC1","MBC2","MBC3","MBC4","MPD1","MPD2","MPD3","MPD4","MPD5","MTTFO1","MTTFO2","MTTFO3","MTTFO5","MTTFO6","MTTFO7","MTTFO8","MTTFO9","MTTFO11","MTTFO12","MTTFO13","MCCRR1","MCCRR2","MCCRR3","TSE1","TSE2","TSE3","TSE4","TSE5","TSE8","MPC1","PCS1","PCS2","IC1","IC2","PTC1","PTC2","PTC3","PTC4","PTC5","PTC6","DTNSP3","DMPRICING"]
+  },
+  "INSPECTO": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Control & Quality"
+    },
+  "Inter Site Journaling": {
+  "l4": ["MOF1_1;3","MOF1_2;3","MOF1_3;3","MOF1_4;3","MOF1_5;2","MOF4_4;2","MOF5_4;2","MOF6_3;1"],
+  "l3": ["MOF1","MOF4","MOF5","MOF6"],
+    "categoryL4": "Reporting & BI"
+  },
+  "Jasper Reports": {
+    "l4": [],
+    "l3": ["MOF1","MOF2","MOF3"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "LA": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+  "Leopard": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Track & Trace"
+  },
+  "Logistix": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "Track & Trace"
+  },
+  "LOSCAM": {
+    "l4": [],
+    "l3": ["PPQ1","MME1"],
+    "categoryL4": "Track & Trace"
+  },
+  "Map&Guide": {
+    "l4": [],
+    "l3": ["TSE3","CPC1"],
+    "categoryL4": "Track & Trace"
+  },
+ "Matrix": {
+   "l4": [
+    "CMAC1_4;1","PPQ1_1;2","CPC1_1;1","CPC1_2;2","CPC1_3;1","CPC1_5;2",
+    "CPC3_1;2","CPC3_2;1","CPC3_3;2","CPC3_4;1",
+    "MOS4_1;2","MOS4_2;1","MOS4_3;1","MOS4_4;0",
+    "CCCO1_1;1","CCCO1_2;2","CCCO1_3;1",
+    "CCCO3_1;2","CCCO3_2;1","CCCO3_3;2","CCCO3_5;1",
+    "CCCO4_1;2","CCCO4_2;2","CCCO4_3;1","CCCO4_4;1","CCCO4_5;2",
+    "CCCO5_1;1","CCCO5_2;1","CCCO5_3;1","CCCO5_4;1","CCCO5_5;1",
+    "CCCO6_1;1","CCCO6_2;2","CCCO6_3;1","CCCO6_4;2",
+    "CCCO7_1;2","CCCO7_2;1","CCCO7_3;2","CCCO7_4;1",
+    "CCCO8_1;2","CCCO8_3","CCCO8_3;0","CCCO8_4;1","CCCO8_5;2",
+    "CCCO9_1;2","CCCO9_2;1","CCCO9_3;1","CCCO9_4;1",
+    "CCCO10_1","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1",
+    "CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1",
+    "CCCO12_1;2","CCCO12_2;1","CCCO12_3;1","CCCO12_4;0","CCCO12_5;2",
+    "CCCO14_1;2","CCCO14_2;2","CCCO14_3;2","CCCO14_4;2","CCCO14_5;2",
+    "CCCO15_1;1","CCCO15_2","CCCO15_3;1","CCCO15_4;2","CCCO15_5;1",
+    "CCCO16_1;2","CCCO16_2;2","CCCO16_3;2","CCCO16_4;2","CCCO16_5;2",
+    "MBC1_1;3","MBC1_2;2","MBC1_3;3","MBC2_1;3","MBC2_2;3","MBC2_3;2","MBC2_4;3",
+    "MBC3_1;3","MBC3_2;3","MBC3_3;2","MBC3_4;3","MBC3_5;2","MBC4_1;3","MBC4_2;2","MBC4_3;3","MBC4_4;2","MBC4_5;3",
+    "MPD1_1;3","MPD1_2;2","MPD1_3;3","MPD1_4;2","MPD1_5;3","MPD2_1;2","MPD2_2;3","MPD2_3;2","MPD2_4;3","MPD2_5;2",
+    "MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;3","MPD4_3;2","MPD4_4;3","MPD4_5;2","MPD5_1;3","MPD5_2;2","MPD5_3;3","MPD5_4;2","MPD5_5;3",
+    "MTTFO1_1;3","MTTFO1_2;3","MTTFO1_3;2","MTTFO1_4;3","MTTFO1_5;2","MTTFO2_1;3","MTTFO2_2;2","MTTFO2_3;3","MTTFO2_4;3","MTTFO3_1;3","MTTFO3_2;2","MTTFO3_3;3","MTTFO3_4;2",
+    "MTTFO5_1;3","MTTFO5_2;2","MTTFO5_3;3","MTTFO5_4;2","MTTFO5_5;3","MTTFO6_1;2","MTTFO6_2;3","MTTFO6_3;2","MTTFO6_4;3","MTTFO6_5;2","MTTFO7_1;3","MTTFO7_2;2","MTTFO7_3;3","MTTFO7_4;3","MTTFO7_5;2",
+    "MTTFO8_1;3","MTTFO8_2;2","MTTFO8_3;3","MTTFO8_4;2","MTTFO8_5;3","MTTFO9_1;2","MTTFO9_2;3","MTTFO9_3;2","MTTFO9_4;3","MTTFO9_5;2","MTTFO11_1;3","MTTFO11_2;2","MTTFO11_3;3","MTTFO11_4;2","MTTFO11_5;3","MTTFO12_1;3","MTTFO12_2;2","MTTFO12_3;3","MTTFO12_4;2","MTTFO12_5;3","MTTFO13_1;2","MTTFO13_2;3","MTTFO13_3;2","MTTFO13_4;3","MTTFO13_5;2",
+    "MCCRR1_1;3","MCCRR1_2;2","MCCRR1_3;3","MCCRR1_4;2","MCCRR1_5;3","MCCRR2_1;2","MCCRR2_2;3","MCCRR2_3;2","MCCRR2_4;3","MCCRR2_5;2","MCCRR3_1;3","MCCRR3_2;2","MCCRR3_3;3","MCCRR3_4;2","MCCRR3_5;3",
+    "TSE1_1;3","TSE2_1;3","TSE2_2;2","TSE2_3;3","TSE2_4;2","TSE2_5;3","TSE3_1;2","TSE3_2;3","TSE3_3;2","TSE3_4;3","TSE3_5;2","TSE4_1;3","TSE4_2;2","TSE4_3;3","TSE4_4;2","TSE5_1;3","TSE5_2;2","TSE5_3;3","TSE5_4;2","TSE5_5;3","TSE8_1;2","TSE8_2;3","TSE8_3;2","TSE8_4;3","TSE8_5;2",
+    "MPC1_1;3","MPC1_2;2","MPC1_3;3","MPC1_4;2","MPC1_5;3","PCS1_1;2","PCS1_2;3","PCS1_3;2","PCS1_4;3","PCS1_5;2","PCS2_1;3","PCS2_2;2","PCS2_3;3","PCS2_4;2","PCS2_5;3",
+    "IC1_1;2","IC1_2;2","IC1_3;2","IC1_4;2","IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;1","IC2_5;1","PTC1_1;2","PTC1_2;2","PTC1_3;2","PTC1_4;2","PTC2_1;2","PTC2_2;2","PTC2_3;2","PTC2_4;2","PTC3_1;2","PTC3_2;2","PTC3_3;2","PTC3_4;2","PTC3_5;1","PTC4_1;2","PTC4_2;2","PTC4_3;2","PTC4_4;2","PTC4_5;1","PTC5_1;2","PTC5_2;2","PTC5_3;2","PTC5_4;1","PTC5_5;1","PTC6_1;2","PTC6_2;2","PTC6_3;2","PTC6_4;1","PTC6_5;1",
+    "DTNSP3_1;1","DTNSP3_2;1","DTNSP3_3;1;4","DTNSP3_4;0;4","DTNSP3_5;1;4","DMPRICING_1;2","DMPRICING_2;2","DMPRICING_3;2","DMPRICING_4;3"
+  ],
+  "l3": ["CMAC1","PPQ1","CPC1","CPC3","MOS4","CCCO1","CCCO3","CCCO4","CCCO5","CCCO6","CCCO7","CCCO8","CCCO9","CCCO10","CCCO11","CCCO12","CCCO14","CCCO15","CCCO16","MBC1","MBC2","MBC3","MBC4","MPD1","MPD2","MPD3","MPD4","MPD5","MTTFO1","MTTFO2","MTTFO3","MTTFO5","MTTFO6","MTTFO7","MTTFO8","MTTFO9","MTTFO11","MTTFO12","MTTFO13","MCCRR1","MCCRR2","MCCRR3","TSE1","TSE2","TSE3","TSE4","TSE5","TSE8","MPC1","PCS1","PCS2","IC1","IC2","PTC1","PTC2","PTC3","PTC4","PTC5","PTC6","DTNSP3","DMPRICING"],
+  "categoryL4": "TMS"
+      },
+
+"Matrix EAI SCM": {
+  "parent": "Matrix",
+    "l4": [],
+    "l3": ["MBC1","MBC2","MBC3","MBC4"],
+    "categoryL4": "Integration & Middleware"
+    },
+"Matrix FSS": {
+  "parent": "Matrix",
+      "l4": ["MOF1_2;1","MOF1_4;1","MOF2_1;2","MOF2_3;1","MOF2_5;2","MOF3_1;3","MOF3_2;1","MOF3_4;1","MOF3_5;1","MOF4_2;2","MOF4_3;1","MOF4_4;1","MOF5_1;2","MOF5_2;2","MOF5_3;1","MOF5_5;3","MOF6_1;1","MOF6_3;2","MOF6_4;2","MOF6_5;3"],
+      "l3": ["MOF1","MOF2","MOF3","MOF5","MOF6"],
+      "categoryL4": "Financial & Settlement Systems"
+      },
+"Matrix SCI": {
+  "parent": "Matrix",
+      "l4": [],
+      "l3": ["CCCO8","MTTFO3"],
+      "categoryL4": "Reporting & BI"
+      },
+"Matrix SCM (4PL)": {
+  "parent": "Matrix",
+      "l4": [],
+      "l3": ["MBC1","MBC2","MBC3","MBC4"],
+      "categoryL4": "TMS"
+      },
+"Matrix TMS - Core+": {
+  "parent": "Matrix",
+ "l4": [
+"CMAC1_4;2","PPQ1_1;3","CPC1_1;2","CPC1_2;2","CPC1_3;2","CPC1_4","CPC1_5;2","CPC3_1;2","CPC3_2;2","CPC3_3;2","CPC3_4;2","MOS4_1;3","MOS4_2;2","MOS4_3;1","MOS4_4","CCCO1_1;2","CCCO1_2;2","CCCO1_3;2","CCCO3_1;2","CCCO3_2;2","CCCO3_3;2","CCCO3_5;2","CCCO4_1;3","CCCO4_2;3","CCCO4_3;2","CCCO4_4;1","CCCO4_5;2","CCCO5_1;1","CCCO5_2;1","CCCO5_3;1",
+"CCCO5_4;1","CCCO5_5;1","CCCO6_1;2","CCCO6_2;3","CCCO6_3;2","CCCO6_4;2","CCCO7_1;2","CCCO7_2;1","CCCO7_3;3","CCCO7_4;1","CCCO8_1;3","CCCO8_2;3","CCCO8_3","CCCO8_4;2","CCCO8_5;2","CCCO9_1;3","CCCO9_2;1","CCCO9_3;1","CCCO9_4;1","CCCO10_1;3","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1","CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1","CCCO12_1;2",
+"CCCO12_2;2","CCCO12_3;1","CCCO12_4","CCCO12_5;2","CCCO14_1;3","CCCO14_2;3","CCCO14_3;3","CCCO14_4;3","CCCO14_5;3","CCCO15_1;2","CCCO15_2","CCCO15_3;1","CCCO15_4;2","CCCO15_5;1","CCCO16_1;3","CCCO16_2;3","CCCO16_3;3","CCCO16_4;3","CCCO16_5;3","MBC1_1;3","MBC1_2;2","MBC1_3;3","MBC2_1;3","MBC2_2;3","MBC2_3;2","MBC2_4;3","MBC3_1;3","MBC3_2;3","MBC3_3;2","MBC3_4;3",
+"MBC3_5;2","MBC4_1;3","MBC4_2;2","MBC4_3;3","MBC4_4;2","MBC4_5;3","MPD1_1;3","MPD1_2;2","MPD1_3;3","MPD1_4;2","MPD1_5;3","MPD2_1;2","MPD2_2;3","MPD2_3;2","MPD2_4;3","MPD2_5;2","MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;3","MPD4_3;2","MPD4_4;3","MPD4_5;2","MPD5_1;3","MPD5_2;2","MPD5_3;3","MPD5_4;2","MPD5_5;3",
+"MTTFO1_1;3","MTTFO1_2;3","MTTFO1_3;3","MTTFO1_4;3","MTTFO1_5;3","MTTFO2_1;3","MTTFO2_2;3","MTTFO2_3;3","MTTFO2_4;3","MTTFO3_1;3","MTTFO3_2;3","MTTFO3_3;3","MTTFO3_4;3","MTTFO5_1;3","MTTFO5_2;2","MTTFO5_3;3","MTTFO5_4;2","MTTFO5_5;3","MTTFO6_1;2","MTTFO6_2;3","MTTFO6_3;2","MTTFO6_4;3","MTTFO6_5;2","MTTFO7_1;3","MTTFO7_2;3","MTTFO7_3;3","MTTFO7_4;3","MTTFO7_5;3","MTTFO8_1;3","MTTFO8_2;2",
+"MTTFO8_3;3","MTTFO8_4;2","MTTFO8_5;3","MTTFO9_1;2","MTTFO9_2;3","MTTFO9_3;2","MTTFO9_4;3","MTTFO9_5;2","MTTFO11_1;3","MTTFO11_2;2","MTTFO11_3;3","MTTFO11_4;2","MTTFO11_5;3","MTTFO12_1;3","MTTFO12_2;2","MTTFO12_3;3","MTTFO12_4;2","MTTFO12_5;3","MTTFO13_1;2","MTTFO13_2;3","MTTFO13_3;2","MTTFO13_4;3","MTTFO13_5;2","MCCRR1_1;3","MCCRR1_2;2","MCCRR1_3;3","MCCRR1_4;2","MCCRR1_5;3","MCCRR2_1;2","MCCRR2_2;3",
+"MCCRR2_3;2","MCCRR2_4;3","MCCRR2_5;2","MCCRR3_1;3","MCCRR3_2;2","MCCRR3_3;3","MCCRR3_4;2","MCCRR3_5;3","TSE1_1;3","TSE2_1;3","TSE2_2;3","TSE2_3;3","TSE2_4;3","TSE2_5;3","TSE3_1;3","TSE3_2;3","TSE3_3;3","TSE3_4;3","TSE3_5;3","TSE4_1;3","TSE4_2;2","TSE4_3;3","TSE4_4;2","TSE5_1;3","TSE5_2;3","TSE5_3;3","TSE5_4;3","TSE5_5;3","TSE8_1;2","TSE8_2;3",
+"TSE8_3;2","TSE8_4;3","TSE8_5;2","MPC1_1;3","MPC1_2;2","MPC1_3;3","MPC1_4;2","MPC1_5;3","PCS1_1;2","PCS1_2;3","PCS1_3;2","PCS1_4;3","PCS1_5;2","PCS2_1;3","PCS2_2;2","PCS2_3;3","PCS2_4;2","PCS2_5;3","IC1_1;3","IC1_2;3","IC1_3;3","IC1_4;3","IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;2","IC2_5;2","PTC1_1;2","PTC1_2;2","PTC1_3;2",
+"PTC1_4;2","PTC2_1;2","PTC2_2;2","PTC2_3;2","PTC2_4;2","PTC3_1;2","PTC3_2;2","PTC3_3;2","PTC3_4;2","PTC3_5;2","PTC4_1;2","PTC4_2;2","PTC4_3;2","PTC4_4;2","PTC4_5;2","PTC5_1;2","PTC5_2;2","PTC5_3;2","PTC5_4;2","PTC5_5;2","PTC6_1;2","PTC6_2;2","PTC6_3;2","PTC6_4;2","PTC6_5;2","DTNSP3_1;2","DTNSP3_2;2","DTNSP3_3;2","DTNSP3_4;2","DTNSP3_5;2",
+"DMPRICING_1;2","DMPRICING_2;2","DMPRICING_3;2","DMPRICING_4;3"
+],
+  "l3": ["CMAC1","PPQ1","CPC1","CPC3","MOS4","CCCO1","CCCO3","CCCO4","CCCO5","CCCO6","CCCO7","CCCO8","CCCO9","CCCO10","CCCO11","CCCO12","CCCO14","CCCO15","CCCO16","MBC1","MBC2","MBC3","MBC4","MPD1","MPD2","MPD3","MPD4","MPD5","MTTFO1","MTTFO2","MTTFO3","MTTFO5","MTTFO6","MTTFO7","MTTFO8","MTTFO9","MTTFO11","MTTFO12","MTTFO13","MCCRR1","MCCRR2","MCCRR3","TSE1","TSE2","TSE3","TSE4","TSE5","TSE8","MPC1","PCS1","PCS2","IC1","IC2","PTC1","PTC2","PTC3","PTC4","PTC5","PTC6","DTNSP3","DMPRICING"],
+      "categoryL4": "TMS"
+      },
+"Matrix TMS": {
+  "parent": "Matrix",
+  "l4": ["CMAC1_2;1","CMAC1_3;1","CMAC2_1;1","CMAC2_2;2","CMAC2_5;1","CMAC3_2;1","CMAC3_5;2","PPQ1_2;2","PPQ1_3;3","PPQ1_5;2","PPQ2_2;3","PPQ2_3;2","PPQ2_4;1","PPQ3_2;1","PPQ3_3;2","PPQ4_1;2","PPQ4_3;2", "CPC2_1;3","CPC2_3;2","CPC3_1;3","CPC3_2;2","CPC3_3;2","MOS1_1;3","MOS1_2;3","MOS1_3;1","MOS1_5;2","MOS2_4;2","MOS3_5;1","MOS5_1;2","CCCO2_1;3","CCCO2_3;2","CCCO2_5;2","CCCO3_2;1","CCCO3_4;2","CCCO3_5;3","CCCO4_2;3","CCCO7_2;3","CCCO7_3;3","CCCO9_1;1","CCCO9_4;3","CCCO10_2;2","CCCO10_4;3","CCCO11_1;2","CCCO11_2;1","CCCO11_4;3","CCCO11_5;3","CCCO12_2;2","CCCO12_3;2","CCCO12_5;3","CCCO13_2;3","CCCO13_3;2","CCCO13_5;3","CCCO14_1;2","CCCO14_2;1","CCCO16_1;2","CCCO16_3;2","CCCO16_4;3","CCCO16_5;1","MBC1_2;1","MBC1_3;1","MBC2_1;3","MBC2_3;2","MBC2_4;3","MBC3_2;1","MBC3_3;1","MBC3_5;3","MBC4_1;1","MBC4_2;2","MBC4_5;2","MPD1_1;3","MPD4_1;2","MPD4_2;2","MPD4_3;3","MPD5_1;3","MPD5_3;1","MPD5_4;1","MPD5_5;1","MTTFO1_2;3","MTTFO1_4;3","MTTFO1_5;3","MTTFO2_1;2","MTTFO3_4;1","MTTFO4_2;3","MTTFO4_3;3","MTTFO4_4;1","MTTFO5_1;1","MTTFO5_3;1","MTTFO6_1;1","MTTFO6_3;2","MTTFO6_4;1","MTTFO7_1;3","MTTFO7_3;1","MTTFO7_4;2","MTTFO8_2;1","MTTFO8_4;1","MTTFO9_2;3","MTTFO9_3;1","MTTFO11_1;2","MTTFO11_2;3","MTTFO11_3;1","MTTFO11_5;2","MTTFO12_3;2","MTTFO12_5;2","MTTFO13_2;1","MTTFO13_4;3","MTTFO14_1;2","MTTFO14_4;1","MCCRR1_1;3","MCCRR1_2;2","MCCRR1_3;1","MCCRR1_5;1","MCCRR2_2;1","MCCRR2_4;3","MCCRR2_5;3","MCCRR3_2;1","MCCRR3_3;1","TSE3_1;3","TSE3_2;3","TSE3_3;3","TSE6_1;3","TSE6_2;2","MPC1_1;3","MPC1_2;1","MPC1_3;1","PCS2_1;2","PCS2_2;3","PCS2_3;2","IC1_1;2","IC1_2;2","IC1_4;3","IC2_2;3","IC2_3;1","IC2_4;1","PTC2_1;1","PTC2_4;2","PTC3_2;3","PTC3_4;3","PTC4_1;2","PTC4_2;2","PTC4_4;1","PTC4_5;3","PTC5_2;3","PTC5_3;3","PTC5_5;2","PTC6_2;3","PTC6_3;1","PTC6_5;2","MCP1_1;3","MCP1_2;3","MCP1_4;2","DTNSP1_2;2","DTNSP1_3;2","DTNSP1_5;3","DTNSP2_1;1","DTNSP2_4;2","DTNSP3_2;1","DTNSP3_5;2","DTNSP5_2;1","DTNSP5_3;2","DTNSP5_5;2","DTNSP6_2;1","DTNSP6_3;1","DTNSP6_4;3","DTNSP7_2;1","DTNSP7_3;2","DTNSP7_5;2","MA1_1;1","MA1_2;3","MA1_4;2","MA2_1;2","MA2_2;3","MA2_4;3","MA5_2;2","MA5_3;1","MA5_5;1","MA6_1;3","MA6_4;2","MA7_1;3","MA7_4;1","MME1_1;3","MME1_2;2","MME1_4;2","MMNP1_1;2","MMNP1_2;2","MMNP1_3;1","MMNP2_1;2","MMNP2_2;2","MMNP2_4;1","MMNP2_5;2","MMNP3_1;2","MMNP3_3;2","MMNP3_4;3","MMNP4_1;1","MMNP4_3;2","MMNP4_4;1","MMNP5_1;2","MMNP5_2;1","MMNP5_3;3"],
+  "l3": ["CMAC1","CMAC2","CMAC3","PPQ1","PPQ2","PPQ3","PPQ4","CPC2","CPC3","MOS1","MOS2","MOS5","CCCO2","CCCO3","CCCO4","CCCO7","CCCO9","CCCO10","CCCO11","CCCO12","CCCO13","CCCO14","CCCO16","MBC1","MBC2","MBC3","MBC4","MPD1","MPD4","MPD5","MTTFO1","MTTFO2","MTTFO4","MTTFO5","MTTFO6","MTTFO7","MTTFO8","MTTFO9","MTTFO11","MTTFO12","MTTFO13","MTTFO14","MCCRR1","MCCRR2","MCCRR3","TSE3","TSE6","TSE7","MPC1","PCS2","IC1","IC2","PTC2","PTC3","PTC4","PTC5","PTC6","MCP1","DTNSP1","DTNSP2","DTNSP3","DTNSP4","DTNSP5","DTNSP6","MA1","MA2","MA5","MA6","MA7","MME1","MMNP1","MMNP2","MMNP3","MMNP4","MMNP5"],
+  "categoryL4": "TMS"
+      },
+"Matrix TMS Mobile": {
+  "parent": "Matrix",
+  "l4": [
+    "CMAC1_4;2","PPQ1_1;3","CPC1_1;2","CPC1_2;2","CPC1_3;2","CPC1_4;0","CPC1_5;2",
+    "CPC3_1;2","CPC3_2;2","CPC3_3;2","CPC3_4;2",
+    "MOS4_1;3","MOS4_2;2","MOS4_3;1","MOS4_4;0",
+    "CCCO1_1;2","CCCO1_2;2","CCCO1_3;2",
+    "CCCO3_1;2","CCCO3_2;2","CCCO3_3;2","CCCO3_5;2",
+    "CCCO4_1;3","CCCO4_2;3","CCCO4_3;2","CCCO4_4;1","CCCO4_5;2",
+    "CCCO5_1;1","CCCO5_2;1","CCCO5_3;1","CCCO5_4;1","CCCO5_5;1",
+    "CCCO6_1;2","CCCO6_2;3","CCCO6_3;2","CCCO6_4;2",
+    "CCCO7_1;2","CCCO7_2;1","CCCO7_3;3","CCCO7_4;1",
+    "CCCO8_1;3","CCCO8_2;3","CCCO8_3;0","CCCO8_4;2","CCCO8_5;2",
+    "CCCO9_1;3","CCCO9_2;1","CCCO9_3;1","CCCO9_4;1",
+    "CCCO10_1;3","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1",
+    "CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1",
+    "CCCO12_1;2","CCCO12_2;2","CCCO12_3;1","CCCO12_4;0","CCCO12_5;2",
+    "CCCO14_1;3","CCCO14_2;3","CCCO14_3;3","CCCO14_4;3","CCCO14_5;3",
+    "CCCO15_1;2","CCCO15_2","CCCO15_3;1","CCCO15_4;2","CCCO15_5;1",
+    "CCCO16_1;3","CCCO16_2;3","CCCO16_3;3","CCCO16_4;3","CCCO16_5;3",
+    "MBC1_1;2","MBC1_2;1","MBC1_3;1","MBC2_1;2","MBC2_2;2","MBC2_3;2","MBC2_4;1",
+    "MBC3_1;2","MBC3_2;2","MBC3_3;2","MBC3_4;2","MBC3_5;2","MBC4_1;1","MBC4_2;1","MBC4_3;1","MBC4_4;1","MBC4_5;1",
+    "MPD1_1;1","MPD1_2;2","MPD1_3;2","MPD1_4;2","MPD1_5;0","MPD2_1;2","MPD2_2;2","MPD2_3;2","MPD2_4;2","MPD2_5;2",
+    "MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;2","MPD4_3;2","MPD4_4;2","MPD4_5;2","MPD5_1;2","MPD5_2;2","MPD5_3;2","MPD5_4;2","MPD5_5;2",
+    "MTTFO1_1;3","MTTFO1_2;3","MTTFO1_3;3","MTTFO1_4;3","MTTFO1_5;3","MTTFO2_1;3","MTTFO2_2;3","MTTFO2_3;3","MTTFO2_4;3","MTTFO3_1;3","MTTFO3_2;3","MTTFO3_3;3","MTTFO3_4;3",
+    "MTTFO5_1;2","MTTFO5_2;2","MTTFO5_3;2","MTTFO5_4;2","MTTFO5_5;2","MTTFO6_1;2","MTTFO6_2;2","MTTFO6_3;2","MTTFO6_4;2","MTTFO6_5;2","MTTFO7_1;3","MTTFO7_2;3","MTTFO7_3;3","MTTFO7_4;3","MTTFO7_5;3",
+    "MTTFO8_1;1","MTTFO8_2;1","MTTFO8_3;1","MTTFO8_4;1","MTTFO8_5;1","MTTFO9_1;2","MTTFO9_2;2","MTTFO9_3;2","MTTFO9_4;2","MTTFO9_5;2","MTTFO11_1;2","MTTFO11_2;2","MTTFO11_3;2","MTTFO11_4;2","MTTFO11_5;2","MTTFO12_1;1","MTTFO12_2;1","MTTFO12_3;1","MTTFO12_4;1","MTTFO12_5;1","MTTFO13_1;1","MTTFO13_2;1","MTTFO13_3;1","MTTFO13_4;1","MTTFO13_5;1",
+    "MCCRR1_1;2","MCCRR1_2;2","MCCRR1_3;2","MCCRR1_4;2","MCCRR1_5;2","MCCRR2_1;2","MCCRR2_2;2","MCCRR2_3;2","MCCRR2_4;2","MCCRR2_5;2","MCCRR3_1;2","MCCRR3_2;2","MCCRR3_3;2","MCCRR3_4;2","MCCRR3_5;2",
+    "TSE1_1;2","TSE2_1;3","TSE2_2;3","TSE2_3;3","TSE2_4;3","TSE2_5;3","TSE3_1;3","TSE3_2;3","TSE3_3;3","TSE3_4;3","TSE3_5;3","TSE4_1;2","TSE4_2;1","TSE4_3;2","TSE4_4;1","TSE5_1;3","TSE5_2;3","TSE5_3;3","TSE5_4;3","TSE5_5;3","TSE8_1;2","TSE8_2;2","TSE8_3;1","TSE8_4;1","TSE8_5;2",
+    "MPC1_1;1","MPC1_2;1","MPC1_3;1","MPC1_4;1","MPC1_5;1","PCS1_1;1","PCS1_2;1","PCS1_3;1","PCS1_4;1","PCS1_5;1","PCS2_1;2","PCS2_2;2","PCS2_3;2","PCS2_4;2","PCS2_5;2",
+    "IC1_1;3","IC1_2;3","IC1_3;3","IC1_4;3","IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;2","IC2_5;2","PTC1_1;2","PTC1_2;2","PTC1_3;2","PTC1_4;2","PTC2_1;2","PTC2_2;2","PTC2_3;2","PTC2_4;2","PTC3_1;2","PTC3_2;2","PTC3_3;2","PTC3_4;2","PTC3_5;2","PTC4_1;2","PTC4_2;2","PTC4_3;2","PTC4_4;2","PTC4_5;2","PTC5_1;2","PTC5_2;2","PTC5_3;2","PTC5_4;2","PTC5_5;2","PTC6_1;2","PTC6_2;2","PTC6_3;2","PTC6_4;2","PTC6_5;2",
+    "DTNSP3_1;2","DTNSP3_2;2","DTNSP3_3;2;4","DTNSP3_4;2;4","DTNSP3_5;2;4","DMPRICING_1;2","DMPRICING_2;2","DMPRICING_3;2","DMPRICING_4;2"
+  ],
+  "l3": ["CMAC1","PPQ1","CPC1","CPC3","MOS4","CCCO1","CCCO3","CCCO4","CCCO5","CCCO6","CCCO7","CCCO8","CCCO9","CCCO10","CCCO11","CCCO12","CCCO14","CCCO15","CCCO16","MBC1","MBC2","MBC3","MBC4","MPD1","MPD2","MPD3","MPD4","MPD5","MTTFO1","MTTFO2","MTTFO3","MTTFO5","MTTFO6","MTTFO7","MTTFO8","MTTFO9","MTTFO11","MTTFO12","MTTFO13","MCCRR1","MCCRR2","MCCRR3","TSE1","TSE2","TSE3","TSE4","TSE5","TSE8","MPC1","PCS1","PCS2","IC1","IC2","PTC1","PTC2","PTC3","PTC4","PTC5","PTC6","DTNSP3","DMPRICING"],
+        "categoryL4": "TMS"
+      },
+"Matrix Wiki": {
+  "parent": "Matrix",
+      "l4": [],
+      "l3": ["CCCO8","MTTFO3"],
+      "categoryL4": "Documents & Collaboration"
+      },
+  "MazdaEdi": {
+    "l4": [],
+    "l3": ["OM4","TM6"],
+    "categoryL4": "Integration & Middleware"
+  },
+  "MDC Smartphone app": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Last Mile Distribution"
+  },
+  "Metis": {
+    "l4": [],
+    "l3": ["MOF1","MOF2","MOF3"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "Microlise POD": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Track & Trace"
+  },
+  "MiQuest": {
+    "l4": [],
+    "l3": ["PPQ1","MPC1"],
+    "categoryL4": "Asset & Fleet Management"
+  },
+  "MLC Connect": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Customer Portal"
+  },
+  "MPO eTMS": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "TMS"
+  },
+  "MPO SCOS": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+  "MPO SCOS France": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+  "MS Dynamics": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Customer Portal"
+  },
+  "MSN 2.0": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "TMS"
+  },
+  "My-Fleet": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Track & Trace"
+  },
+  "Nike Scanning": {
+    "l4": [],
+    "l3": ["PPQ1","MPC1"],
+    "categoryL4": "Track & Trace"
+  },
+  "Nortam dimensioning": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Integration & Middleware"
+  },
+  "Omprompt": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Integration & Middleware"
+  },
+  "OMS 3PL (PFS)": {
+    "l4": [
+    "CPC3_1;2","CPC3_2;2","CPC3_3;2","CPC3_4;2",
+    "CCCO4_1;3","CCCO4_2;3","CCCO4_3;2",
+    "CCCO7_1;2","CCCO7_2;1","CCCO7_3;3","CCCO7_4;1",
+    "CCCO9_1;3","CCCO9_2;2","CCCO9_3;2","CCCO9_4;2",
+    "CCCO10_1;3","CCCO10_2;1","CCCO10_3;1","CCCO10_4;1","CCCO10_5;1",
+    "CCCO11_1;1","CCCO11_2;1","CCCO11_3;1","CCCO11_4;1","CCCO11_5;1",
+    "MPD1_1;1","MPD1_2;2","MPD1_3;2","MPD1_4;2","MPD1_5;0","MPD2_1;2","MPD2_2;2","MPD2_3;2","MPD2_4;2","MPD2_5;2",
+    "MPD3_1;3","MPD3_2;3","MPD3_3;3","MPD3_4;3","MPD4_1;2","MPD4_2;2","MPD4_3;2","MPD4_4;2","MPD4_5;2","MPD5_1;2","MPD5_2;2","MPD5_3;2","MPD5_4;2","MPD5_5;2",
+    "MTTFO5_1;2","MTTFO5_2;2","MTTFO5_3;2","MTTFO5_4;2","MTTFO5_5;2",
+    "MTTFO8_1;1;7","MTTFO8_2;1;7","MTTFO8_3;1;7","MTTFO8_4;1;7","MTTFO8_5;1;7","MTTFO9_1;2;7","MTTFO9_2;2;7","MTTFO9_3;2;7","MTTFO9_4;2;7","MTTFO9_5;2;7","MTTFO11_1;2;5","MTTFO11_2;2;5","MTTFO11_3;2;5","MTTFO11_4;2;5","MTTFO11_5;2;5","MTTFO12_1;1","MTTFO12_2;1","MTTFO12_3;1","MTTFO12_4;1","MTTFO12_5;1",
+    "TSE1_1;2","TSE2_1;3","TSE2_2;3","TSE2_3;3","TSE2_4;3","TSE2_5;3","TSE3_1;3","TSE3_2;3","TSE3_3;3","TSE3_4;3","TSE3_5;3","TSE4_1;2","TSE4_2;1","TSE4_3;2","TSE4_4;1","TSE5_1;3","TSE5_2;3","TSE5_3;3","TSE5_4;3","TSE5_5;3","TSE6_1;2","TSE6_2;2","TSE6_3;2","TSE6_4;0","TSE6_5;1","TSE8_1;2","TSE8_2;2","TSE8_3;1","TSE8_4;1","TSE8_5;2",
+    "MPC1_1;1","MPC1_2;1","MPC1_3;1","MPC1_4;1","MPC1_5;1","PCS1_1;1","PCS1_2;1","PCS1_3;1","PCS1_4;1","PCS1_5;1","PCS2_1;2","PCS2_2;2","PCS2_3;2","PCS2_4;2","PCS2_5;2",
+    "IC2_1;2","IC2_2;2","IC2_3;2","IC2_4;2","IC2_5;2","PTC1_1;2;4","PTC1_2;2;4","PTC1_3;2;4","PTC1_4;2;4",
+    "DTNSP3_1;2;4","DTNSP3_2;2;4","DTNSP3_3;2;4","DTNSP3_4;2;4"
+  ],
+    "l3": ["CPC3","CCCO4","CCCO7","CCCO9","CCCO10","CCCO11","MPD1","MPD2","MPD3","MPD4","MPD5","MTTFO5","MTTFO8","MTTFO9","MTTFO11","MTTFO12","TSE1","TSE2","TSE3","TSE4","TSE5","TSE6","TSE8","MPC1","PCS1","PCS2","IC2","PTC1","DTNSP3"],
+    "categoryL4": "Order Management System (OMS)"
+  },
+  "One Dispatch": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+  "Oplus": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Route & Planning Optimization"
+
+  },
+  "Oracle - Analytics": {
+  "l4": ["MOF1_1;3","MOF1_2;3","MOF1_3;3","MOF1_4;3","MOF1_5;2","MOF4_4;2","MOF5_4;2","MOF6_3;1"],
+  "l3": ["MOF1","MOF4","MOF5","MOF6"],
+    "categoryL4": "Reporting & BI"
+  },
+  "Oracle BI Solutions": {
+  "l4": ["MOF1_1;3","MOF1_2;3","MOF1_3;3","MOF1_4;3","MOF1_5;2","MOF4_4;2","MOF5_4;2","MOF6_3;1"],
+  "l3": ["MOF1","MOF4","MOF5","MOF6"],
+    "categoryL4": "Reporting & BI"
+  },
+  "Oracle-EBS": {
+    "l4": [],
+    "l3": ["MOF1","MOF2","MOF3"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "Oracle-OTM": {
+    "l4": [],
+    "l3": ["PPQ1","MPC1"],
+    "categoryL4": "TMS"
+  },
+  "Oracle-Siebel": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "CRM"
+  },
+  "ORION ANZ": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+  "ORION Brazil": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+    "ORS": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "OVL_INES_BATCH": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Integration & Middleware"
+  },
+  "Panoptes (Ex Neopost)": {
+    "l4": ["TSE3_1;2","TSE3_2;0","TSE3_3;3","TSE3_4;1","TSE3_5;2","TSE6_1;0","TSE6_2;1"],
+    "l3": ["TSE3","TSE6"],
+    "categoryL4": "Track & Trace"
+  },
+  "Paragon UKIN": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "PARTS": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "TMS" 
+  },
+  "PathFind": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "PC Miler": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Track & Trace"
+  },
+  "PCSTrac": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Track & Trace"
+  },
+  "Piattaforma SMS": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Documents & Collaboration"
+  },
+  "Project 44 (Ground)": {
+    "l4": ["TSE2_1;2","TSE2_2;2","TSE2_3;2","TSE2_4;2","TSE2_5;2","TSE3_1;3","TSE3_2;3","TSE3_3;3","TSE3_4;3","TSE3_5;2","TSE4_1;1","TSE4_2;1","TSE4_3;1","TSE4_4;1","TSE6_1;2","TSE6_2;2","TSE6_3;1","TSE6_4;3","TSE6_5;3","TSE7_1;3","TSE7_2;3","TSE7_3;3","TSE7_4;3","TSE7_5;3","TSE8_1;3","TSE8_2;3","TSE8_3;3","TSE8_4;3","TSE8_5;2"],
+    "l3": ["TSE2","TSE3","TSE4","TSE6","TSE7","TSE8"],
+    "categoryL4": "Track & Trace"
+  },
+  "PTV OptiFlow": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "PTV Route Optimizer": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "PTV Xserver": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "Integration & Middleware"
+  },
+  "Quadient (Ground)": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "CRM"
+  },
+  "Raal Trans": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+  "Rail-Flow": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+  "REPOM": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "RO e-Transport": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "Legal Compliance"
+  },
+  "RouteMax": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "Samsara MyFleet": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "Asset & Fleet Management"
+  },
+  "SDS": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Asset & Fleet Management"
+  },
+  "Sertifi": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Track & Trace"
+  },
+   "Sharenet": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Asset & Fleet Management"
+  },
+  "Sherlock Waste": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Documents & Collaboration"
+  },
+  "Ship track": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Track & Trace"
+  },
+  "Shiplify": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "SHIPPER": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "TMS"
+  },
+  "Silogtran": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "Legal Compliance"
+  },
+  "Smartsheet": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Documents & Collaboration"
+  },
+  "SOTI MobiControl": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+   "categoryL4": "Track & Trace"
+  },
+  "Speditor.net": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+  "Speed TMS": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "TMS"
+  },
+  "SphereWMS": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "WMS"
+  },
+  "Stratagi": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Track & Trace"
+  },
+  "Sub-It": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "Surgere": {
+    "l4": ["TSE3_1;3","TSE3_2;1","TSE3_3;0","TSE3_4;2","TSE3_5;1","TSE6_1;2","TSE6_2;0"],
+    "l3": ["TSE3","TSE6"],
+    "categoryL4": "Track & Trace"
+  },
+  "Tarot Analytics": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Last Mile Distribution"
+  },
+  "TC1GDO": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+    "Telerik DevCraft": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "ntegration & Middleware"
+  },
+  "Teliae": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Last Mile Distribution"
+  },
+  "Teranalytics-Linehaul Scheduler": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "Teranalytics-Station Gravity": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+    "TIBCO SCM": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Integration & Middleware"
+  },
+  "Time Slot Control (Ground)": {
+    "l4": ["TSE3_1;2","TSE3_2;0","TSE3_3;3","TSE3_4;1","TSE3_5;2","TSE6_1;0","TSE6_2;1"],
+    "l3": ["TSE3","TSE6"],
+    "categoryL4": "Track & Trace"
+  },
+  "Timocom": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+   "Titan Hyperion": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Asset & Fleet Management"
+  },
+  "TMS Customer Web": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Customer Portal"
+  },
+  "TMS Portal": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Customer Portal"
+  },
+  "TOSCA": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Integration & Middleware"
+  },
+  "Trans.eu": {
+    "l4": [],
+    "l3": ["MME1","MTTFO1"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+  "TransNET": {
+    "l4": [],
+    "l3": ["CMAC1","MPC1"],
+    "categoryL4": "TMS"
+  },
+  "Transporeon": {
+    "l4": [],
+    "l3": ["CPC1","TSE3"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+  "TraspoJ": {
+    "l4": [],
+    "l3": ["MCCRR1","MOS1"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "TV Preview - API": {
+    "l4": [],
+    "l3": ["PPQ1","TSE3"],
+    "categoryL4": "Integration & Middleware"
+  },
+  "TXVISIO": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Asset & Fleet Management"
+  },
+  "Upply": {
+    "l4": [],
+    "l3": ["MME1","CCCO1"],
+    "categoryL4": "Freight Marketplaces & Tendering"
+  },
+  "Vectio": {
+    "l4": [],
+    "l3": ["MPD1","CCCO1"],
+    "categoryL4": "Carriers Portal"
+  },
+  "Vypex": {
+    "l4": ["TSE3_1;1","TSE3_2;3","TSE3_3;0","TSE3_4;2","TSE3_5;1","TSE6_1;2","TSE6_2;0"],
+    "l3": ["TSE3","TSE6"],
+    "categoryL4": "Track & Trace"
+  },
+  "Waplanner": {
+    "l4": [],
+    "l3": ["MPD1","MTTFO1","CMAC1"],
+    "categoryL4": "TMS"
+  },
+  "Winroute": {
+    "l4": [],
+    "l3": ["MPD2","MTTFO2","CMAC2"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "Worldport": {
+    "l4": [],
+    "l3": ["MPD3","MTTFO3","CMAC3"],
+    "categoryL4": "TMS"
+  },
+  "Xcargo": {
+    "l4": [],
+    "l3": ["MPD4","MTTFO4","CMAC1"],
+    "categoryL4": "Route & Planning Optimization"
+  },
+  "XMLSpy": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Integration & Middleware"
+  },
+  "XPlanis xGU": {
+    "l4": [],
+    "l3": ["MPD1","MTTFO6","CMAC3"],
+    "categoryL4": "Financial & Settlement Systems"
+  },
+  "YMS 3M": {
+    "l4": [],
+    "l3": ["MPD2","MTTFO7","CMAC1"],
+    "categoryL4": "YMS"
+  }
+}

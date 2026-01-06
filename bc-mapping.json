@@ -1,0 +1,177 @@
+{
+  "_hierarchy": {
+    "TM": {
+      "TM1": {
+        "MBC1": ["MBC1_1", "MBC1_2", "MBC1_3", "MBC1_4"],
+        "MBC2": ["MBC2_1", "MBC2_2", "MBC2_3", "MBC2_4"],
+        "MBC3": ["MBC3_1", "MBC3_2", "MBC3_3", "MBC3_4", "MBC3_5"],
+        "MBC4": ["MBC4_1", "MBC4_2", "MBC4_3", "MBC4_4", "MBC4_5"]
+      },
+      "TM2": {
+        "MPD1": ["MPD1_1", "MPD1_2", "MPD1_3", "MPD1_4", "MPD1_5"],
+        "MPD2": ["MPD2_1", "MPD2_2", "MPD2_3", "MPD2_4", "MPD2_5"],
+        "MPD3": ["MPD3_1", "MPD3_2", "MPD3_3", "MPD3_4"],
+        "MPD4": ["MPD4_1", "MPD4_2", "MPD4_3", "MPD4_4", "MPD4_5"],
+        "MPD5": ["MPD5_1", "MPD5_2", "MPD5_3", "MPD5_4", "MPD5_5"]
+      },
+      "TM3": {
+        "MTTFO1": ["MTTFO1_1", "MTTFO1_2", "MTTFO1_3", "MTTFO1_4", "MTTFO1_5"],
+        "MTTFO2": ["MTTFO2_1", "MTTFO2_2", "MTTFO2_3", "MTTFO2_4"],
+        "MTTFO3": ["MTTFO3_1", "MTTFO3_2", "MTTFO3_3", "MTTFO3_4"],
+        "MTTFO4": ["MTTFO4_1", "MTTFO4_2", "MTTFO4_3", "MTTFO4_4"],
+        "MTTFO5": ["MTTFO5_1", "MTTFO5_2", "MTTFO5_3", "MTTFO5_4", "MTTFO5_5"],
+        "MTTFO6": ["MTTFO6_1", "MTTFO6_2", "MTTFO6_3", "MTTFO6_4", "MTTFO6_5"],
+        "MTTFO7": ["MTTFO7_1", "MTTFO7_2", "MTTFO7_3", "MTTFO7_4", "MTTFO7_5"],
+        "MTTFO8": ["MTTFO8_1", "MTTFO8_2", "MTTFO8_3", "MTTFO8_4", "MTTFO8_5"],
+        "MTTFO9": ["MTTFO9_1", "MTTFO9_2", "MTTFO9_3", "MTTFO9_4", "MTTFO9_5"],
+        "MTTFO10": ["MTTFO10_1", "MTTFO10_2", "MTTFO10_3", "MTTFO10_4", "MTTFO10_5"],
+        "MTTFO11": ["MTTFO11_1", "MTTFO11_2", "MTTFO11_3", "MTTFO11_4", "MTTFO11_5"],
+        "MTTFO12": ["MTTFO12_1", "MTTFO12_2", "MTTFO12_3", "MTTFO12_4", "MTTFO12_5"],
+        "MTTFO13": ["MTTFO13_1", "MTTFO13_2", "MTTFO13_3", "MTTFO13_4", "MTTFO13_5"],
+        "MTTFO14": ["MTTFO14_1", "MTTFO14_2", "MTTFO14_3", "MTTFO14_4", "MTTFO14_5"]
+      },
+      "TM4": {
+        "MCCRR1": ["MCCRR1_1", "MCCRR1_2", "MCCRR1_3", "MCCRR1_4", "MCCRR1_5"],
+        "MCCRR2": ["MCCRR2_1", "MCCRR2_2", "MCCRR2_3", "MCCRR2_4", "MCCRR2_5"],
+        "MCCRR3": ["MCCRR3_1", "MCCRR3_2", "MCCRR3_3", "MCCRR3_4", "MCCRR3_5"]
+      },
+      "TM5": {
+        "TSE1": ["TSE1_1"],
+        "TSE2": ["TSE2_1", "TSE2_2", "TSE2_3", "TSE2_4", "TSE2_5"],
+        "TSE3": ["TSE3_1", "TSE3_2", "TSE3_3", "TSE3_4", "TSE3_5"],
+        "TSE4": ["TSE4_1", "TSE4_2", "TSE4_3", "TSE4_4"],
+        "TSE5": ["TSE5_1", "TSE5_2", "TSE5_3", "TSE5_4", "TSE5_5"],
+        "TSE6": ["TSE6_1", "TSE6_2", "TSE6_3", "TSE6_4", "TSE6_5"],
+        "TSE7": ["TSE7_1", "TSE7_2", "TSE7_3", "TSE7_4", "TSE7_5"],
+        "TSE8": ["TSE8_1", "TSE8_2", "TSE8_3", "TSE8_4", "TSE8_5"]
+      },
+      "TM6": {
+        "MPC1": ["MPC1_1", "MPC1_2", "MPC1_3", "MPC1_4", "MPC1_5"],
+        "MPC2": ["MPC2_1", "MPC2_2", "MPC2_3", "MPC2_4", "MPC2_5"]
+      },
+      "TM7": {
+        "PCS1": ["PCS1_1", "PCS1_2", "PCS1_3", "PCS1_4", "PCS1_5"],
+        "PCS2": ["PCS2_1", "PCS2_2", "PCS2_3", "PCS2_4", "PCS2_5"]
+      }
+    },
+    "OM": {
+      "OM1": {
+        "CMAC1": ["CMAC1_1", "CMAC1_2", "CMAC1_3", "CMAC1_4"],
+        "CMAC2": ["CMAC2_1", "CMAC2_2", "CMAC2_3", "CMAC2_4", "CMAC2_5"],
+        "CMAC3": ["CMAC3_1", "CMAC3_2", "CMAC3_3", "CMAC3_4", "CMAC3_5"]
+      },
+      "OM2": {
+        "PPQ1": ["PPQ1_1", "PPQ1_2", "PPQ1_3", "PPQ1_4", "PPQ1_5"],
+        "PPQ2": ["PPQ2_1", "PPQ2_2", "PPQ2_3", "PPQ2_4"],
+        "PPQ3": ["PPQ3_1", "PPQ3_2", "PPQ3_3", "PPQ3_4"],
+        "PPQ4": ["PPQ4_1", "PPQ4_2", "PPQ4_3", "PPQ4_4"]
+      },
+      "OM3": {
+        "CPC1": ["CPC1_1", "CPC1_2", "CPC1_3", "CPC1_4", "CPC1_5"],
+        "CPC2": ["CPC2_1", "CPC2_2", "CPC2_3", "CPC2_4"],
+        "CPC3": ["CPC3_1", "CPC3_2", "CPC3_3", "CPC3_4"]
+      },
+      "OM4": {
+        "MOS1": ["MOS1_1", "MOS1_2", "MOS1_3", "MOS1_4", "MOS1_5"],
+        "MOS2": ["MOS2_1", "MOS2_2", "MOS2_3", "MOS2_4", "MOS2_5"],
+        "MOS3": ["MOS3_1", "MOS3_2", "MOS3_3", "MOS3_4", "MOS3_5"],
+        "MOS4": ["MOS4_1", "MOS4_2", "MOS4_3", "MOS4_4"],
+        "MOS5": ["MOS5_1", "MOS5_2", "MOS5_3", "MOS5_4"]
+      },
+      "OM5": {
+        "CCCO1": ["CCCO1_1", "CCCO1_2", "CCCO1_3", "CCCO1_4", "CCCO1_5"],
+        "CCCO2": ["CCCO2_1", "CCCO2_2", "CCCO2_3", "CCCO2_4", "CCCO2_5"],
+        "CCCO3": ["CCCO3_1", "CCCO3_2", "CCCO3_3", "CCCO3_4", "CCCO3_5"],
+        "CCCO4": ["CCCO4_1", "CCCO4_2", "CCCO4_3", "CCCO4_4", "CCCO4_5"],
+        "CCCO5": ["CCCO5_1", "CCCO5_2", "CCCO5_3", "CCCO5_4", "CCCO5_5"],
+        "CCCO6": ["CCCO6_1", "CCCO6_2", "CCCO6_3", "CCCO6_4"],
+        "CCCO7": ["CCCO7_1", "CCCO7_2", "CCCO7_3", "CCCO7_4"],
+        "CCCO8": ["CCCO8_1", "CCCO8_2", "CCCO8_3", "CCCO8_4", "CCCO8_5"],
+        "CCCO9": ["CCCO9_1", "CCCO9_2", "CCCO9_3", "CCCO9_4"],
+        "CCCO10": ["CCCO10_1", "CCCO10_2", "CCCO10_3", "CCCO10_4", "CCCO10_5"],
+        "CCCO11": ["CCCO11_1", "CCCO11_2", "CCCO11_3", "CCCO11_4", "CCCO11_5"],
+        "CCCO12": ["CCCO12_1", "CCCO12_2", "CCCO12_3", "CCCO12_4", "CCCO12_5"],
+        "CCCO13": ["CCCO13_1", "CCCO13_2", "CCCO13_3", "CCCO13_4", "CCCO13_5"],
+        "CCCO14": ["CCCO14_1", "CCCO14_2", "CCCO14_3", "CCCO14_4", "CCCO14_5"],
+        "CCCO15": ["CCCO15_1", "CCCO15_2", "CCCO15_3", "CCCO15_4", "CCCO15_5"],
+        "CCCO16": ["CCCO16_1", "CCCO16_2", "CCCO16_3", "CCCO16_4", "CCCO16_5"]
+      }
+    },
+    "CM": {
+      "CM1": {
+        "SCOC1": ["SCOC1_1", "SCOC1_2", "SCOC1_3", "SCOC1_4", "SCOC1_5"],
+        "SCOC2": ["SCOC2_1", "SCOC2_2", "SCOC2_3", "SCOC2_4"],
+        "SCOC3": ["SCOC3_1", "SCOC3_2", "SCOC3_3", "SCOC3_4"],
+        "SCOC4": ["SCOC4_1", "SCOC4_2", "SCOC4_3", "SCOC4_4"]
+      },
+      "CM2": {
+        "IC1": ["IC1_1", "IC1_2", "IC1_3", "IC1_4"],
+        "IC2": ["IC2_1", "IC2_2", "IC2_3", "IC2_4", "IC2_5"]
+      },
+      "CM3": {
+        "MCCI1": ["MCCI1_1", "MCCI1_2", "MCCI1_3", "MCCI1_4", "MCCI1_5"],
+        "MCCI2": ["MCCI2_1", "MCCI2_2", "MCCI2_3", "MCCI2_4", "MCCI2_5"]
+      },
+      "CM4": {
+        "PTC1": ["PTC1_1", "PTC1_2", "PTC1_3", "PTC1_4"],
+        "PTC2": ["PTC2_1", "PTC2_2", "PTC2_3", "PTC2_4"],
+        "PTC3": ["PTC3_1", "PTC3_2", "PTC3_3", "PTC3_4", "PTC3_5"],
+        "PTC4": ["PTC4_1", "PTC4_2", "PTC4_3", "PTC4_4", "PTC4_5"],
+        "PTC5": ["PTC5_1", "PTC5_2", "PTC5_3", "PTC5_4", "PTC5_5"],
+        "PTC6": ["PTC6_1", "PTC6_2", "PTC6_3", "PTC6_4", "PTC6_5"]
+      },
+      "CM5": {
+        "MCP1": ["MCP1_1", "MCP1_2", "MCP1_3", "MCP1_4", "MCP1_5"],
+        "MCP2": ["MCP2_1", "MCP2_2", "MCP2_3", "MCP2_4"],
+        "MCR1": ["MCR1_1", "MCR1_2", "MCR1_3", "MCR1_4"]
+      }
+    },
+    "ANM": {
+      "ANM1": {
+        "DTNSP1": ["DTNSP1_1", "DTNSP1_2", "DTNSP1_3", "DTNSP1_4", "DTNSP1_5"],
+        "DTNSP2": ["DTNSP2_1", "DTNSP2_2", "DTNSP2_3", "DTNSP2_4"],
+        "DTNSP3": ["DTNSP3_1", "DTNSP3_2", "DTNSP3_3", "DTNSP3_4", "DTNSP3_5"],
+        "DTNSP4": ["DTNSP4_1", "DTNSP4_2", "DTNSP4_3", "DTNSP4_4", "DTNSP4_5"],
+        "DTNSP5": ["DTNSP5_1", "DTNSP5_2", "DTNSP5_3", "DTNSP5_4"],
+        "DTNSP6": ["DTNSP6_1", "DTNSP6_2", "DTNSP6_3", "DTNSP6_4", "DTNSP6_5"]
+      },
+      "ANM2": {
+        "MA1": ["MA1_1", "MA1_2", "MA1_3", "MA1_4"],
+        "MA2": ["MA2_1", "MA2_2", "MA2_3", "MA2_4"],
+        "MA3": ["MA3_1", "MA3_2", "MA3_3", "MA3_4", "MA3_5"],
+        "MA4": ["MA4_1", "MA4_2", "MA4_3", "MA4_4", "MA4_5"],
+        "MA5": ["MA5_1", "MA5_2", "MA5_3", "MA5_4", "MA5_5"],
+        "MA6": ["MA6_1", "MA6_2", "MA6_3", "MA6_4", "MA6_5"],
+        "MA7": ["MA7_1", "MA7_2", "MA7_3", "MA7_4", "MA7_5"]
+      },
+      "ANM3": {
+        "MME1": ["MME1_1", "MME1_2", "MME1_3", "MME1_4", "MME1_5"]
+      },
+      "ANM4": {
+        "MMNP1": ["MMNP1_1", "MMNP1_2", "MMNP1_3", "MMNP1_4"],
+        "MMNP2": ["MMNP2_1", "MMNP2_2", "MMNP2_3", "MMNP2_4", "MMNP2_5"],
+        "MMNP3": ["MMNP3_1", "MMNP3_2", "MMNP3_3", "MMNP3_4"],
+        "MMNP4": ["MMNP4_1", "MMNP4_2", "MMNP4_3", "MMNP4_4", "MMNP4_5"],
+        "MMNP5": ["MMNP5_1", "MMNP5_2", "MMNP5_3", "MMNP5_4", "MMNP5_5"]
+      }
+    },
+    "OP": {
+      "OP1": {
+        "DMPRODUCTS": ["DMPRODUCTS_1", "DMPRODUCTS_2", "DMPRODUCTS_3", "DMPRODUCTS_4", "DMPRODUCTS_5"]
+      },
+      "OP2": {
+        "DMPRICING": ["DMPRICING_1", "DMPRICING_2", "DMPRICING_3", "DMPRICING_4"]
+      }
+    },
+    "FM": {
+      "FM1": {
+        "MOF1": ["MOF1_1", "MOF1_2", "MOF1_3", "MOF1_4", "MOF1_5"],
+        "MOF2": ["MOF2_1", "MOF2_2", "MOF2_3", "MOF2_4", "MOF2_5"],
+        "MOF3": ["MOF3_1", "MOF3_2", "MOF3_3", "MOF3_4", "MOF3_5"],
+        "MOF4": ["MOF4_1", "MOF4_2", "MOF4_3", "MOF4_4", "MOF4_5"],
+        "MOF5": ["MOF5_1", "MOF5_2", "MOF5_3", "MOF5_4", "MOF5_5"],
+        "MOF6": ["MOF6_1", "MOF6_2", "MOF6_3", "MOF6_4", "MOF6_5"]
+      }
+    }
+  }
+}
