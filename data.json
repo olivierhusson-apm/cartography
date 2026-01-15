@@ -967,7 +967,7 @@
     "application_code": "APP09045",
     "7R_analysis": "Remain",
     "portfolio_entry": "",
-    "active_years": ["2025", "2026", "2027", "2028", "2029"],
+    "active_years": ["2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Web based safety training modules primarily for truck drivers. We have the ability to add / create our own content as well. Regulation requires documented safety training program that meets requiremtents. This program meets those regulations and tracks performance for us."
   },
@@ -2365,4 +2365,5 @@
     "description": "Legacy Yard Management system for specific US locations.",
     "replace_by": "Matrix TMS (YMS)"
   }
+
 ]
