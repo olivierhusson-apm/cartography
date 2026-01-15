@@ -473,7 +473,7 @@
               if (validStatuses.length > 0) {
                 const maxStatus = Math.max(...validStatuses);
                 // Afficher le cercle coloré basé sur le statut
-                const statusLabels = ['Absent', 'Manuel', 'Semi-auto', 'Automatique'];
+                const statusLabels = ['Absent', 'Manual', 'Semi-auto', 'Auto'];
                 statusDisplay = statusLabels[maxStatus];
               }
               
@@ -612,9 +612,9 @@
             const l4StatusMap = {
               undefined: { label: "Indéfini", color: "#bbb" },
               0: { label: "Absent", color: "#e53935" },
-              1: { label: "Manuel", color: "#ff9800" },
+              1: { label: "Manual", color: "#ff9800" },
               2: { label: "Semi-auto", color: "#66bb6a" },
-              3: { label: "Automatique", color: "#2e7d32" },
+              3: { label: "Auto", color: "#2e7d32" },
               4: { label: "Externe", color: null } // couleur dynamique
             };
             l4sAttendue.forEach(l4=>{
