@@ -39,7 +39,7 @@
   "l3": ["PPQ1","MCCRR1","MME1"],
   "categoryL4": "Freight Marketplaces & Tendering"
 },
-"Boreus": {
+"BOREUS": {
   "l4": [],
   "l3": ["MOS1","MPC1","MME1"],
   "categoryL4": "Track & Trace"
@@ -59,7 +59,7 @@
   "l3": ["CCCO1","MBC1","MME1"],
   "categoryL4": "Route & Planning Optimization"
 },
-"Canada reporting": {
+"Canada Reporting": {
   "l4": ["MOF1_1;3","MOF1_2;3","MOF1_3;3","MOF1_4;3","MOF1_5;2","MOF4_4;2","MOF5_4;2","MOF6_3;1"],
   "l3": ["MOF1","MOF4","MOF5","MOF6"],
   "categoryL4": "Reporting & BI"
@@ -109,7 +109,7 @@
   "l3": ["CCCO1","MTTFO1","MME1"],
   "categoryL4": "YMS"
 },
-"CEVACONNECT (PFS)": {
+"CEVACONNECT (PFS) Portail Client 3PL": {
   "l4": [],
   "l3": ["CPC1","MPC1","MME1"],
   "categoryL4": "Customer Portal"
@@ -211,7 +211,7 @@
   "l3": ["CCCO1","MPC1","MME1"],
   "categoryL4": "Integration & Middleware"
 },
-"Agence digitale": {
+"Digital agency": {
 "l4": [],
   "l3": ["CPC1","MCCRR1","MME1"],
   "categoryL4": "TMS"
@@ -226,7 +226,7 @@
   "l3": ["PPQ1","MPC1","MME1"],
   "categoryL4": "Documents & Collaboration"
 },
-"E2Open Booking": {
+"E2Open - Booking": {
   "l4": [],
   "l3": ["CPC1","MBC1","MME1"],
   "categoryL4": "Documents & Collaboration"
@@ -311,7 +311,7 @@
     "l3": ["MOS1","MPC1"],
     "categoryL4": "Customer Portal"
   },
-  "GoComet Tracking": {
+  "GOCOMET - Tracking": {
     "l4": [],
     "l3": ["CCCO1","MBC1"],
     "categoryL4": "Track & Trace"
@@ -366,6 +366,11 @@
   ],
   "l3": ["CMAC1","PPQ1","CPC1","CPC3","MOS4","CCCO1","CCCO3","CCCO4","CCCO5","CCCO6","CCCO7","CCCO8","CCCO9","CCCO10","CCCO11","CCCO12","CCCO14","CCCO15","CCCO16","MBC1","MBC2","MBC3","MBC4","MPD1","MPD2","MPD3","MPD4","MPD5","MTTFO1","MTTFO2","MTTFO3","MTTFO5","MTTFO6","MTTFO7","MTTFO8","MTTFO9","MTTFO11","MTTFO12","MTTFO13","MCCRR1","MCCRR2","MCCRR3","TSE1","TSE2","TSE3","TSE4","TSE5","TSE8","MPC1","PCS1","PCS2","IC1","IC2","PTC1","PTC2","PTC3","PTC4","PTC5","PTC6","DTNSP3","DMPRICING"]
   },
+  "Infiniti": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Control & Quality"
+    },
   "INSPECTO": {
     "l4": [],
     "l3": ["MCCRR1","MOS1"],
@@ -946,6 +951,11 @@
     "l4": [],
     "l3": [],
     "categoryL4": "Asset & Fleet Management"
+  },
+  "UM": {
+    "l4": [],
+    "l3": [],
+    "categoryL4": "Integration & Middleware"
   },
   "Upply": {
     "l4": [],

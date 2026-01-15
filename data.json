@@ -7,9 +7,11 @@
     "application_code": "APP05313",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Third party application to manage pallets. Pallet tracking",
-    "replace_by": "Orion ANZ"
+    "replace_by": "Orion ANZ",
+    "tco": 42000.0
   },
   {
     "name": "4flow",
@@ -18,6 +20,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08764",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "A cloud-based business process management and supply chain optimization solution offering consulting, software, and 4PL services. Used for stellantis flows (IFCSUM & IFTSTA)."
   },
@@ -29,6 +32,7 @@
     "application_code": "APP06989",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "BIERNACKI Scott",
     "description": "US Legacy reporting app, replaced by Matrix Report Manager.",
     "replace_by": "Matrix TMS"
@@ -41,9 +45,12 @@
     "application_code": "APP05653",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "mar",
+    "active_years": ["2025", "2026"],
     "it_owner": "PEREIRA BRUNO",
     "description": "TMS application used in Argentina.",
-    "replace_by": "ORION Brazil"
+    "replace_by": "ORION Brazil",
+    "tco": 10000.0
   },
   {
     "name": "Allo",
@@ -52,6 +59,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP08832",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Network strategic and tactical logistics optimization tool used by Honda."
   },
@@ -62,8 +70,23 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP08765",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Performs middleware functions in logistics. Integrates disparate systems and enables data flow. Used for Volvo cars, Bosch and Scania."
+  },
+  {
+    "name": "Apolo",
+    "countries": ["France"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06733",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "active_years": ["2025"],
+    "it_owner": "RAUCH, Nancy, DEBERT, Julien",
+    "description": "Datawiz for Operational execution on Ground business",
+    "replace_by": ""
   },
   {
     "name": "ASTAG GU (Ground)",
@@ -72,6 +95,7 @@
     "category": "Customs",
     "application_code": "APP07931",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien, Santoni Paolo",
     "description": "Data base calculation for goods transport in CHE."
   },
@@ -82,17 +106,19 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP04709",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Road marketplace for transportation.",
     "replace_by": "B2P Global contract"
   },
   {
-    "name": "Boreus",
+    "name": "BOREUS",
     "countries": ["Switzerland"],
     "regions": ["europe"],
     "category": "Track & Trace",
     "application_code": "APP08811",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo",
     "description": "DPD Shipper & Quadient - POD Management from DPD partner - BOREUS FTP server for Quadient."
   },
@@ -103,6 +129,7 @@
     "category": "Track & Trace",
     "application_code": "APP05680",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Track and trace system integrated with TMS ORION."
   },
@@ -113,6 +140,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP07945",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BERNICOT, Marc",
     "description": "EDI solution used in Poland."
   },
@@ -124,9 +152,11 @@
     "application_code": "APP04621",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "The portal offered to Customers to track their shipments.",
-    "replace_by": "Possibly INES Long term"
+    "replace_by": "Possibly INES Long term",
+    "tco": 26786.82
   },
   {
     "name": "CADIS (R4)",
@@ -135,20 +165,23 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP05503",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Last mile management for network pick-up and delivery."
   },
   {
-    "name": "Canada reporting",
+    "name": "Canada Reporting",
     "countries": ["Canada"],
     "regions": ["nortam"],
     "category": "Reporting & BI",
     "application_code": "APP05246",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Habara Rudy",
     "description": "Used in Canada for operational and financial Reporting.",
-    "replace_by": "Matrix SCM"
+    "replace_by": "Matrix SCM",
+    "tco": 26554.0
   },
   {
     "name": "Canada scanning",
@@ -158,9 +191,11 @@
     "application_code": "APP08726",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Habara Rudy",
     "description": "Parcels scanning application.",
-    "replace_by": "Matrix"
+    "replace_by": "Matrix",
+    "tco": 20022.0
   },
   {
     "name": "Canada Shipping System",
@@ -170,9 +205,11 @@
     "application_code": "APP08739",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Habara Rudy",
     "description": "External portal to request/book transport for ceva.",
-    "replace_by": "MyCeva"
+    "replace_by": "MyCeva",
+    "tco": 21636.0
   },
   {
     "name": "Canada track",
@@ -182,6 +219,7 @@
     "application_code": "APP08742",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Habara Rudy",
     "description": "Warehouse T&T portal and labels printing.",
     "replace_by": "Matrix"
@@ -194,17 +232,21 @@
     "application_code": "APP04744",
     "7R_analysis": "Replace",
     "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "active_years": ["2025"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Seemann, Marco",
     "description": "Local TMS system.",
-    "replace_by": "INES"
+    "replace_by": "INES",
+    "tco": 101798.0
   },
   {
     "name": "Cargado",
-    "countries": ["United States of America","Canada", "Mexico"],
+    "countries": ["United States of America", "Canada", "Mexico"],
     "regions": ["nortam"],
     "category": "Digital Forwarding",
     "application_code": "APP09013",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Cargado is a technology-driven logistics platform designed to simplify cross-border freight operations between the U.S., Mexico, and Canada"
   },
@@ -215,6 +257,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08758",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Integration and labelling for Carriers."
   },
@@ -225,6 +268,7 @@
     "category": "Mobile Applications",
     "application_code": "APP04659",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, RAUCH, Nancy, DEBERT, Julien",
     "description": "Ground & Rail - Partial distribution LTL mobile."
   },
@@ -236,9 +280,12 @@
     "application_code": "APP04584",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "mar",
+    "active_years": ["2025", "2026"],
     "it_owner": "Cano Adolfo, Santoni Paolo, DEBERT, Julien",
     "description": "Allows external people to collect return requests and generates excel files.",
-    "replace_by": "INES"
+    "replace_by": "INES",
+    "tco": 24689.19
   },
   {
     "name": "CEVA SPOT MODULE",
@@ -247,39 +294,34 @@
     "category": "Digital Forwarding",
     "application_code": "APP05626",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "VERRECCHIA, Matthieu, DEBERT, Julien",
     "description": "SaaS platform for G&R Digital Freight Forwarding with bidding, tracking, and dispatching."
   },
   {
     "name": "CEVA YMS",
-    "countries": ["United States of America", "Netherlands", "Poland"],
-    "regions": ["nortam", "europe"],
-    "category": "YMS",
+    "countries": ["United States of America"],
+    "regions": ["nortam"],
+    "category": "Ground & Rail",
     "application_code": "APP05195",
     "7R_analysis": "Replace",
-    "7R_action_year": "2026",
+    "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "active_years": ["2025"],
     "it_owner": "Kelly Shawn",
-    "description": "Legacy Yard management system."
+    "description": "Legacy Yard management( Dell, BNA, ATL,DAL, IAH)",
+    "replace_by": "Matrix TMS"
   },
   {
-    "name": "CEVACONNECT (PFS)",
+    "name": "CEVACONNECT (PFS) Portail Client 3PL",
     "countries": ["Belgium", "Bulgaria", "Croatia", "Czech Republic", "France", "Germany", "Greece", "Hungary", "Ireland", "Lithuania", "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Switzerland", "Morocco", "Tunisia"],
     "regions": ["europe"],
     "category": "Customer Portal",
     "application_code": "APP05522",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "POUYE Fatou, RAUCH, Nancy, DEBERT, Julien",
     "description": "PFS front office for Carriers, Customers, and Partners."
-  },
-  {
-    "name": "Cevalution",
-    "countries": ["Turkey"],
-    "regions": ["europe"],
-    "category": "Track & Trace",
-    "application_code": "APP04661",
-    "7R_analysis": "Remain",
-    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
-    "description": "Ground & Rail - Partial distribution Track and Trace."
   },
   {
     "name": "CEVASSETS (BEXTER Trackonline)",
@@ -288,6 +330,7 @@
     "category": "Asset & Fleet Management",
     "application_code": "APP08048",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Reusable packaging asset management system."
   },
@@ -298,8 +341,20 @@
     "category": "Documents&Collaboration",
     "application_code": "APP06913",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Batch bulk mailing for order tracking."
+  },
+  {
+    "name": "Cevalution",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Track & Trace",
+    "application_code": "APP04661",
+    "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
+    "description": "Ground & Rail - Partial distribution Track and Trace."
   },
   {
     "name": "Cevatrack-Responsive",
@@ -309,9 +364,12 @@
     "application_code": "APP04634",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Customer order tracking portal for Ground consignments.",
-    "replace_by": "CEVACONNECT / myCEVA"
+    "replace_by": "CEVACONNECT (PFS) Portail Client 3PL / myCeva",
+    "tco": 18209.47
   },
   {
     "name": "Chronotruck",
@@ -320,6 +378,7 @@
     "category": "Digital Forwarding",
     "application_code": "APP05625",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "VERRECCHIA, Matthieu, DEBERT, Julien",
     "description": "SaaS platform for Digital Freightforwarding including pricing, invoicing, and T&T."
   },
@@ -330,6 +389,7 @@
     "category": "Claims & Damages",
     "application_code": "APP06772",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Agir Dilek",
     "description": "Managing damage on vehicles claimed by operational and insurance cases."
   },
@@ -341,9 +401,12 @@
     "application_code": "APP05506",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Carrier registration and tenders portal.",
-    "replace_by": "TRANSPOREON AND COUPA (SRM)"
+    "replace_by": "TRANSPOREON AND COUPA (SRM)",
+    "tco": 57475.0
   },
   {
     "name": "Comdata",
@@ -352,6 +415,7 @@
     "category": "Financial & Settlement Systems",
     "application_code": "APP05226",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rogers, Jeff (Houston)",
     "description": "3rd party application for paying independent contractors."
   },
@@ -362,6 +426,7 @@
     "category": "Track & Trace",
     "application_code": "APP04662",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Ground & Rail vehicle tracking."
   },
@@ -373,6 +438,8 @@
     "application_code": "APP05203",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Kelly Shawn",
     "description": "iSeries based CrossDock application for automotive contracts.",
     "replace_by": "Matrix TMS"
@@ -384,6 +451,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP05002",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Cubic Planning tool managed by Business."
   },
@@ -394,6 +462,7 @@
     "category": "Financial & Settlement Systems",
     "application_code": "APP09000",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "VERRECCHIA, Matthieu",
     "description": "Independent audit of freight rating against contract terms."
   },
@@ -404,6 +473,7 @@
     "category": "TMS",
     "application_code": "APP04664",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "LTL main application for partial distribution."
   },
@@ -414,6 +484,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08831",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Provides consulting and licences to maintain and secure IT components."
   },
@@ -424,6 +495,7 @@
     "category": "Customer Portal",
     "application_code": "APP04759",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "Vehicle inbound booking system with cross dock module."
   },
@@ -434,6 +506,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP08055",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
     "description": "Linehauls and trips optimization tool."
   },
@@ -444,6 +517,7 @@
     "category": "Documents & Collaboration",
     "application_code": "APP08830",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Sending Bulk SMS service."
   },
@@ -454,19 +528,36 @@
     "category": "Integration & Middleware",
     "application_code": "APP08772",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Global Logistics Network managing real-time flow of commercial information."
   },
-    {
-    "name": "Digital Agency",
+  {
+    "name": "Digital agency",
     "countries": ["Belgium", "Czech Republic", "France", "Germany", "Italy", "Poland", "Portugal", "Slovakia", "Spain", "United Kingdom", "Switzerland"],
     "regions": ["europe"],
     "category": "TMS",
     "application_code": "APP08943",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "VERRECCHIA, Matthieu",
-    "description": "Digital Freigt forwarding portal for spot lot activity"
+    "description": "Digital Freigt forwarding portal for spot lot activity",
+    "replace_by": "Ceva Spot Module"
+  },
+  {
+    "name": "Digital Archieve",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06824",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "active_years": ["2025"],
+    "it_owner": "Bayram, Kaan",
+    "description": "Ground & Rail - digital document archieve",
+    "replace_by": "DMS"
   },
   {
     "name": "Dispatch",
@@ -476,9 +567,12 @@
     "application_code": "APP05509",
     "7R_analysis": "Replace",
     "7R_action_year": "2028",
+    "7R_action_month": "mar",
+    "active_years": ["2025", "2026", "2027", "2028"],
     "it_owner": "RAUCH Nancy, DEBERT, Julien",
     "description": "Transports Speciaux (FVL France) TMS used for a specific adn customized confidentiel transport for customers",
-    "replace_by": "INES / Ceva Spot Module"
+    "replace_by": "INES / Ceva Spot Module",
+    "tco": 248518.0
   },
   {
     "name": "DMS",
@@ -487,6 +581,7 @@
     "category": "Documents & Collaboration",
     "application_code": "APP04666",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Document management system for Ground & Rail."
   },
@@ -498,19 +593,37 @@
     "application_code": "APP04625",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "Tool managing delivery notes and proof of delivery documents.",
-    "replace_by": "INES"
+    "replace_by": "INES",
+    "tco": 95270.0
   },
   {
-    "name": "E2Open Booking",
+    "name": "E2Open - Booking",
     "countries": ["Saudi Arabia"],
     "regions": ["imea"],
     "category": "Asset & Fleet Management",
     "application_code": "APP08829",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Shipping Line Booking System."
+  },
+  {
+    "name": "ECCO",
+    "countries": ["France"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06750",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "active_years": ["2025"],
+    "it_owner": "RAUCH, Nancy, DEBERT, Julien",
+    "description": "Datawiz for Operational execution on Ground business",
+    "replace_by": ""
   },
   {
     "name": "EDICOM iPaaS",
@@ -519,6 +632,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08766",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BERNICOT, Marc",
     "description": "Cloud-based integration for EDI, e-invoicing, and B2B communications."
   },
@@ -529,6 +643,7 @@
     "category": "Customer Portal",
     "application_code": "APP04627",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "Ediel logistics platform for slot booking."
   },
@@ -539,10 +654,13 @@
     "category": "Track & Trace",
     "application_code": "APP05223",
     "7R_analysis": "Replace",
-    "7R_action_year": "2027",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rogers, Jeff (Houston)",
     "description": "Capture thru RF scan of Nortam HAWBs arrival/departures.",
-    "replace_by": "Matrix TMS"
+    "replace_by": "Matrix TMS",
+    "tco": 4000.0
   },
   {
     "name": "EGL Scan Shuttles",
@@ -551,10 +669,13 @@
     "category": "Track & Trace",
     "application_code": "APP05199",
     "7R_analysis": "Replace",
-    "7R_action_year": "2027",
+    "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rogers, Jeff (Houston)",
     "description": "Moves HAWB scan data between EGLScan, Matrix scan and Worldport tables.",
-    "replace_by": "Matrix TMS"
+    "replace_by": "Matrix TMS",
+    "tco": 4000.0
   },
   {
     "name": "ELO ANZ",
@@ -564,9 +685,26 @@
     "application_code": "APP05303",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "mar",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Ramasamy Velu",
     "description": "Data Digitisation, storage and retrieval.",
-    "replace_by": "INES for DEU and ORION ANZ"
+    "replace_by": "INES for DEU and ORION ANZ",
+    "tco": 28185.0
+  },
+  {
+    "name": "ELO DE",
+    "countries": ["Germany"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP08622",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jun",
+    "active_years": ["2025"],
+    "it_owner": "Seemann, Marco, Santoni Paolo, DEBERT, Julien",
+    "description": "Data Digitisation, storage and retrieval",
+    "replace_by": "INES for DEU"
   },
   {
     "name": "Fleetwave",
@@ -575,6 +713,7 @@
     "category": "Asset & Fleet Management",
     "application_code": "APP08120",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Muro, Juan Manuel",
     "description": "Fleet & asset management including maintenance and reporting."
   },
@@ -585,6 +724,7 @@
     "category": "Track & Trace",
     "application_code": "APP08671",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Telematics devices system for fleet management."
   },
@@ -595,8 +735,37 @@
     "category": "TMS",
     "application_code": "APP06699",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Wang, Bo",
     "description": "Transportation system used in China."
+  },
+  {
+    "name": "FordEdi",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06760",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr",
+    "active_years": ["2025"],
+    "it_owner": "Agir Dilek",
+    "description": "printing label for ford package",
+    "replace_by": ""
+  },
+  {
+    "name": "FordReturn",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06761",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr",
+    "active_years": ["2025"],
+    "it_owner": "Santoni Paolo, DEBERT, Julien, Agir Dilek",
+    "description": "spare parts returns",
+    "replace_by": ""
   },
   {
     "name": "Forecast & Adapt",
@@ -605,6 +774,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP08999",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "VERRECCHIA, Matthieu",
     "description": "Tool used to optimize hourly forecasted volume to labor requirements."
   },
@@ -616,6 +786,7 @@
     "application_code": "APP06830",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Santoni Paolo, DEBERT, Julien",
     "description": "Complaints management system for Ground & Rail in Poland.",
     "replace_by": "Clearsight"
@@ -628,9 +799,12 @@
     "application_code": "APP05524",
     "7R_analysis": "Replace",
     "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "active_years": ["2025"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
     "description": "Networking Reusable packaging portal.",
-    "replace_by": "BAXTER (trackonline)"
+    "replace_by": "BAXTER (trackonline)",
+    "tco": 118550.0
   },
   {
     "name": "Genio",
@@ -640,8 +814,11 @@
     "application_code": "APP05492",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "BERNICOT, Marc",
-    "description": "Integration/extraction of large files, data exchange, and batch processing."
+    "description": "Integration/extraction of large files, data exchange, and batch processing.",
+    "tco": 134428.0
   },
   {
     "name": "Geoserver",
@@ -650,6 +827,7 @@
     "category": "Track & Trace",
     "application_code": "APP07987",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Open source server for sharing geospatial data."
   },
@@ -661,9 +839,11 @@
     "application_code": "APP05526",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
     "description": "Local app for GLT operations (LTL/FTL + Fleet management).",
-    "replace_by": "INES"
+    "replace_by": "INES",
+    "tco": 4583.27
   },
   {
     "name": "GM Customs Webportal",
@@ -672,16 +852,18 @@
     "category": "Customer Portal",
     "application_code": "APP05207",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Garcia Leiser",
     "description": "Check customer clearance status of HAWB."
   },
   {
-    "name": "GoComet Tracking",
+    "name": "GOCOMET - Tracking",
     "countries": ["Saudi Arabia"],
     "regions": ["imea"],
     "category": "Track & Trace",
     "application_code": "APP08828",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Real-time multimodal shipment tracking across road, rail, ocean, and air."
   },
@@ -692,6 +874,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08762",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Creates barcodes used worldwide in retail and logistics."
   },
@@ -703,20 +886,67 @@
     "application_code": "APP04597",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "BIERNACKI Scott",
     "description": "Visibility and appointment scheduling for B2C customers.",
-    "replace_by": "MyCeva"
+    "replace_by": "MyCeva",
+    "tco": 20556.0
+  },
+  {
+    "name": "HONDABARSAN",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06767",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr",
+    "active_years": ["2025"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
+    "description": "label printing system for Honda",
+    "replace_by": ""
   },
   {
     "name": "i2 replacement",
     "countries": ["United States of America"],
     "regions": ["nortam"],
-    "category": "Financial & Settlement Systems",
+    "category": "Ground & Rail",
     "application_code": "APP06991",
     "7R_analysis": "Replace",
     "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "active_years": ["2025"],
     "it_owner": "BIERNACKI Scott",
-    "description": "Invoicing system replacement."
+    "description": "Invoicing system",
+    "replace_by": "Matrix FSS"
+  },
+  {
+    "name": "INCI WEB PORTAL",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06777",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr",
+    "active_years": ["2025"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
+    "description": "receiving extraction from INES (invoice - legal constraints)",
+    "replace_by": ""
+  },
+  {
+    "name": "INCI WEB SERVICE",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06778",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr",
+    "active_years": ["2025"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
+    "description": "receiving extraction from INES (invoice - legal constraints)",
+    "replace_by": ""
   },
   {
     "name": "INES",
@@ -725,8 +955,35 @@
     "category": "TMS",
     "application_code": "APP05534",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy, PAPIN Anne",
     "description": "Network & Forwarding TMS managing vehicle chartering and messaging services."
+  },
+  {
+    "name": "Infiniti",
+    "countries": ["United States of America"],
+    "regions": ["nortam"],
+    "category": "Control & Quality",
+    "application_code": "APP09045",
+    "7R_analysis": "Remain",
+    "portfolio_entry": "",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
+    "it_owner": "BIERNACKI Scott",
+    "description": "Web based safety training modules primarily for truck drivers. We have the ability to add / create our own content as well. Regulation requires documented safety training program that meets requiremtents. This program meets those regulations and tracks performance for us."
+  },
+  {
+    "name": "InfoPortal",
+    "countries": ["Global"],
+    "regions": ["global"],
+    "category": "Ground & Rail",
+    "application_code": "APP04745",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jun",
+    "active_years": ["2025"],
+    "it_owner": "Seemann, Marco, Santoni Paolo, DEBERT, Julien",
+    "description": "Customer visibility portal",
+    "replace_by": "INES"
   },
   {
     "name": "INSPECTO",
@@ -735,6 +992,7 @@
     "category": "Control & Quality",
     "application_code": "APP08755",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "App for drivers to inspect vehicles before, during, and after loading."
   },
@@ -746,20 +1004,38 @@
     "application_code": "APP05100",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Rating of inter site vehicle movements.",
     "replace_by": "Qlick sense"
   },
   {
+    "name": "IsuzuEDI",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06785",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "apr",
+    "active_years": ["2025"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
+    "description": "label printing system for Isuzu",
+    "replace_by": ""
+  },
+  {
     "name": "Jasper Reports",
-    "countries": ["United Kingdom","Belgium","Netherlands","Luxembourg"],
+    "countries": ["United Kingdom", "Belgium", "Netherlands", "Luxembourg"],
     "regions": ["europe"],
     "category": "Financial & Settlement Systems",
     "application_code": "APP04746",
     "7R_analysis": "Retire",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, MarcoSantoni PaoloDEBERT, Julien",
-    "description": "Reporting" 
+    "description": "Reporting",
+    "tco": 23414.0
   },
   {
     "name": "LA",
@@ -769,9 +1045,11 @@
     "application_code": "APP04678",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Ground & Rail application for retirement.",
-    "replace_by": "Matrix TMS + DAGITIM"
+    "replace_by": "Matrix TMS + DAGITIM",
+    "tco": 29369.49
   },
   {
     "name": "Leopard",
@@ -781,9 +1059,25 @@
     "application_code": "APP06389",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Software for handheld scanners and drivers used for Transport moves.",
-    "replace_by": "Orion ANZ"
+    "replace_by": "Orion ANZ",
+    "tco": 32400.0
+  },
+  {
+    "name": "LOAD SAPX",
+    "countries": ["Brazil"],
+    "regions": ["latam"],
+    "category": "Ground & Rail",
+    "application_code": "APP05796",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jan",
+    "active_years": ["2025"],
+    "it_owner": "PEREIRA BRUNO",
+    "description": "Portal Load SAPX - PSA Outbound interface",
+    "replace_by": "ORION Brazil"
   },
   {
     "name": "Logistix",
@@ -792,6 +1086,7 @@
     "category": "Track & Trace",
     "application_code": "APP04626",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Platform to manage the Waste Electric and Electronic (WEEE) process."
   },
@@ -802,6 +1097,7 @@
     "category": "Track & Trace",
     "application_code": "APP08676",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kopara Stacey",
     "description": "Helps track and manage pooled assets using IoT networks."
   },
@@ -813,9 +1109,18 @@
     "application_code": "APP05541",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "sept",
+    "active_years": ["2025", "2026"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
     "description": "Cartography solutions for dispatchers.",
-    "replace_by": "Map & Guide Internet"
+    "replace_by": "Map & Guide Internet",
+    "tco": 56898.52
+  },
+  {
+    "name": "Matrix",
+    "countries": ["Belgium", "Netherlands", "Luxembourg", "Poland", "Spain", "Turkey", "United States of America", "Mexico", "Japan", "China", "Singapore", "Malaysia", "Thailand", "Indonesia", "Vietnam", "Chile", "Colombia", "Costa Rica", "Guatemala", "Panama", "Peru", "Paraguay", "Uruguay", "India", "United Arab Emirates", "Canada", "Philippines", "Cambodia", "Laos", "Myanmar", "Brunei", "Ireland", "United Kingdom"],
+    "regions": ["europe", "apac", "nortam", "imea", "latam"],
+    "active_years": ["2025", "2026", "2027", "2028", "2029"]
   },
   {
     "name": "Matrix FSS",
@@ -825,6 +1130,7 @@
     "hidden": true,
     "application_code": "APP04712",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Global stand-alone rating, freight audit, and invoicing solution."
   },
@@ -836,6 +1142,7 @@
     "hidden": true,
     "application_code": "APP07928",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Heilmann Pat",
     "description": "Supply Chain Intelligence for Business Intelligence and Customer Insight."
   },
@@ -847,39 +1154,43 @@
     "hidden": true,
     "application_code": "APP04713",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Pasmanik Gena",
     "description": "Integrated solution that enables full end-to-end supply chain management."
   },
   {
     "name": "Matrix TMS",
     "countries": ["Netherlands", "Spain", "Turkey", "United States of America", "Canada", "Mexico", "China", "Singapore", "Malaysia", "Thailand", "Indonesia", "Philippines", "Vietnam", "Cambodia", "Laos", "Myanmar", "Brunei", "Chile", "Colombia", "Costa Rica", "Guatemala", "Panama", "Peru", "Paraguay", "Uruguay", "India", "United Arab Emirates"],
-    "regions": ["europe", "apac", "nortam", "imea", "latam", "imea"],
+    "regions": ["europe", "apac", "nortam", "imea", "latam"],
     "category": "TMS",
     "hidden": true,
     "application_code": "APP05112",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Cloud-based platform for efficient planning and settlement."
   },
   {
     "name": "Matrix TMS - Core+",
     "countries": ["Canada", "Mexico", "China", "Singapore", "Malaysia", "Thailand", "Philippines", "Vietnam", "Cambodia", "Laos", "Myanmar", "Brunei", "India", "United Arab Emirates"],
-    "regions": ["apac","nortam","imea"],
+    "regions": ["apac", "nortam", "imea"],
     "category": "TMS",
     "hidden": true,
     "application_code": "APP06526",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PENEAUD Cyril (ADM)",
     "description": "Standard Transportation Management applicable for all countries"
   },
   {
     "name": "Matrix TMS Mobile",
     "countries": ["Turkey", "United States of America", "Canada", "Mexico", "China", "Singapore", "Malaysia", "Thailand", "Indonesia", "Philippines", "Vietnam", "Cambodia", "Laos", "Myanmar", "Brunei", "Chile", "Colombia", "Costa Rica", "Guatemala", "Panama", "Peru", "Paraguay", "Uruguay", "United Arab Emirates"],
-    "regions": ["apac","nortam","imea","europe"],
+    "regions": ["apac", "nortam", "imea", "europe"],
     "category": "TMS",
     "hidden": true,
     "application_code": "APP07927",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Mobile app for Matrix TMS"
   },
@@ -891,6 +1202,7 @@
     "hidden": true,
     "application_code": "APP08785",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Knowledge-sharing repository and collaboration tool for Matrix."
   },
@@ -901,6 +1213,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP06800",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Label printing system for Mazda."
   },
@@ -912,9 +1225,11 @@
     "application_code": "APP04630",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Mobile Data Collection app for managing driver last mile distribution trips.",
-    "replace_by": "CADIS?"
+    "replace_by": "CADIS?",
+    "tco": 87031.0
   },
   {
     "name": "Metis",
@@ -924,8 +1239,11 @@
     "application_code": "APP05543",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
-    "description": "Network quotation portal for internal GEFCO sales."
+    "description": "Network quotation portal for internal GEFCO sales.",
+    "tco": 58516.83
   },
   {
     "name": "Microlise POD",
@@ -934,6 +1252,7 @@
     "category": "Track & Trace",
     "application_code": "APP04758",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Journey execution, POD, and vehicle tracking."
   },
@@ -945,9 +1264,12 @@
     "application_code": "APP04747",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Asset management system.",
-    "replace_by": "CEVASSETS (BEXTER Trackonline)"
+    "replace_by": "CEVASSETS (BEXTER Trackonline)",
+    "tco": 90599.32
   },
   {
     "name": "MLC Connect",
@@ -956,6 +1278,7 @@
     "category": "Customer Portal",
     "application_code": "APP08672",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Yousef, Yousef Kamal",
     "description": "Customer Portal for track and trace of shipment lifecycles."
   },
@@ -967,9 +1290,11 @@
     "application_code": "APP05180",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rodriguez, Guillermo Gomez, Santoni Paolo, DEBERT, Julien",
     "description": "3rd party TMS developed by vendor MP-Objects.",
-    "replace_by": "MPO SCOS"
+    "replace_by": "MPO SCOS",
+    "tco": 255200.0
   },
   {
     "name": "MPO SCOS",
@@ -978,6 +1303,7 @@
     "category": "TMS",
     "application_code": "APP05181",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rodriguez, Guillermo Gomez, Santoni Paolo, DEBERT, Julien",
     "description": "SaaS successor of eTMS by MP-Objects."
   },
@@ -988,6 +1314,7 @@
     "category": "TMS",
     "application_code": "APP07916",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien, Forget Paul",
     "description": "4PL TMS for France and Netherlands."
   },
@@ -998,6 +1325,7 @@
     "category": "Customer Portal",
     "application_code": "APP06994",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Manage Inbound movements into UK for key customers."
   },
@@ -1009,9 +1337,12 @@
     "application_code": "APP04622",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "The Italian transport management system (TMS).",
-    "replace_by": "INES"
+    "replace_by": "INES",
+    "tco": 1720690.04
   },
   {
     "name": "My-Fleet",
@@ -1020,6 +1351,7 @@
     "category": "Track & Trace",
     "application_code": "APP08628",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Ramasamy Velu",
     "description": "GPS Tracking devices for trailers with geofencing capability."
   },
@@ -1031,6 +1363,7 @@
     "application_code": "APP04748",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Scanning system for Nike contracts.",
     "replace_by": "INES"
@@ -1042,8 +1375,23 @@
     "category": "Integration & Middleware",
     "application_code": "APP08741",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Habara Rudy",
     "description": "Dimensions calculation for pallets."
+  },
+  {
+    "name": "Omnitracs",
+    "countries": ["US"],
+    "regions": ["nortam"],
+    "category": "Ground & Rail",
+    "application_code": "APP05233",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "jun",
+    "active_years": ["2025"],
+    "it_owner": "Rogers, Jeff (Houston)",
+    "description": "Driver Hours of Service, GPS/Telematics.",
+    "replace_by": "samsara"
   },
   {
     "name": "Omprompt",
@@ -1053,8 +1401,11 @@
     "application_code": "APP04865",
     "7R_analysis": "Retire",
     "7R_action_year": "2025",
+    "7R_action_month": "dec",
+    "active_years": ["2025"],
     "it_owner": "BIHR, Gerald",
-    "description": "Transmission of Business Documents such as transport orders."
+    "description": "Transmission of Business Documents such as transport orders.",
+    "replace_by": ""
   },
   {
     "name": "OMS 3PL (PFS)",
@@ -1063,6 +1414,7 @@
     "category": "Order Management System (OMS)",
     "application_code": "APP05554",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "POUYE Fatou, DEBERT, Julien, RAUCH, Nancy",
     "description": "PFS back office for internal users."
   },
@@ -1074,6 +1426,7 @@
     "application_code": "APP08744",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Habara Rudy",
     "description": "Shipment Consolidation module by BluJay linked to OFS."
   },
@@ -1085,6 +1438,8 @@
     "application_code": "APP05555",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
     "description": "Transport plan parametrization linked to INES.",
     "replace_by": "INES"
@@ -1096,6 +1451,7 @@
     "category": "Reporting & BI",
     "application_code": "APP08668",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Visibility and dashboards for CEVA Almajdoui."
   },
@@ -1106,6 +1462,7 @@
     "category": "Reporting & BI",
     "application_code": "APP04683",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Ground & Rail Business Intelligence."
   },
@@ -1116,6 +1473,7 @@
     "category": "Financial & Settlement Systems",
     "application_code": "APP08669",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Back-office tool for Financials, Supply Chain, and HR."
   },
@@ -1126,6 +1484,7 @@
     "category": "TMS",
     "application_code": "APP08667",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "Transport Management System handling orders, trips, and financials."
   },
@@ -1136,6 +1495,7 @@
     "category": "CRM",
     "application_code": "APP08670",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kamal, Mohammed Maher",
     "description": "CRM managing contracts, quotations, and customer master data."
   },
@@ -1146,6 +1506,7 @@
     "category": "TMS",
     "application_code": "APP08553",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "TMS system for Australia and New Zealand."
   },
@@ -1156,6 +1517,7 @@
     "category": "TMS",
     "application_code": "APP05015",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "TMS from Brazil hosted in GDC."
   },
@@ -1166,8 +1528,23 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP07093",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Route Scheduling application for network planning."
+  },
+  {
+    "name": "OVL_INES_BATCH",
+    "countries": ["Turkey"],
+    "regions": ["europe"],
+    "category": "Ground & Rail",
+    "application_code": "APP06812",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "oct",
+    "active_years": ["2025"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
+    "description": "receiving extraction from INES (invoice)",
+    "replace_by": ""
   },
   {
     "name": "Panoptes (Ex Neopost)",
@@ -1176,6 +1553,7 @@
     "category": "Track & Trace",
     "application_code": "APP05551",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "POUYE Fatou, DEBERT, Julien, RAUCH, Nancy",
     "description": "Network POD storage for legacy systems."
   },
@@ -1186,6 +1564,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP04750",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Route planning system (TMS)."
   },
@@ -1197,6 +1576,7 @@
     "application_code": "APP08993",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "BIERNACKI Scott",
     "description": "Route and planning optimization",
     "replace_by": "Route Max"
@@ -1209,6 +1589,8 @@
     "application_code": "APP05306",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "mar",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Australian Ground Transport management system (TMS).",
     "replace_by": "Orion ANZ"
@@ -1220,6 +1602,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP06815",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Dynamic Routing integrated with TMS ORION."
   },
@@ -1230,6 +1613,7 @@
     "category": "Track & Trace",
     "application_code": "APP05227",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Gatiganti Ram",
     "description": "Mileage calculation tool for driver payment and billing."
   },
@@ -1241,6 +1625,7 @@
     "application_code": "APP05225",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Gatiganti Ram",
     "description": "3rd-Party application for pool distribution and VAS operations.",
     "replace_by": "Matrix TMS"
@@ -1253,6 +1638,8 @@
     "application_code": "APP04628",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Technical component to send SMS.",
     "replace_by": "Retarus"
@@ -1264,6 +1651,7 @@
     "category": "Track & Trace",
     "application_code": "APP07929",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Muro, Juan Manuel",
     "description": "Real Time Transport visibility platform dedicated to track shipments."
   },
@@ -1274,6 +1662,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP08536",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Saruva, Sundaramoorthy",
     "description": "Web-based Vehicle Scheduling and Route Optimisation solution."
   },
@@ -1281,12 +1670,15 @@
     "name": "PTV Route Optimizer",
     "countries": ["Italy"],
     "regions": ["europe"],
-    "category": "Route & Planning Optimization",
-    "application_code": "APP05560",
-    "7R_analysis": "Replace",
-    "7R_action_year": "2026",
-    "it_owner": "DEBERT, Julien, RAUCH, Nancy",
-    "description": "xRoute, xLocate, xMap, xTour tools (API)."
+    "category": "Ground & Rail",
+    "application_code": "APP04631",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "oct",
+    "active_years": ["2025"],
+    "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
+    "description": "Route optimisation software",
+    "replace_by": ""
   },
   {
     "name": "PTV Xserver",
@@ -1296,9 +1688,11 @@
     "application_code": "APP05560",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "sep",
+    "active_years": ["2025", "2026"],
     "it_owner": "DEBERT, Julien, RAUCH, Nancy",
     "description": "xRoute, xLocate, xMap, xTour tools (API)",
-    "replace_by": "Map & Guide Internet "
+    "replace_by": "Map & Guide Internet"
   },
   {
     "name": "Quadient (Ground)",
@@ -1307,6 +1701,7 @@
     "category": "CRM",
     "application_code": "APP08814",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien, Santoni Paolo",
     "description": "Personalized customer communication and operational workflow management."
   },
@@ -1317,6 +1712,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP06821",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Carrier freight exchange and bid board."
   },
@@ -1327,6 +1723,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP08769",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Digital platform managing rail freight logistics from procurement to invoicing."
   },
@@ -1337,8 +1734,23 @@
     "category": "Financial & Settlement Systems",
     "application_code": "APP05018",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Owner Operators Payments integrated with TMS ORION."
+  },
+  {
+    "name": "ReturnPool",
+    "countries": ["Colombia/Ecuador"],
+    "regions": ["latam"],
+    "category": "Ground & Rail",
+    "application_code": "APP06783",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "may",
+    "active_years": ["2025"],
+    "it_owner": "PEREIRA BRUNO",
+    "description": "TMS / delivery management signature capture",
+    "replace_by": "Matrix TMS"
   },
   {
     "name": "RO e-Transport",
@@ -1347,6 +1759,7 @@
     "category": "Legal Compliance",
     "application_code": "APP08768",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "System for monitoring transport of goods with high fiscal risk in Romania."
   },
@@ -1357,6 +1770,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP06983",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "AI-based optimization for pick-up and delivery."
   },
@@ -1367,6 +1781,7 @@
     "category": "Asset & Fleet Management",
     "application_code": "APP07926",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Muro, Juan Manuel",
     "description": "Telematic provider to manage own fleets."
   },
@@ -1377,7 +1792,8 @@
     "category": "Asset & Fleet Management",
     "application_code": "APP06837",
     "7R_analysis": "Remain",
-    "it_owner": "Agir DilekSantoni PaoloDEBERT, Julien",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
+    "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Consumable management"
   },
   {
@@ -1388,6 +1804,7 @@
     "application_code": "APP06992",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "BIERNACKI Scott",
     "description": "Electronic signature tool for WorldPort.",
     "replace_by": "DocuSign"
@@ -1400,6 +1817,8 @@
     "application_code": "APP04752",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "jun",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Pallet/carton consolidation and label creation.",
     "replace_by": "INES"
@@ -1411,6 +1830,7 @@
     "category": "Documents & Collaboration",
     "application_code": "APP05650",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy",
     "description": "Platform for reporting problems and sharing improvement ideas."
   },
@@ -1422,6 +1842,7 @@
     "application_code": "APP08743",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Habara Rudy",
     "description": "Global track and trace, POD, dispatch, and route planning."
   },
@@ -1432,6 +1853,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP08554",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "Identifies assessorials for addresses to increase revenue."
   },
@@ -1442,6 +1864,7 @@
     "category": "TMS",
     "application_code": "APP06724",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo, DEBERT, Julien",
     "description": "Transport delivery tool managed by DPD partner in Switzerland."
   },
@@ -1452,6 +1875,7 @@
     "category": "Legal Compliance",
     "application_code": "APP08813",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Logistics system for cargo transport and regulatory compliance in Colombia."
   },
@@ -1462,6 +1886,7 @@
     "category": "Documents & Collaboration",
     "application_code": "APP08745",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Ramasamy Velu",
     "description": "Cloud-based platform for work management and collaboration."
   },
@@ -1472,6 +1897,7 @@
     "category": "Track & Trace",
     "application_code": "APP08631",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Hossen Sayeed",
     "description": "Enterprise Mobility Management for control over mobile devices."
   },
@@ -1482,6 +1908,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP08756",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Freight exchange platform."
   },
@@ -1493,6 +1920,7 @@
     "application_code": "APP07079",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
     "it_owner": "Santoni Paolo, DEBERT, Julien",
     "description": "Local Polish TMS used with WMS.",
     "replace_by": "INES"
@@ -1504,6 +1932,7 @@
     "category": "WMS",
     "application_code": "APP06684",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Gatiganti Ram",
     "description": "3rd party WMS for Ground Value Add operations."
   },
@@ -1515,6 +1944,7 @@
     "application_code": "APP05229",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Gatiganti Ram",
     "description": "Web access for Worldport by Agents. FM Ground (network), Used to manage the US Domestic Ground shipments.",
     "replace_by": "Matrix TMS"
@@ -1527,6 +1957,8 @@
     "application_code": "APP04645",
     "7R_analysis": "Retire",
     "7R_action_year": "2026",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "Subcontractor management and costs control"
   },
@@ -1537,6 +1969,7 @@
     "category": "Track & Trace",
     "application_code": "APP08641",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "BIERNACKI Scott",
     "description": "RFID and IoT-based solutions for end-to-end supply chain visibility."
   },
@@ -1547,6 +1980,7 @@
     "category": "Last Mile Distribution",
     "application_code": "APP05583",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Last mile management for spare parts and 2-wheelers distribution."
   },
@@ -1557,6 +1991,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP04629",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "Booking platform for mass market."
   },
@@ -1567,6 +2002,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08863",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Heilmann Pat",
     "description": "Tool to build high-performance applications across platforms."
   },
@@ -1577,6 +2013,7 @@
     "category": "Last Mile Distribution",
     "application_code": "APP06718",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Carrier label management and EDI customer station."
   },
@@ -1587,6 +2024,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP06995",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rogers, Jeff (Houston)",
     "description": "Optimize linehaul schedule by reducing miles and improving trailer capacities."
   },
@@ -1597,6 +2035,7 @@
     "category": "Route & Planning Optimization",
     "application_code": "APP08625",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rogers, Jeff (Houston)",
     "description": "Helps analyze the cost of operating CEVA’s network and station locations."
   },
@@ -1608,6 +2047,8 @@
     "application_code": "APP08810",
     "7R_analysis": "Replace",
     "7R_action_year": "2028",
+    "7R_action_month": "mar",
+    "active_years": ["2025", "2026", "2027", "2028"],
     "it_owner": "Li Ye",
     "description": "Integration Layer dedicated to Matrix Carrier TMS usage.",
     "replace_by": "TIBCO Group"
@@ -1619,6 +2060,7 @@
     "category": "Track & Trace",
     "application_code": "APP08750",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Managing arrivals, departures, and unloading notifications."
   },
@@ -1629,6 +2071,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP04753",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Carrier freight exchange and bid board."
   },
@@ -1639,6 +2082,7 @@
     "category": "Asset & Fleet Management",
     "application_code": "APP07860",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Web-based fuel management solution for dispensers."
   },
@@ -1649,6 +2093,7 @@
     "category": "Customer Portal",
     "application_code": "APP04689",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Agir Dilek, Santoni Paolo, DEBERT, Julien",
     "description": "Customer portal for Ground & Rail."
   },
@@ -1660,6 +2105,7 @@
     "application_code": "APP05309",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "PEREIRA BRUNO",
     "description": "Create consignments and track shipments for CL and VL systems.",
     "replace_by": "Orion ANZ"
@@ -1671,8 +2117,21 @@
     "category": "Integration & Middleware",
     "application_code": "APP08767",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy",
     "description": "AI-powered test automation platform for end-to-end testing."
+  },
+  {
+    "name": "Track track",
+    "countries": ["Canada"],
+    "regions": ["nortam"],
+    "category": "Track & Trace",
+    "application_code": "APP08743",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2026",
+    "active_years": ["2025", "2026"],
+    "it_owner": "Habara Rudy",
+    "description": "Global track and trace, POD, dispatch, and route planning."
   },
   {
     "name": "Trans.eu",
@@ -1681,6 +2140,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP04754",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Carrier freight exchange and bid board.",
     "replace_by": "Bolloré Stack"
@@ -1693,6 +2153,8 @@
     "application_code": "APP06332",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "jun",
+    "active_years": ["2025", "2026"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "Local TMS used across Pharma/Ground/CL.",
     "replace_by": "INES"
@@ -1704,6 +2166,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP06996",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Carrier label management and EDI customer station."
   },
@@ -1715,9 +2178,25 @@
     "application_code": "APP04624",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Santoni Paolo, DEBERT, Julien, Rubini, Marco",
     "description": "Italian billing system.",
     "replace_by": "INES"
+  },
+  {
+    "name": "Trucker Tools",
+    "countries": ["US"],
+    "regions": ["nortam"],
+    "category": "Ground & Rail",
+    "application_code": "APP05233",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "sep",
+    "active_years": ["2025"],
+    "it_owner": "BIERNACKI Scott",
+    "description": "Carrier Procurement, capacity search",
+    "replace_by": ""
   },
   {
     "name": "TV Preview - API",
@@ -1726,6 +2205,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP06833",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Rubini, Marco, Santoni Paolo, DEBERT, Julien",
     "description": "View for dispatchers to monitor trucks currently loading."
   },
@@ -1736,8 +2216,20 @@
     "category": "Asset & Fleet Management",
     "application_code": "APP07872",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Terminal for monitoring drivers' driving times."
+  },
+  {
+    "name": "UM",
+    "countries": ["United Kingdom", "Italy", "France", "Singapore", "Spain", "Malaysia", "Turkey"],
+    "regions": ["europe", "apac"],
+    "category": "Integration & Middleware",
+    "application_code": "APP08524",
+    "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
+    "it_owner": "Laat Angelo de",
+    "description": "Communication layer aimed to import/export transactionnal data in/out of xMS."
   },
   {
     "name": "Upply",
@@ -1746,6 +2238,7 @@
     "category": "Freight Marketplaces & Tendering",
     "application_code": "APP08773",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "Digital platform connecting shippers and carriers with rate benchmarking."
   },
@@ -1756,8 +2249,23 @@
     "category": "Carriers Portal",
     "application_code": "APP06751",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Santoni Paolo, DEBERT, Julien",
     "description": "Multi purpose platform for workflows and carrier management."
+  },
+  {
+    "name": "Vision +",
+    "countries": ["Global"],
+    "regions": ["global"],
+    "category": "Ground & Rail",
+    "application_code": "APP05588",
+    "7R_analysis": "Replace",
+    "7R_action_year": "2025",
+    "7R_action_month": "sep",
+    "active_years": ["2025"],
+    "it_owner": "RAUCH, Nancy, DEBERT, Julien",
+    "description": "GPS truck portal. G&R T&T GPS broker",
+    "replace_by": "Project 44"
   },
   {
     "name": "Vypex",
@@ -1766,6 +2274,7 @@
     "category": "Track & Trace",
     "application_code": "APP08675",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "Kopara Stacey",
     "description": "Tags and IoT relay data to the cloud for real-time asset tracking."
   },
@@ -1776,8 +2285,23 @@
     "category": "TMS",
     "application_code": "APP06720",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Fleet management solution for managed and own fleets."
+  },
+  {
+    "name": "Winroute",
+    "countries": ["Global"],
+    "regions": ["global"],
+    "category": "Ground & Rail",
+    "application_code": "APP05590",
+    "7R_analysis": "Retire",
+    "7R_action_year": "2025",
+    "7R_action_month": "aug",
+    "active_years": ["2025"],
+    "it_owner": "RAUCH, Nancy, DEBERT, Julien",
+    "description": "Optimization tool for P&D. P&D tour optimization",
+    "replace_by": ""
   },
   {
     "name": "Worldport",
@@ -1787,6 +2311,8 @@
     "application_code": "APP06375",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "7R_action_month": "dec",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Gatiganti Ram",
     "description": "Homegrown application used for US Domestic Ground and Freight Forwarding.",
     "replace_by": "Matrix TMS"
@@ -1799,6 +2325,8 @@
     "application_code": "APP05591",
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
+    "7R_action_month": "jul",
+    "active_years": ["2025", "2026"],
     "it_owner": "RAUCH, Nancy, DEBERT, Julien",
     "description": "Optimization tool for tender centers and distance calculation."
   },
@@ -1809,6 +2337,7 @@
     "category": "Integration & Middleware",
     "application_code": "APP08757",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien",
     "description": "IDE designed for working with XML and related technologies."
   },
@@ -1819,6 +2348,7 @@
     "category": "Financial & Settlement Systems",
     "application_code": "APP07932",
     "7R_analysis": "Remain",
+    "active_years": ["2025", "2026", "2027", "2028", "2029"],
     "it_owner": "DEBERT, Julien, Santoni Paolo",
     "description": "ASTAG GU module to create a cost matrix."
   },
@@ -1830,13 +2360,9 @@
     "application_code": "APP05216",
     "7R_analysis": "Replace",
     "7R_action_year": "2027",
+    "active_years": ["2025", "2026", "2027"],
     "it_owner": "Kelly Shawn",
     "description": "Legacy Yard Management system for specific US locations.",
     "replace_by": "Matrix TMS (YMS)"
-  },
-  {
-    "name": "Matrix",
-    "countries": ["Belgium", "Netherlands", "Luxembourg", "Poland", "Spain", "Turkey", "United States of America", "Mexico", "Japan", "China", "Singapore", "Malaysia", "Thailand", "Indonesia", "Vietnam", "Chile", "Colombia", "Costa Rica", "Guatemala", "Panama", "Peru", "Paraguay", "Uruguay", "India", "United Arab Emirates", "Canada", "Philippines", "Cambodia", "Laos", "Myanmar", "Brunei", "Ireland", "United Kingdom"],
-    "regions": ["europe", "apac", "nortam", "imea", "latam"]
   }
 ]

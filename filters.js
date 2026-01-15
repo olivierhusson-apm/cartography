@@ -1,3 +1,24 @@
+
+// Variable globale stockant l'année sélectionnée dans le curseur
+window.timelineYear = 2026;
+
+// Event listener pour le slider timeline
+document.addEventListener('DOMContentLoaded', function() {
+    const timelineSlider = document.getElementById('timeline-slider');
+    
+    if (timelineSlider) {
+        timelineSlider.addEventListener('input', function(e) {
+            // Mettre à jour la variable globale
+            window.timelineYear = parseInt(e.target.value);
+            
+            // Réappliquer tous les filtres
+            if (typeof filterAndShowApplications === 'function') {
+                filterAndShowApplications();
+            }
+        });
+    }
+});
+
 // Affiche les détails d'une application (popup capabilities)
 function displayApplicationCapabilities(appName, appData) {
     const infoPanel = document.getElementById('info-panel');
@@ -519,6 +540,15 @@ function filterAndShowApplications() {
         }
     });
     filteredApps = [...nonMatrixApps, ...Object.values(matrixByCategory)];
+    
+    // ============================================
+    // FILTRE TIMELINE : S'applique uniformément à toutes les années (2025-2029)
+    // ============================================
+    if (window.timelineYear) {
+        filteredApps = filteredApps.filter(app => 
+            !app.active_years || app.active_years.includes(window.timelineYear.toString())
+        );
+    }
     
     window.currentFilteredApps = filteredApps;
 

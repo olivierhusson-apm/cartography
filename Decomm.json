@@ -210,7 +210,6 @@
     "7R_analysis": "Retire",
     "7R_action_year": "2026",
     "7R_action_month": "dec",
-    "replace_by": "",
     "tco": 23414.0,
     "category": "Financial & Settlement Systems",
     "application_code": "APP04746"
@@ -221,7 +220,6 @@
     "7R_analysis": "Retire",
     "7R_action_year": "2026",
     "7R_action_month": "dec",
-    "replace_by": "",
     "category": "Financial & Settlement Systems",
     "application_code": "APP04645"
   },
@@ -301,7 +299,7 @@
     "7R_analysis": "Replace",
     "7R_action_year": "2026",
     "7R_action_month": "dec",
-    "replace_by": "CEVACONNECT / myCeva",
+    "replace_by": "CEVACONNECT (PFS) Portail Client 3PL / myCeva",
     "tco": 18209.47,
     "category": "Customer Portal",
     "application_code": "APP04634"
