@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Comparateur Applications - L1/L2/L3</title>
   <link rel="stylesheet" href="comparator-styles.css">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <div id="banner">
@@ -16,9 +17,11 @@
       <p>Compare the business capabilities of your applications</p>
       <div class="detail-level-container" style="margin-bottom:1em;">
         <div id="selected-apps-info" style="margin-bottom:0.5em; font-style:italic; color:#666;"></div>
-        <label style="margin-left:2em;">Application 1 <select id="app1" class="search-input"></select></label>
+        <button id="export-excel-btn" style="margin-left:2em; padding:6px 12px; background:#43a047; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Export</button>
+        <label style="margin-left:0.5em;">Application 1 <select id="app1" class="search-input"></select></label>
         <label style="margin-left:1em;">Application 2 <select id="app2" class="search-input"></select></label>
-        <button id="toggle-app2-btn" style="margin-left:1em; padding:6px 12px; background:#1976d2; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Remove App2</button>
+        <button id="export-excel-btn2" style="margin-left:0.5em; padding:6px 12px; background:#43a047; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Export</button>
+        <button id="toggle-app2-btn" style="margin-left:0.5em; padding:6px 12px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; font-size:16px;">✕</button>
       </div>
       
       <!-- Slider de niveau de détail -->
@@ -145,15 +148,23 @@
       const toggleApp2Btn = document.getElementById('toggle-app2-btn');
       let app2Saved = app2.value; // Sauvegarder la valeur actuelle
       
+      const exportExcelBtn2 = document.getElementById('export-excel-btn2');
+      
       function updateToggleButton() {
         if (app2.value) {
-          toggleApp2Btn.textContent = 'Remove App2';
+          toggleApp2Btn.textContent = '✕';
           toggleApp2Btn.style.background = '#d32f2f';
           app2.disabled = false;
+          exportExcelBtn2.disabled = false;
+          exportExcelBtn2.style.opacity = '1';
+          exportExcelBtn2.style.cursor = 'pointer';
         } else {
-          toggleApp2Btn.textContent = 'Add App2';
+          toggleApp2Btn.textContent = '+';
           toggleApp2Btn.style.background = '#43a047';
           app2.disabled = true;
+          exportExcelBtn2.disabled = true;
+          exportExcelBtn2.style.opacity = '0.5';
+          exportExcelBtn2.style.cursor = 'not-allowed';
         }
       }
       
@@ -179,6 +190,27 @@
         }
         updateToggleButton();
         show();
+      };
+      
+      // Bouton d'export Excel pour app1
+      const exportExcelBtn = document.getElementById('export-excel-btn');
+      exportExcelBtn.onclick = function() {
+        const selectedApp = app1.value;
+        if (!selectedApp) {
+          alert('Please select an application first');
+          return;
+        }
+        exportToExcel(selectedApp);
+      };
+      
+      // Bouton d'export Excel pour app2
+      exportExcelBtn2.onclick = function() {
+        const selectedApp = app2.value;
+        if (!selectedApp) {
+          alert('Please select Application 2 first');
+          return;
+        }
+        exportToExcel(selectedApp);
       };
       
       // Mettre à jour le bouton quand on change app2 manuellement
@@ -339,6 +371,161 @@
         // Niveau 3: Détail L2 avec L3s/L4s
         level3.classList.add('active');
       }
+    }
+    
+    // Fonction d'export Excel
+    function exportToExcel(appName) {
+      if (!data || !bc || !bcdefs || !window.expectedL4ByCategory) {
+        alert('Data not loaded yet');
+        return;
+      }
+      
+      const appData = data[appName];
+      if (!appData) {
+        alert('Application not found');
+        return;
+      }
+      
+      const categoryL4 = appData.categoryL4;
+      if (!categoryL4) {
+        alert('Application has no categoryL4 defined');
+        return;
+      }
+      
+      // Créer un lookup des L4 et leurs statuts
+      const l4StatusLookup = {};
+      (appData.l4 || []).forEach(entry => {
+        if (typeof entry === 'string' && entry.includes(';')) {
+          const parts = entry.split(';');
+          const l4Code = parts[0];
+          const statuses = parts.slice(1).map(s => parseInt(s));
+          l4StatusLookup[l4Code] = statuses;
+        }
+      });
+      
+      // Créer le workbook
+      const wb = XLSX.utils.book_new();
+      
+      // Parcourir chaque L1
+      Object.keys(bc).forEach(l1Code => {
+        const l1Name = getDef(l1Code, 1);
+        const l1FullName = l1Mapping[l1Code] || l1Name;
+        
+        // Vérifier si ce L1 a des L4 attendues pour cette catégorie
+        const categoryData = window.expectedL4ByCategory[categoryL4];
+        if (!categoryData || !categoryData[l1FullName]) {
+          // Pas de données attendues pour ce L1 dans cette catégorie
+          return;
+        }
+        
+        const sheetData = [];
+        
+        // En-tête
+        sheetData.push(['L3 Capability', 'L4 Capability', 'Status', 'External Description']);
+        
+        let hasData = false;
+        
+        // Parcourir les L2 de ce L1
+        Object.keys(bc[l1Code]).forEach(l2Code => {
+          const l2Name = getDef(l2Code, 2);
+          
+          // Vérifier si ce L2 a des données attendues
+          if (!categoryData[l1FullName][l2Code]) {
+            return;
+          }
+          
+          let l2HasData = false;
+          const l2StartRow = sheetData.length;
+          
+          // Ligne de séparation L2 (temporaire) - en majuscules pour visibilité
+          sheetData.push([`=== ${l2Name.toUpperCase()} ===`, '', '', '']);
+          
+          // Parcourir les L3 de ce L2
+          Object.keys(bc[l1Code][l2Code]).forEach(l3Code => {
+            const l3Name = getDef(l3Code, 3);
+            
+            // Vérifier si ce L3 a des L4 attendues
+            const expectedL4ForL3 = categoryData[l1FullName][l2Code][l3Code];
+            if (!expectedL4ForL3 || expectedL4ForL3.length === 0) {
+              return;
+            }
+            
+            // Créer un Set des L4 attendues (sans les statuts)
+            const expectedL4Set = new Set(expectedL4ForL3.map(l4 => l4.split(';')[0]));
+            
+            const l4Array = bc[l1Code][l2Code][l3Code];
+            
+            // Parcourir les L4 de ce L3 et filtrer selon expectedL4
+            l4Array.forEach(l4Code => {
+              if (!expectedL4Set.has(l4Code)) {
+                // Cette L4 n'est pas attendue pour cette catégorie
+                return;
+              }
+              
+              const l4Description = getDef(l4Code, 4);
+              const statuses = l4StatusLookup[l4Code] || [];
+              
+              // Filtrer les statuts 0-3 et prendre le max
+              const validStatuses = statuses.filter(s => s >= 0 && s <= 3);
+              let statusDisplay = '';
+              let externalDesc = '';
+              
+              if (validStatuses.length > 0) {
+                const maxStatus = Math.max(...validStatuses);
+                // Afficher le cercle coloré basé sur le statut
+                const statusLabels = ['Absent', 'Manuel', 'Semi-auto', 'Automatique'];
+                statusDisplay = statusLabels[maxStatus];
+              }
+              
+              // Vérifier les statuts ≥4 pour External Description
+              const externalStatuses = statuses.filter(s => s >= 4);
+              if (externalStatuses.length > 0) {
+                const externalIntegrations = {
+                  4: 'Several',
+                  5: 'Adapt',
+                  6: 'Cadis',
+                  7: 'INES',
+                  8: 'OMS',
+                  9: 'SAP, JDE'
+                };
+                externalDesc = externalStatuses.map(s => externalIntegrations[s] || `External ${s}`).join(', ');
+              }
+              
+              sheetData.push([l3Name, l4Description, statusDisplay, externalDesc]);
+              l2HasData = true;
+              hasData = true;
+            });
+          });
+          
+          // Si aucune donnée pour ce L2, supprimer la ligne de séparation
+          if (!l2HasData) {
+            sheetData.splice(l2StartRow, 1);
+          }
+        });
+        
+        // Si aucune donnée pour ce L1, ne pas créer la feuille
+        if (!hasData) {
+          return;
+        }
+        
+        // Créer la feuille
+        const ws = XLSX.utils.aoa_to_sheet(sheetData);
+        
+        // Appliquer les styles (largeur des colonnes)
+        ws['!cols'] = [
+          { wch: 35 }, // L3 Capability
+          { wch: 60 }, // L4 Capability
+          { wch: 15 }, // Status
+          { wch: 30 }  // External Description
+        ];
+        
+        // Ajouter la feuille au workbook (limiter le nom à 31 caractères)
+        const sheetName = l1Name.substring(0, 31);
+        XLSX.utils.book_append_sheet(wb, ws, sheetName);
+      });
+      
+      // Télécharger le fichier
+      XLSX.writeFile(wb, `${appName}_capabilities.xlsx`);
     }
     
     function show() {
