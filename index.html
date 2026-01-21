@@ -15,58 +15,137 @@
         <img src="CEVA_BlueRed.jpg" alt="CEVA Logistics" id="banner-logo">
         <h1>Applications Cartography</h1>
     </div>
-    <div id="sidebar">
-        <!-- Bouton d'expansion supprimé -->
-        <div id="capabilities-block">
-            <!-- Gros boutons capabilities (L1) doivent être ici si générés dynamiquement -->
-            <form id="capabilities-form" style="margin-bottom: 0; padding: 4px 0 0 0; font-size: 13px;">
-                <!-- Cases à cocher générées dynamiquement -->
-            </form>
-        </div>
-        <!-- Section Categories sous Finance Management -->
-        <div id="categories-filter-section" style="margin-top: 0; margin-bottom: 4px; padding-top: 0;">
-            <div id="categories-list" style="
-                max-height: 80px;
-                overflow-y: auto;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                padding: 0 4px 1px 4px;
-                background: white;
-                font-size: 12px;
-            ">
-                <!-- Les catégories seront générées ici -->
+    <div id="sidebar" class="dual-panel-active">
+        
+        <!-- Panneau gauche : Filtres (visible en mode normal et double panneau) -->
+        <div id="filters-panel" class="sidebar-panel">
+            <!-- 🎯 CARTE 1: BUSINESS CAPABILITIES -->
+            <div class="sidebar-card collapsed" data-card="capabilities" style="background: linear-gradient(to right, #1976d2 4px, rgba(25,118,210,0.05) 4px); border: 1px solid #ddd; border-left: 4px solid #1976d2; border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s;">
+                <div class="card-header" style="font-weight: bold; font-size: 14px; padding: 10px; color: #1976d2; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 16px;">🎯</span>
+                        <span>BUSINESS CAPABILITIES</span>
+                    </div>
+                    <span class="toggle-icon" style="font-size: 14px; transition: transform 0.3s;">►</span>
+                </div>
+                <div class="card-content">
+                    <div id="capabilities-block">
+                        <form id="capabilities-form" style="margin-bottom: 0; padding: 0; font-size: 13px;">
+                            <!-- Cases à cocher générées dynamiquement -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 🏷️ CARTE 2: CATEGORIES -->
+            <div class="sidebar-card collapsed" data-card="categories" style="background: linear-gradient(to right, #43a047 4px, rgba(67,160,71,0.05) 4px); border: 1px solid #ddd; border-left: 4px solid #43a047; border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s;">
+                <div class="card-header" style="font-weight: bold; font-size: 14px; padding: 10px; color: #43a047; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 16px;">🏷️</span>
+                        <span>CATEGORIES</span>
+                    </div>
+                    <span class="toggle-icon" style="font-size: 14px; transition: transform 0.3s;">►</span>
+                </div>
+                        <div class="card-content">
+                    <div id="categories-list">
+                        <!-- Les catégories seront générées ici -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ⭐ CARTE 3: ASSESSMENT -->
+            <div class="sidebar-card collapsed" data-card="assessment" style="background: linear-gradient(to right, #7b1fa2 4px, rgba(123,31,162,0.05) 4px); border: 1px solid #ddd; border-left: 4px solid #7b1fa2; border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s;">
+                <div class="card-header" style="font-weight: bold; font-size: 14px; padding: 10px; color: #7b1fa2; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 16px;">⭐</span>
+                        <span>ASSESSMENT</span>
+                    </div>
+                    <span class="toggle-icon" style="font-size: 14px; transition: transform 0.3s;">►</span>
+                </div>
+                        <div class="card-content">
+                    <div style="display:flex; gap:8px;">
+                        <select id="assessment-app1-select" style="flex:1; padding:8px; border:1px solid #ddd; border-radius:4px; font-size:13px; box-sizing:border-box;">
+                            <option value="">App 1...</option>
+                        </select>
+                        <select id="assessment-app2-select" style="flex:1; padding:8px; border:1px solid #ddd; border-radius:4px; font-size:13px; box-sizing:border-box;">
+                            <option value="">App 2...</option>
+                        </select>
+                    </div>
+                    <button id="assessment-button" style="width: 100%; margin-top:8px; padding: 8px; border-radius: 4px; background: #f57c00; color: white; font-size: 14px; font-weight: bold; border: none; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#ef6c00'" onmouseout="this.style.background='#f57c00'" disabled>Compare</button>
+                </div>
+            </div>
+            
+            <!-- 📅 CARTE 5: ROADMAP -->
+            <div class="sidebar-card collapsed" data-card="roadmap" style="background: linear-gradient(to right, #3949ab 4px, rgba(57,73,171,0.05) 4px); border: 1px solid #ddd; border-left: 4px solid #3949ab; border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s;">
+                <div class="card-header" style="font-weight: bold; font-size: 14px; padding: 10px; color: #3949ab; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 16px;">📅</span>
+                        <span>RATIONALIZATION ROADMAP</span>
+                    </div>
+                    <span class="toggle-icon" style="font-size: 14px; transition: transform 0.3s;">►</span>
+                </div>
+                <div class="card-content">
+                    <div id="timeline-filter">
+                        <div class="timeline-frise-container">
+                            <img src="Assets/Frise.png" alt="frise" class="timeline-frise-image">
+                            <input type="range" id="timeline-slider" min="0" max="4" value="0" step="1" class="timeline-frise-slider">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <!-- Timeline Roadmap Filter -->
-        <div id="timeline-filter" style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin: 8px 0; background: #f9f9f9;">
-            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 4px;">
-                <span>2025</span>
-                <span>2026</span>
-                <span>2027</span>
-                <span>2028</span>
-                <span>2029</span>
+        <!-- Séparateur redimensionnable (visible uniquement en mode double panneau) -->
+        <div id="panel-resizer" style="display: none;"></div>
+        
+        <!-- Panneau droit : Résultats (contient l'info-panel, visible uniquement en mode double panneau) -->
+        <div id="results-panel" class="sidebar-panel" style="display: none;">
+            <!-- Persistent header with Extract button so dynamic info-panel content doesn't need to inject it -->
+            <div id="results-panel-header" style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px;">
+                <div style="display:flex; justify-content:flex-end;">
+                    <button id="exportFilteredApps" class="extract-button" title="Extract Filtered Apps">Extract</button>
+                </div>
+                <div style="width:100%;">
+                    <input type="text" id="search-input" placeholder="🔍 Search for an application..." style="width:100%; padding:8px 10px; border: 1px solid #ddd; border-radius:6px; box-sizing:border-box; font-size:14px;" />
+                </div>
             </div>
-            <input type="range" id="timeline-slider" min="2025" max="2029" value="2026" step="1" style="width: 100%; cursor: pointer; height: 6px;">
+            <div id="info-panel" style="background:#f0f4ff; padding:8px 10px; border-radius:6px; font-size: 15px; border: 1px solid #bbdefb; height: 100%; overflow-y: auto; box-sizing: border-box;">
+            </div>
         </div>
         
-        <div style="border-top: 2px solid #ddd; margin: 2px 0;"></div>
-        <div class="search-container" style="margin-bottom: 0;">
-            <input type="text" id="search-input" placeholder="Search for an application..." style="width: 100%; padding: 6px 30px 6px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; box-sizing: border-box;">
-            <!-- Bouton toggle supprimé - panneau toujours visible -->
-        </div>
-        <button id="exportFilteredApps" style="width:100%;margin:0 0 4px 0;padding:8px 0;border-radius:4px;background:#1976d2;color:white;font-size:15px;border:none;cursor:pointer;">Extract Filtered Apps</button>
-        <div id="info-panel" style="background:#f0f4ff; padding:4px 10px 4px 10px; border-radius:6px; margin-top: 4px; font-size: 13px;"></div>
+        <!-- INFO PANEL placeholder removed (normal mode) -->
     </div>
     <div id="map">
+        <!-- Compteur d'applications par année -->
+        <div id="year-app-counter" onclick="window.open('Decomm.html', '_blank')" style="
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(25, 118, 210, 0.95);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-weight: bold;
+            text-align: center;
+            min-width: 180px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'">
+            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;" id="year-app-label">Active Applications</div>
+            <div style="font-size: 32px; line-height: 1;" id="year-app-count">0</div>
+            <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;" id="year-display">Year 2026</div>
+        </div>
+        
         <div id="selected-app-container" style="
             position: fixed;
-            top: max(20px, 5vh);
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             display: none;
-            max-width: 90vw;
+            max-width: 1150px;
         ">
             <div id="selected-app-button" style="
                 background: #e53935;
@@ -113,7 +192,7 @@
             "europe": [46.818188, 8.227512],
             "apac": [15.0, 120.0],
             "latam": [-15.0, -60.0],
-            "imea": [20.0, 25.0]
+            "imeca": [20.0, 25.0]
         };
 
         let countryMarkers = [];
@@ -176,7 +255,7 @@
                 europe: [],
                 apac: [],
                 latam: [],
-                imea: []
+                imeca: []
             };
 
             // Classifier chaque pays dans sa région
@@ -233,7 +312,7 @@
                 } else if (['China', 'Japan', 'South Korea', 'Singapore', 'Malaysia', 'Thailand', 'Indonesia', 'Philippines', 'Vietnam', 'Australia', 'New Zealand', 'Cambodia', 'Laos', 'Myanmar', 'Brunei', 'China (Mainland)'].includes(country)) {
                     regionGroups.apac.push(countryData);
                 } else if (['India', 'United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman', 'Jordan', 'Lebanon', 'Israel', 'Iran', 'Iraq', 'Syria', 'Yemen', 'South Africa', 'Nigeria', 'Kenya', 'Ghana', 'Ethiopia', 'Tanzania', 'Uganda'].includes(country)) {
-                    regionGroups.imea.push(countryData);
+                    regionGroups.imeca.push(countryData);
                 } else if (['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt'].includes(country)) {
                     // Maghreb fait partie de l'Europe
                     regionGroups.europe.push(countryData);
@@ -575,8 +654,8 @@
                     listHtml += `<div style=\"margin-bottom:10px;\">
                         <span style=\"font-weight:bold; font-size: 1.1em; ${textColor}\">${cat} (${grouped[cat].length})</span><br>
                         ${grouped[cat].map(name =>
-                            `<span class=\"sidebar-item\" data-name=\"${name}\" style=\"margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.5em; ${textColor}\">${name}</span>`
-                        ).join('<br>')}
+                            `<span class=\"sidebar-item\" data-name=\"${name}\" style=\"margin-left:10px; cursor:pointer; text-decoration:underline; ${textColor}\">${name}</span>`
+                        ).join('')}
                     </div>`;
                 });
                 return listHtml;
@@ -601,7 +680,7 @@
                     cursor: pointer;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
                     transition: background 0.3s;
-                \">All : ${totalUniqueAppsCount}</button>
+                \">All ${totalUniqueAppsCount}</button>
                 <button id=\"toggleUniqueApps\" style=\"
                     background: ${COLOR_UNIQUE};
                     color: white;
@@ -613,7 +692,7 @@
                     cursor: pointer;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
                     transition: background 0.3s;
-                \">Local : ${totalUniqueCount}</button>
+                \">Local ${totalUniqueCount}</button>
                 <button id=\"toggleNonUniqueApps\" style=\"
                     background: ${COLOR_OTHER};
                     color: white;
@@ -625,7 +704,7 @@
                     cursor: pointer;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
                     transition: background 0.3s;
-                \">Global : ${totalNonUniqueCount}</button>
+                \">Global ${totalNonUniqueCount}</button>
             </div>`;
 
             // Container pour la liste d'applications
@@ -775,9 +854,9 @@
 
             // Boutons pour afficher les uniques et multi-régions
             html += `<div style=\"display: flex; align-items: center; gap: 10px; margin: 5px 0 8px 0;\">`
-                + `<button id=\"showAllRegionAppsBtn\" style=\"background: #1976d2; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 1em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">All : ${totalUniqueAppsCount}</button>`
-                + `<button id=\"showUniqueRegionAppsBtn\" style=\"background: #66BB6A; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 0.95em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">Local : ${uniqueCount}</button>`
-                + `<button id=\"showMultiRegionAppsBtn\" style=\"background: #BA68C8; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 0.95em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">Global : ${multiCount}</button>`
+                + `<button id=\"showAllRegionAppsBtn\" style=\"background: #1976d2; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 1em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">All: ${totalUniqueAppsCount}</button>`
+                + `<button id=\"showUniqueRegionAppsBtn\" style=\"background: #66BB6A; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 0.95em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">Local ${uniqueCount}</button>`
+                + `<button id=\"showMultiRegionAppsBtn\" style=\"background: #BA68C8; color: white; border: none; border-radius: 15px; padding: 3px 10px; font-size: 0.95em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.15);\">Global ${multiCount}</button>`
                 + `</div>`;
 
             // Générer la liste HTML par catégorie
@@ -805,12 +884,12 @@
                 
                 sortedCategories.forEach(cat => {
                     let textColor = color ? `color: ${color};` : '';
-                    listHtml += `<div style=\"margin-bottom:10px;\">`
-                        + `<span style=\"font-weight:bold; font-size: 1.1em; ${textColor}\">${cat} (${grouped[cat].length})</span><br>`
-                        + grouped[cat].map(name =>
-                            `<span class=\"sidebar-item\" data-name=\"${name}\" style=\"margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.3em; ${textColor}\">${name}</span>`
-                        ).join('<br>')
-                        + `</div>`;
+                    listHtml += `<div style="margin-bottom:10px;">
+                        <span style="font-weight:bold; font-size: 1.1em; ${textColor}">${cat} (${grouped[cat].length})</span><br>
+                        ${grouped[cat].map(name =>
+                            `<div class="sidebar-item" data-name="${name}" style="margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.05em; ${textColor}">${name}</div>`
+                        ).join('')}
+                    </div>`;
                 });
                 return listHtml;
             }
@@ -818,7 +897,6 @@
             html += `<div id=\"appListContainer\">`;
             html += generateAppList(groupedApps, '#1976d2');
             html += `</div>`;
-            html += `<div style=\"height: 10px;\"></div>`;
 
             infoPanel.innerHTML = html;
             addAppClickEvents(infoPanel, allApps);
@@ -1018,13 +1096,36 @@
         window.showCountryApps = showCountryApps;
 
         window.addEventListener('DOMContentLoaded', () => {
+            
+            // Initialize collapsible sidebar cards
+            document.querySelectorAll('.sidebar-card').forEach(card => {
+                const header = card.querySelector('.card-header');
+                const content = card.querySelector('.card-content');
+                const icon = card.querySelector('.toggle-icon');
+                const cardType = card.getAttribute('data-card');
+                
+                header.addEventListener('click', () => {
+                    const isCollapsed = card.classList.contains('collapsed');
+                    if (isCollapsed) {
+                        // Expand: remove collapsed class and clear inline maxHeight so CSS rule applies
+                        card.classList.remove('collapsed');
+                        content.style.maxHeight = '';
+                        icon.style.transform = 'rotate(90deg)';
+                    } else {
+                        // Collapse: add collapsed class and ensure inline maxHeight=0 to close immediately
+                        card.classList.add('collapsed');
+                        content.style.maxHeight = '0px';
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
 
             Promise.all([
                 fetch('bc-mapping.json').then(r => r.json()),
                 fetch('data.json').then(r => r.json()),
                 fetch('app-capabilities-unified.json').then(r => r.json()),
                 fetch('bc-definitions.json').then(r => r.json())
-            ]).then(([bcMapping, appData, unifiedData, bcDefinitions]) => {
+            ]).then(async ([bcMapping, appData, unifiedData, bcDefinitions]) => {
                 // Fusionne les pays si countriesRef est présent
                 appData.forEach(app => {
                     if (app.countriesRef) {
@@ -1064,13 +1165,54 @@
                 // Stocker bcMapping globalement pour l'accès depuis capabilities.js
                 window.bcMapping = bcMapping;
                 
-                // Initialiser les capabilities depuis les définitions BC
-                initializeCapabilities(bcDefinitions, appData);
+                // Initialiser les capabilities depuis les définitions BC (async)
+                await initializeCapabilities(bcDefinitions, appData);
                 
-                // Initialiser la recherche avec un petit délai pour s'assurer que le DOM est prêt
-                setTimeout(() => {
-                    initializeSearch();
-                }, 100);
+                // Initialiser la recherche avec délégation d'événements
+                initializeSearch();
+                
+                // Initialiser les deux listes Assessment (app1 / app2) contenant seulement INES et Matrix TMS Core +
+                const app1Select = document.getElementById('assessment-app1-select');
+                const app2Select = document.getElementById('assessment-app2-select');
+                const assessmentButton = document.getElementById('assessment-button');
+
+                // Options souhaitées
+                const assessmentOptions = [
+                    { value: 'INES', label: 'INES' },
+                    { value: 'Matrix TMS - Core+', label: 'Matrix TMS - Core+' }
+                ];
+
+                function populateAssessmentSelect(selectEl) {
+                    // clear existing (keep first placeholder)
+                    selectEl.innerHTML = '';
+                    const placeholder = document.createElement('option');
+                    placeholder.value = '';
+                    placeholder.textContent = selectEl.id === 'assessment-app1-select' ? 'App 1...' : 'App 2...';
+                    selectEl.appendChild(placeholder);
+                    assessmentOptions.forEach(opt => {
+                        const o = document.createElement('option');
+                        o.value = opt.value;
+                        o.textContent = opt.label;
+                        selectEl.appendChild(o);
+                    });
+                }
+
+                populateAssessmentSelect(app1Select);
+                populateAssessmentSelect(app2Select);
+
+                function updateAssessmentButtonState() {
+                    assessmentButton.disabled = !(app1Select.value || app2Select.value);
+                }
+
+                app1Select.addEventListener('change', updateAssessmentButtonState);
+                app2Select.addEventListener('change', updateAssessmentButtonState);
+
+                assessmentButton.addEventListener('click', function() {
+                    const a1 = app1Select.value || '';
+                    const a2 = app2Select.value || '';
+                    const url = `comparateur.html?app1=${encodeURIComponent(a1)}&app2=${encodeURIComponent(a2)}`;
+                    window.open(url, '_blank');
+                });
                 
                 // Ajouter l'événement de zoom pour regrouper/dégrouper les markers
                 map.on('zoomend', function() {
@@ -1155,10 +1297,12 @@
                 });
             });
         }
-    // Fonction d'export des applications filtrées
-    document.getElementById('exportFilteredApps').addEventListener('click', function() {
-        // Déterminer le contexte (pays/région) et le filtre actif
-        let filteredApps = [];
+    // Fonction d'export des applications filtrées (délégation d'événements)
+    // Listen globally so the persistent header button (#exportFilteredApps) is handled
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'exportFilteredApps') {
+            // Déterminer le contexte (pays/région) et le filtre actif
+            let filteredApps = [];
         if (window.selectedCountryName) {
             if (window.currentCountryFilter === 'unique') {
                 filteredApps = window.countryUniqueApps || [];
@@ -1257,10 +1401,103 @@
         
         // Télécharger le fichier
         XLSX.writeFile(wb, 'applications_filtrees.xlsx');
+        }
+    });
+    
+    // ================================
+    // GESTION DU MODE DOUBLE PANNEAU
+    // ================================
+    
+    const sidebar = document.getElementById('sidebar');
+    const infoPanel = document.getElementById('info-panel');
+    // placeholder removed; keep a safe reference (will be null)
+    const infoPanelPlaceholder = document.getElementById('info-panel-placeholder');
+    const resultsPanel = document.getElementById('results-panel');
+    const panelResizer = document.getElementById('panel-resizer');
+    
+    let isDualPanelMode = false;
+    
+    // Fonction pour déplacer l'info-panel
+    function moveInfoPanel(toResultsPanel) {
+        if (toResultsPanel) {
+            // Déplacer vers le panneau droit (si placeholder présent)
+            if (infoPanelPlaceholder) {
+                const currentContent = infoPanelPlaceholder.innerHTML;
+                resultsPanel.querySelector('#info-panel').innerHTML = currentContent;
+                infoPanelPlaceholder.innerHTML = '';
+            }
+        } else {
+            // Ramener vers la position originale (si placeholder présent)
+            if (infoPanelPlaceholder) {
+                const currentContent = resultsPanel.querySelector('#info-panel').innerHTML;
+                infoPanelPlaceholder.innerHTML = currentContent;
+                resultsPanel.querySelector('#info-panel').innerHTML = ''; // Vider le panneau droit
+            }
+        }
+    }
+    
+    // Double panel mode is enabled by default (sidebar has class 'dual-panel-active')
+    // No toggle button: keep results panel visible permanently.
+    
+    // Gestion du redimensionnement du séparateur
+    let isResizing = false;
+    let startX = 0;
+    let startLeftWidth = 0;
+    
+    panelResizer.addEventListener('mousedown', function(e) {
+        isResizing = true;
+        startX = e.clientX;
+        const filtersPanel = document.getElementById('filters-panel');
+        startLeftWidth = filtersPanel.offsetWidth;
+        document.body.style.cursor = 'col-resize';
+        e.preventDefault();
+    });
+    
+    document.addEventListener('mousemove', function(e) {
+        if (!isResizing) return;
+
+        const deltaX = e.clientX - startX;
+        const filtersPanel = document.getElementById('filters-panel');
+        const resultsPanel = document.getElementById('results-panel');
+        const panelResizer = document.getElementById('panel-resizer');
+        const sidebar = document.getElementById('sidebar');
+
+        const newLeftWidth = startLeftWidth + deltaX;
+
+        // Fixed pixel bounds (no viewport-dependent logic)
+        const minLeft = 200; // px
+        const maxLeft = 520; // px
+
+        if (newLeftWidth >= minLeft && newLeftWidth <= maxLeft) {
+            const newRightWidth = sidebar.offsetWidth - newLeftWidth - panelResizer.offsetWidth;
+            filtersPanel.style.width = `${newLeftWidth}px`;
+            resultsPanel.style.width = `${newRightWidth}px`;
+        }
+    });
+    
+    document.addEventListener('mouseup', function() {
+        if (isResizing) {
+            isResizing = false;
+            document.body.style.cursor = 'default';
+        }
+    });
+    
+    // Double-clic sur le séparateur pour réinitialiser aux valeurs par défaut selon la taille d'écran
+    panelResizer.addEventListener('dblclick', function() {
+        // Reset to fixed defaults
+        const filtersPanel = document.getElementById('filters-panel');
+        const resultsPanel = document.getElementById('results-panel');
+        filtersPanel.style.width = '360px';
+        resultsPanel.style.width = '240px';
     });
         // Stocker la liste des apps du pays sélectionné pour l'export
         window.selectedCountryName = country;
         window.selectedCountryApps = appsWithMatrixDuplicates;
+
+        // -- nothing else --
+    
+    // No responsive resizing: slider track width is fixed in CSS
+
     </script>
 </body>
 </html>

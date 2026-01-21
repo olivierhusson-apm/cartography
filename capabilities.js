@@ -276,8 +276,11 @@ function attachL4BlockEventListeners() {
 
 // Fonction globale pour retourner à la liste complète des applications
 window.showAllApplications = function() {
-    // Remettre la sidebar à son état normal
-    document.getElementById('sidebar').className = '';
+    // Revenir à l'état de sidebar par défaut sans retirer la configuration dual-panel-active
+    const sb = document.getElementById('sidebar');
+    if (sb) {
+        sb.classList.remove('l1-expanded', 'l2-expanded');
+    }
     // Désélectionner le pays
     window.selectedCountryName = null;
     // Réafficher les markers s'ils étaient cachés
@@ -325,7 +328,7 @@ function generateCapabilitiesInterface(bcMapping, capabilitiesForm) {
         categoryTitle.textContent = l1Name;
         categoryTitle.setAttribute('data-category', l1Name);
         categoryTitle.style.cursor = 'pointer';
-        categoryTitle.style.fontSize = '1.5em';
+        categoryTitle.style.fontSize = '1.05em';
         categoryTitle.style.fontWeight = 'bold';
         categoryTitle.style.color = 'white';
         categoryTitle.style.background = '#1a237e';
@@ -481,7 +484,7 @@ function setupHybridControls() {
                 // Vérifier s'il reste des catégories ouvertes
                 const hasExpandedCategories = document.querySelector('.capabilities-container.expanded');
                 if (!hasExpandedCategories) {
-                    // Revenir à la largeur normale (18vw)
+                    // Revenir à la largeur normale (360px)
                     document.getElementById('sidebar').classList.remove('l1-expanded', 'l2-expanded');
                 }
             } else {
@@ -684,15 +687,14 @@ async function initializeCapabilities(capData, appData) {
 // Recherche d'applications
 function initializeSearch() {
     
-    // Debug complet de la structure DOM
-    const sidebar = document.getElementById('sidebar');
-    const searchContainer = document.querySelector('.search-container');
-    const searchInput = document.getElementById('search-input');
-        
-    if (!searchInput) {
-    console.error('❌ Élément search-input introuvable !');
-    return;
+    // Utiliser la délégation d'événements sur info-panel pour gérer le champ de recherche dynamique
+    const infoPanel = document.getElementById('info-panel');
+    
+    if (!infoPanel) {
+        console.error('❌ Élément info-panel introuvable !');
+        return;
     }
+    
     let searchResults = [];
     
     function searchApplications(searchTerm) {
@@ -718,8 +720,20 @@ function initializeSearch() {
     function displaySearchResults(results, searchTerm) {
         const infoPanel = document.getElementById('info-panel');
         
+        // Sauvegarder la valeur actuelle du champ de recherche et la position du curseur
+        const searchInput = document.getElementById('search-input');
+        const searchValue = searchInput ? searchInput.value : searchTerm;
+        const cursorPosition = searchInput ? searchInput.selectionStart : searchValue.length;
+        
         if (results.length === 0) {
             infoPanel.innerHTML = `<div style="padding: 10px; text-align: center; color: #666;">Aucune application trouvée pour "${searchTerm}"</div>`;
+            
+            // Restaurer le focus et la position du curseur
+            const newSearchInput = document.getElementById('search-input');
+            if (newSearchInput) {
+                newSearchInput.focus();
+                newSearchInput.setSelectionRange(cursorPosition, cursorPosition);
+            }
             return;
         }
         
@@ -737,6 +751,15 @@ function initializeSearch() {
         });
         
         infoPanel.innerHTML = html;
+        
+        // Restaurer le focus et la position du curseur
+        const newSearchInput = document.getElementById('search-input');
+        if (newSearchInput) {
+            newSearchInput.focus();
+            newSearchInput.setSelectionRange(cursorPosition, cursorPosition);
+        }
+        
+        // No Extract button injected here (handled via delegated export handler)
         
         // Ajouter les événements de clic sur les résultats de recherche
         infoPanel.querySelectorAll('.search-result').forEach(elem => {
@@ -802,14 +825,18 @@ function initializeSearch() {
         });
     }
     
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value;
-        searchApplications(searchTerm);
+    // Délégation d'événements pour le champ de recherche (global)
+    document.addEventListener('input', function(e) {
+        if (e.target && e.target.id === 'search-input') {
+            const searchTerm = e.target.value;
+            searchApplications(searchTerm);
+        }
     });
     
     // Effacer la recherche quand on change les capabilities
     function clearSearchOnCapabilityChange() {
-        if (searchInput.value) {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput && searchInput.value) {
             searchInput.value = '';
             searchResults = [];
         }
@@ -882,7 +909,7 @@ function initializeCategoriesFilter() {
         label.textContent = category;
         label.style.cssText = `
             cursor: pointer;
-            font-size: 1.3em;
+            font-size: 1.05em;
             color: #333;
             flex: 1;
             user-select: none;

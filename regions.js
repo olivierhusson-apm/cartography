@@ -51,7 +51,7 @@ export const regionMapping = {
         "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Venezuela", 
         "Ecuador", "Bolivia", "Paraguay", "Uruguay", "Guyana", "Suriname"
     ],
-    "Imea": [
+    "Imeca": [
         "India", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", 
         "Bahrain", "Oman", "Jordan", "Lebanon", "Israel", "Turkey", 
         "Iran", "Iraq", "Syria", "Yemen", "South Africa","Kazakhstan"
@@ -64,7 +64,7 @@ export const regionCenters = {
     "europe": [46.818188, 8.227512],  // Centre de l'Europe (Suisse)
     "apac": [15.0, 120.0],       // Centre de l'Asie-Pacifique
     "latam": [-15.0, -60.0],     // Centre de l'Amérique Latine
-    "imea": [20.0, 25.0]         // Centre de l'India, Middle East & Africa
+    "imeca": [20.0, 25.0]         // Centre de l'India, Middle East & Africa
 };
 
 // Fonction pour expander les régions vers les pays

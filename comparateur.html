@@ -754,7 +754,7 @@
               let a1L2Display = isL2ExpectedApp1 ? `${a1L3Covered}/${totalL3}` : '';
               let a2L2Display = isL2ExpectedApp2 ? `${a2L3Covered}/${totalL3}` : '';
               const tdApp2L2 = hasApp2 ? `<td class="coverage app-column" style="font-size:1.6em;">${a2L2Display}</td>` : '';
-              html+=`<tr class="l2-row l2-clickable" data-l2="${l2}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.2em;"><b>${l2Def}</b></td><td class="coverage app-column" style="font-size:1.6em;">${a1L2Display}</td>${tdApp2L2}</tr>`;
+              html+=`<tr class="l2-row l2-clickable" data-l2="${l2}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.05em;"><b>${l2Def}</b></td><td class="coverage app-column" style="font-size:1.6em;">${a1L2Display}</td>${tdApp2L2}</tr>`;
               
               // Récupérer les L3 attendus pour cette L2 depuis expectedL4
               if (currentCategoryL4 && window.expectedL4ByCategory && window.expectedL4ByCategory[currentCategoryL4]) {
@@ -922,7 +922,7 @@
               
               // Affichage du ratio pour chaque L1
               const tdApp2L1 = hasApp2 ? `<td class="coverage app-column" style="font-size:1.6em;text-align:center;">${a2L2Couverts}/${totalL2}</td>` : '';
-              html += `<tr class="l1-row" data-l1="${l1Code}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.2em;"><b>${l1Def}</b></td><td class="coverage app-column" style="font-size:1.6em;text-align:center;">${a1L2Couverts}/${totalL2}</td>${tdApp2L1}</tr>`;
+              html += `<tr class="l1-row" data-l1="${l1Code}" style="background:#e3f2fd; border-top:2px solid #ccc;"><td style="font-size:1.05em;"><b>${l1Def}</b></td><td class="coverage app-column" style="font-size:1.6em;text-align:center;">${a1L2Couverts}/${totalL2}</td>${tdApp2L1}</tr>`;
               
               // Afficher les L2 attendus
               l2Attendus.forEach((l2, l2Index) => {
@@ -1967,7 +1967,7 @@
                     // Afficher les L4 organisées par L2 et L3
                     Object.keys(l4ByL2L3).forEach(l2 => {
                       html += `<div style=\"margin-bottom:28px; margin-top:18px; padding:18px 14px 12px 14px; background:#e3f2fd; border-left:6px solid #0d47a1; border-radius:8px; box-shadow:0 2px 8px #1976d220;\">`;
-                      html += `<div class=\"clickable-l2\" data-l2=\"${l2}\" data-l1=\"${axisCode}\" style=\"font-weight:bold; color:#0d47a1; background:transparent; font-size:1.18em; padding:0 0 6px 0; border-radius:4px; margin-bottom:10px; cursor:pointer; text-decoration:underline; letter-spacing:0.5px;\">L2 : ${getDef(l2, 2)}</div>`;
+                      html += `<div class=\"clickable-l2\" data-l2=\"${l2}\" data-l1=\"${axisCode}\" style=\"font-weight:bold; color:#0d47a1; background:transparent; font-size:1.05em; padding:0 0 6px 0; border-radius:4px; margin-bottom:10px; cursor:pointer; text-decoration:underline; letter-spacing:0.5px;\">L2 : ${getDef(l2, 2)}</div>`;
                       
                       Object.keys(l4ByL2L3[l2]).forEach(l3 => {
                         html += `<div style=\"margin-left:10px; margin-bottom:14px; background:#f5f5f5; border:1.5px solid #b0bec5; border-radius:6px; padding:10px 10px 6px 10px; box-shadow:0 1px 4px #1976d210;\">`;

@@ -1,16 +1,43 @@
 
 // Variable globale stockant l'année sélectionnée dans le curseur
-window.timelineYear = 2026;
+// Par défaut on positionne sur 2025 (slider value 0 → 2025)
+window.timelineYear = 2025;
 
 // Event listener pour le slider timeline
 document.addEventListener('DOMContentLoaded', function() {
     const timelineSlider = document.getElementById('timeline-slider');
-    
+
     if (timelineSlider) {
+        // Mapping: slider value 0..4 -> end of year 2025..2029 (year = 2025 + value)
+        // Adjust visual offset per value as requested:
+        // value 0 -> +5px, 1 -> +10px, 2 -> +5px, 3 -> 0, 4 -> -5px
+        const adjustSliderOffset = (el, val) => {
+            if (!el) return;
+            let x = 0;
+            switch (val) {
+                case 0: x = 20; break;
+                case 1: x = 12; break;
+                case 2: x = 5; break;
+                case 3: x = 0; break;
+                case 4: x = -9; break;
+                default: x = 0;
+            }
+            // base translate centers the thumb; then apply horizontal offset
+            el.style.transform = `translate(-50%,-50%) translateX(${x}px)`;
+        };
+
+        // initialize visual offset based on current value
+        try {
+            const initialV = parseInt(timelineSlider.value, 10);
+            adjustSliderOffset(timelineSlider, isNaN(initialV) ? 0 : initialV);
+        } catch (e) { /* ignore */ }
+
         timelineSlider.addEventListener('input', function(e) {
-            // Mettre à jour la variable globale
-            window.timelineYear = parseInt(e.target.value);
-            
+            const v = parseInt(e.target.value, 10);
+            const numericV = isNaN(v) ? 0 : v;
+            window.timelineYear = 2025 + numericV;
+            adjustSliderOffset(timelineSlider, numericV);
+
             // Réappliquer tous les filtres
             if (typeof filterAndShowApplications === 'function') {
                 filterAndShowApplications();
@@ -26,7 +53,8 @@ function displayApplicationCapabilities(appName, appData) {
         console.error('❌ Élément info-panel introuvable !');
         return;
     }
-    document.getElementById('sidebar').className = 'l2-expanded';
+    // Do not overwrite existing sidebar classes (keep dual-panel-active); add expanded marker
+    document.getElementById('sidebar').classList.add('l2-expanded');
     const appCapabilities = [];
     let allL3 = appData?.l3 || [];
     let allL2 = appData?.l2 || [];
@@ -130,6 +158,10 @@ function displayApplicationCapabilities(appName, appData) {
                     " title="BIA">BIA</button>`;
     }
     let capabilitiesHTML = `
+        <!-- Search bar (permanent) -->
+        <div style="margin-bottom: 10px;">
+            <input type="text" id="search-input" placeholder="🔍 Search for an application..." style="width: 100%; padding: 10px 12px; border: 2px solid #ff6f00; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: white; transition: border-color 0.2s, box-shadow 0.2s;" onfocus="this.style.borderColor='#ef6c00'; this.style.boxShadow='0 0 0 3px rgba(255,111,0,0.1)'" onblur="this.style.borderColor='#ff6f00'; this.style.boxShadow='none'">
+        </div>
         <div style="margin-bottom: 15px;">
             <button onclick="showAllApplicationsAndRecolor()" class="back-button" style="margin-bottom: 8px;">← Back</button>
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -209,6 +241,8 @@ function displayApplicationCapabilities(appName, appData) {
         };
     }
     attachL4BlockEventListeners();
+    
+    // Ajouter le bouton Extract s'il n'existe pas déjà
 }
 
 window.displayApplicationCapabilities = displayApplicationCapabilities;
@@ -225,6 +259,15 @@ function showAllApplicationsAndRecolor() {
     if (typeof hideSelectedAppButton === 'function') hideSelectedAppButton();
 }
 window.showAllApplicationsAndRecolor = showAllApplicationsAndRecolor;
+// Backwards-compatible alias: certains boutons appellent `showAllApplications()`
+// Définit une fonction globale qui affiche la liste complète via `filterAndShowApplications`.
+window.showAllApplications = function() {
+    if (typeof filterAndShowApplications === 'function') {
+        // clear any selected country and refresh
+        window.selectedCountryName = null;
+        filterAndShowApplications();
+    }
+};
 // Fonction pour filtrer les applications selon les catégories sélectionnées
 // Fonction pour afficher les applications filtrées par catégories dans la sidebar
 function displayCategoryFilteredApplications(apps, selectedCategories) {
@@ -256,7 +299,7 @@ function displayCategoryFilteredApplications(apps, selectedCategories) {
     Object.keys(groupedSidebar).forEach(cat => {
         groupedSidebar[cat].sort((a, b) => a.localeCompare(b, 'fr', {sensitivity: 'base'}));
     });
-    let html = '';
+    let html = ``;
     const categoryOrder = [
         "TMS", "Asset & Fleet Management", "Track & Trace", "Integration & Middleware", "Financial & Settlement Systems",
         "Reporting & BI", "Route & Planning Optimization", "Customs",
@@ -270,10 +313,10 @@ function displayCategoryFilteredApplications(apps, selectedCategories) {
         const appNames = groupedSidebar[cat].filter(Boolean);
         if (appNames.length === 0) return;
         html += `<div style="margin-bottom:10px;">
-            <span style="font-weight:bold; font-size: 1.3em;">${cat} (${appNames.length})</span><br>
+            <span style="font-weight:bold;">${cat} (${appNames.length})</span><br>
             ${appNames.map(name =>
-                `<span class="sidebar-item" data-name="${name}" style="margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.2em;">${name}</span>`
-            ).join('<br>')}
+                `<div class="sidebar-item" data-name="${name}" style="margin-left:10px; cursor:pointer; text-decoration:underline;">${name}</div>`
+            ).join('')}
         </div>`;
     });
     // Afficher les catégories non listées dans categoryOrder à la fin
@@ -282,11 +325,11 @@ function displayCategoryFilteredApplications(apps, selectedCategories) {
         const appNames = groupedSidebar[cat].filter(Boolean);
         if (appNames.length === 0) return;
         html += `<div style="margin-bottom:10px;">
-            <span style="font-weight:bold; font-size: 1.3em;">${cat}</span><br>
+            <span style="font-weight:bold;">${cat}</span><br>
             ${appNames.map(name =>
-                `<span class="sidebar-item" data-name="${name}" style="margin-left:10px; cursor:pointer; text-decoration:underline; font-size: 1.2em;">${name}</span>`
-            ).join('<br>')}
-        </div>`;
+                `<div class="sidebar-item" data-name="${name}" style="margin-left:10px; cursor:pointer; text-decoration:underline;">${name}</div>`
+            ).join('')}
+        </div>`
     });
     infoPanel.innerHTML = html;
     // Ajouter les événements de clic
@@ -551,6 +594,45 @@ function filterAndShowApplications() {
     }
     
     window.currentFilteredApps = filteredApps;
+
+    // Mettre à jour le compteur d'applications par année (INCLUANT les hidden)
+    const yearCounterElement = document.getElementById('year-app-count');
+    const yearDisplayElement = document.getElementById('year-display');
+    const yearLabelElement = document.getElementById('year-app-label');
+    if (yearCounterElement) {
+        // Compter directement depuis allApplications pour avoir un compte précis
+        let totalCount = 0;
+        if (window.timelineYear) {
+            totalCount = window.allApplications.filter(app => {
+                // Exclure Matrix (car c'est la fusion de ses variantes)
+                if (app.name === 'Matrix') return false;
+                
+                // Filtre par année
+                if (!app.active_years || !app.active_years.includes(window.timelineYear.toString())) return false;
+                
+                // Vérifier si l'app correspond aux filtres (catégories et capabilities)
+                const matchesCategory = checkedCategories.length === 0 || checkedCategories.includes(app.category);
+                const matchesCapability = allActiveCapabilities.length === 0 || 
+                    (app.l2 && app.l2.some(l2 => allActiveCapabilities.includes(l2))) ||
+                    (app.l3 && app.l3.some(l3 => allActiveCapabilities.includes(l3))) ||
+                    (app.l4 && app.l4.some(l4 => allActiveCapabilities.includes(l4)));
+                
+                return matchesCategory && matchesCapability;
+            }).length;
+        }
+        yearCounterElement.textContent = totalCount;
+    }
+    if (yearDisplayElement && window.timelineYear) {
+        yearDisplayElement.textContent = `Year ${window.timelineYear}`;
+    }
+    if (yearLabelElement && window.timelineYear) {
+        // Changer le label selon l'année
+        if (window.timelineYear >= 2027) {
+            yearLabelElement.textContent = 'Planned Applications';
+        } else {
+            yearLabelElement.textContent = 'Active Applications';
+        }
+    }
 
     // 4. Reset les couleurs
     if (typeof window.resetCountryColors === 'function') {
