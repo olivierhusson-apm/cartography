@@ -36,7 +36,7 @@
     </div>
     <div class="comparison-area" style="margin-top:1.5em;">
       <div style="display:flex; align-items:center; gap:18px; margin-bottom:10px;">
-          <input type="range" id="toggle-slider" min="0" max="2" value="0" style="width:120px;">
+          <input type="range" id="toggle-slider" min="0" max="2" value="2" style="width:120px;">
           <span id="slider-label" style="font-weight:bold; color:#1976d2;">Table</span>
       </div>
       <div id="result" style="display:block;"></div>
@@ -1396,7 +1396,7 @@
                 l2Tab = null;
                 show();
                 // Changer le slider pour afficher le radar
-                document.getElementById('toggle-slider').value = 1;
+                document.getElementById('toggle-slider').value = 0;
                 document.getElementById('toggle-slider').oninput();
               } else if (l1Tab && !l2Tab) {
                 // Niveau 2: sélectionner le premier L2 du L1
@@ -1404,7 +1404,7 @@
                 l2Tab = firstL2;
                 show();
                 // Changer le slider pour afficher le radar
-                document.getElementById('toggle-slider').value = 1;
+                document.getElementById('toggle-slider').value = 0;
                 document.getElementById('toggle-slider').oninput();
               }
               // Niveau 3: ne rien faire
@@ -2046,7 +2046,7 @@
                         l2Tab = null;
                         show();
                         // Changer le slider pour afficher le bar chart
-                        document.getElementById('toggle-slider').value = 2;
+                        document.getElementById('toggle-slider').value = 1;
                         document.getElementById('toggle-slider').oninput();
                       };
                     });
@@ -2060,7 +2060,7 @@
                         l2Tab = l2Code;
                         show();
                         // Changer le slider pour afficher le bar chart
-                        document.getElementById('toggle-slider').value = 2;
+                        document.getElementById('toggle-slider').value = 1;
                         document.getElementById('toggle-slider').oninput();
                       };
                     });
@@ -2084,7 +2084,7 @@
                           l2Tab = l2Code;
                           show();
                           // Changer le slider pour afficher le bar chart
-                          document.getElementById('toggle-slider').value = 2;
+                          document.getElementById('toggle-slider').value = 1;
                           document.getElementById('toggle-slider').oninput();
                         }
                       };
@@ -2234,26 +2234,45 @@
       // Gestion du slider
       const slider = document.getElementById('toggle-slider');
       const sliderLabel = document.getElementById('slider-label');
-      slider.value = 0;
+      slider.value = 2;
       slider.oninput = function() {
         if (slider.value == '0') {
-          document.getElementById('result').style.display = 'block';
-          document.getElementById('radar-charts').style.display = 'none';
-          document.getElementById('bar-chart-container').style.display = 'none';
-          sliderLabel.textContent = 'Table';
-        } else if (slider.value == '1') {
+          // Radar
           document.getElementById('result').style.display = 'none';
           document.getElementById('radar-charts').style.display = 'flex';
           document.getElementById('bar-chart-container').style.display = 'none';
           sliderLabel.textContent = 'Radar';
-        } else if (slider.value == '2') {
+        } else if (slider.value == '1') {
+          // Bar chart
           document.getElementById('result').style.display = 'none';
           document.getElementById('radar-charts').style.display = 'none';
           document.getElementById('bar-chart-container').style.display = 'flex';
           sliderLabel.textContent = 'Bar chart';
           showBarChart();
+        } else if (slider.value == '2') {
+          // Table
+          document.getElementById('result').style.display = 'block';
+          document.getElementById('radar-charts').style.display = 'none';
+          document.getElementById('bar-chart-container').style.display = 'none';
+          sliderLabel.textContent = 'Table';
         }
       };
+      // Si l'URL fournit un paramètre `view`, régler le slider en conséquence
+      (function(){
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const view = params.get('view');
+          if (view) {
+            const map = { 'radar': '0', 'bar': '1', 'table': '2', '0':'0','1':'1','2':'2' };
+            if (map[view] !== undefined) {
+              slider.value = map[view];
+              slider.oninput();
+            }
+          }
+        } catch (e) {
+          console.debug('comparateur: could not apply view param', e);
+        }
+      })();
     }
   </script>
 </body>

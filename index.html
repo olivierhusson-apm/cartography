@@ -1,6 +1,4 @@
-// Stocker la liste des apps de la région sélectionnée pour l'export
-            window.selectedRegionName = regionName;
-            window.selectedRegionApps = appsWithMatrixDuplicates;
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -88,15 +86,14 @@
                     <div id="timeline-filter">
                         <div class="timeline-frise-container">
                             <img src="Assets/Frise.png" alt="frise" class="timeline-frise-image">
-                            <input type="range" id="timeline-slider" min="0" max="4" value="0" step="1" class="timeline-frise-slider">
+                            <input type="range" id="timeline-slider" min="0" max="4" value="1" step="1" class="timeline-frise-slider">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Séparateur redimensionnable (visible uniquement en mode double panneau) -->
-        <div id="panel-resizer" style="display: none;"></div>
+        <!-- Séparateur redimensionnable (removed) -->
         
         <!-- Panneau droit : Résultats (contient l'info-panel, visible uniquement en mode double panneau) -->
         <div id="results-panel" class="sidebar-panel" style="display: none;">
@@ -109,7 +106,7 @@
                     <input type="text" id="search-input" placeholder="🔍 Search for an application..." style="width:100%; padding:8px 10px; border: 1px solid #ddd; border-radius:6px; box-sizing:border-box; font-size:14px;" />
                 </div>
             </div>
-            <div id="info-panel" style="background:#f0f4ff; padding:8px 10px; border-radius:6px; font-size: 15px; border: 1px solid #bbdefb; height: 100%; overflow-y: auto; box-sizing: border-box;">
+            <div id="info-panel" style="background:#f0f4ff; padding:0; border-radius:6px; font-size: 15px; border: 1px solid #bbdefb; height: 100%; overflow-y: auto; box-sizing: border-box;">
             </div>
         </div>
         
@@ -117,30 +114,38 @@
     </div>
     <div id="map">
         <!-- Compteur d'applications par année -->
-        <div id="year-app-counter" onclick="window.open('Decomm.html', '_blank')" style="
+        <div id="year-app-counter" style="
             position: fixed;
-            top: 80px;
+            top: 84px;
             right: 20px;
             z-index: 1000;
             background: rgba(25, 118, 210, 0.95);
             color: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            padding: 10px 12px;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
             font-weight: bold;
             text-align: center;
-            min-width: 180px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'">
-            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;" id="year-app-label">Active Applications</div>
-            <div style="font-size: 32px; line-height: 1;" id="year-app-count">0</div>
-            <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;" id="year-display">Year 2026</div>
+            min-width: 140px;
+            transition: box-shadow 0.18s;
+        ">
+            <div style="font-size: 12px; opacity: 0.95; margin-bottom: 4px;" id="year-app-label">Active Applications</div>
+            <div style="font-size: 22px; line-height: 1;" id="year-app-count">0</div>
+            <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;" id="year-display"></div>
+            <!-- Slider de mode d'affichage des markers intégré ici -->
+            <div id="marker-mode-control" style="margin-top: 12px; background: #e3f0fd; border-radius: 12px; padding: 10px 8px;">
+                <div id="marker-mode-labels" style="display: flex; justify-content: space-between; width: 160px; margin-bottom: 4px; font-size: 10px; color: #1976d2; font-weight: 700; padding: 0 2px;">
+                    <span id="label-business" style="flex:1; text-align: left;">Business</span>
+                    <span id="label-it" style="flex:1; text-align: right;">IT Owner</span>
+                </div>
+                <input type="range" id="marker-mode-slider" min="1" max="2" value="1" step="1">
+                <!-- label sous le slider supprimé -->
+            </div>
         </div>
         
         <div id="selected-app-container" style="
             position: fixed;
-            top: 40px;
+            top: 120px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
@@ -150,12 +155,13 @@
             <div id="selected-app-button" style="
                 background: #e53935;
                 color: white;
-                padding: 12px 18px;
-                border-radius: 25px;
+                height: 18px;
+                padding: 6px 12px;
+                border-radius: 18px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                font-size: 14px;
+                font-size: 12px;
                 font-weight: bold;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.3);
                 white-space: nowrap;
@@ -178,18 +184,41 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Slider déplacé dans le panneau Active Applications -->
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="capabilities.js"></script>
     <script src="filters.js"></script>
     <script src="HiddenApps.js"></script>
+    <script>
+    // Mettre en rouge le label correspondant à la position du slider
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('marker-mode-slider');
+        const labelBusiness = document.getElementById('label-business');
+        const labelIt = document.getElementById('label-it');
+        function updateLabels() {
+            labelBusiness.style.color = (slider.value == '1') ? 'red' : '#1976d2';
+            labelIt.style.color = (slider.value == '2') ? 'red' : '#1976d2';
+        }
+        slider.addEventListener('input', updateLabels);
+        updateLabels();
+
+        // Affichage markers selon la position du slider
+        slider.addEventListener('input', function() {
+            if (window.updateMarkerMode) window.updateMarkerMode(Number(slider.value));
+        });
+        // Appel initial
+        if (window.updateMarkerMode) window.updateMarkerMode(Number(slider.value));
+    });
+    </script>
     <script type="module">
         import { countries } from './countriesList.js';
 
         // Centres géographiques des régions principales
         const regionCenters = {
             "nortam": [45.0, -100.0],
-            "europe": [46.818188, 8.227512],
+            "europe": [48.573405, 7.752111],
             "apac": [15.0, 120.0],
             "latam": [-15.0, -60.0],
             "imeca": [20.0, 25.0]
@@ -238,8 +267,52 @@
             countryMarkers = [];
 
             const currentZoom = map.getZoom();
-            
-            if (currentZoom < ZOOM_THRESHOLD) {
+            // Si les items sont des markers personnalisés (IT Owner), items auront des lat/lng
+            if (items && items.length > 0 && items[0].lat !== undefined && items[0].lng !== undefined) {
+                // Afficher des markers personnalisés (IT Owner)
+                items.forEach(it => {
+                    const center = [it.lat, it.lng];
+                    const html = `<div style="\
+                            background: #d32f2f;\
+                            color: white;\
+                            border-radius: 12px;\
+                            width: 72px;\
+                            height: 56px;\
+                            display: flex;\
+                            flex-direction: column;\
+                            align-items: center;\
+                            justify-content: center;\
+                            font-weight: bold;\
+                            font-size: 1.05em;\
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.25);\
+                            padding: 6px 6px;\
+                            ">\
+                            <div style=\"font-size:1.25em; line-height:1; font-weight:900;\">${it.count}</div>\
+                            <div style=\"font-size:0.95em; line-height:1; margin-top:2px; opacity:0.98; text-transform:uppercase; font-weight:700;\">${it.name}</div>\
+                        </div>`;
+                        const marker = L.marker(center, {
+                            icon: L.divIcon({
+                                className: 'it-owner-icon',
+                                html: html,
+                                iconSize: [72, 56],
+                                iconAnchor: [36, 28]
+                            }),
+                            interactive: true
+                        }).addTo(map);
+                    marker.on('click', function() {
+                        // Delegate to global handler that builds the app list for the IT Owner region
+                        if (typeof window.showAppListForRegion === 'function') {
+                            window.showAppListForRegion(it.name, center);
+                        } else {
+                            const infoPanel = document.getElementById('info-panel');
+                            if (infoPanel) {
+                                infoPanel.innerHTML = `<h3 style="margin-top:0;">${it.name} (${it.count})</h3><div>IT Owner marker</div>`;
+                            }
+                        }
+                    });
+                    countryMarkers.push(marker);
+                });
+            } else if (currentZoom < ZOOM_THRESHOLD) {
                 // Mode regroupé : afficher les markers régionaux
                 showGroupedMarkers(items, allApps);
             } else {
@@ -515,6 +588,42 @@
         function showCountryApps(country, apps, allApps) {
             const infoPanel = document.getElementById('info-panel');
             const sidebar = document.getElementById('sidebar');
+
+            // Si les onglets Matrix sont affichés, montrer directement les variantes Matrix présentes dans ce pays
+            const matrixContainer = document.getElementById('matrix-variants-container');
+            if (matrixContainer && matrixContainer.style.display !== 'none') {
+                const variants = (window.HiddenApps && typeof window.HiddenApps.getVariantsForMainApp === 'function')
+                    ? window.HiddenApps.getVariantsForMainApp('Matrix', country, allApps)
+                    : allApps.filter(v => v.parent === 'Matrix' && Array.isArray(v.countries) && v.countries.includes(country));
+                if (variants.length > 0) {
+                    let html = `
+                        <div style="margin-bottom: 15px;">
+                            <button onclick="showBackFromApp()" class="back-button" style="margin-bottom: 8px;">← Back</button>
+                            <h3 class="app-title">Matrix ${country} (${variants.length})</h3>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                    `;
+                    variants.forEach(variant => {
+                        html += `
+                            <div style="background: white; border-radius: 8px; border: 1px solid #e0e0e0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="background: #f5f5f5; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #1976d2; display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="sidebar-item" data-name="${variant.name}" style="cursor:pointer; text-decoration:underline;">${variant.name}</div>
+                                            <span style="font-size: 0.85em; color: #666; font-weight: normal;">${variant.category || ''}</span>
+                                        </div>
+                                <div style="padding: 12px; font-size: 14px; line-height: 1.5;">
+                                    ${variant.application_code ? `<div style="margin-bottom: 4px;"><strong style="color: #555;">Code:</strong> ${variant.application_code}</div>` : ''}
+                                    ${variant["7R_analysis"] ? `<div style="margin-bottom: 4px;"><strong style="color: #555;">7R:</strong> ${variant["7R_analysis"]}</div>` : ''}
+                                    ${variant.it_owner ? `<div style="margin-bottom: 4px;"><strong style="color: #555;">IT Owner:</strong> ${variant.it_owner}</div>` : ''}
+                                    ${variant.description ? `<div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; color: #444;">${variant.description}</div>` : ''}
+                                </div>
+                            </div>`;
+                    });
+                    html += `</div>`;
+                    infoPanel.innerHTML = html;
+                    if (typeof window.addAppClickEvents === 'function') window.addAppClickEvents(infoPanel, allApps);
+                    return;
+                }
+            }
             
             // Récupérer les catégories filtrées (si elles existent)
             const checkedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked'))
@@ -525,7 +634,9 @@
             apps.forEach(app => {
                 if (app.name === "Matrix") {
                     // Récupérer toutes les variantes Matrix (même hidden)
-                    const variants = allApps.filter(v => v.parent === "Matrix");
+                    const variants = (window.HiddenApps && typeof window.HiddenApps.getVariantsForMainApp === 'function')
+                        ? window.HiddenApps.getVariantsForMainApp('Matrix', null, allApps)
+                        : allApps.filter(v => v.parent === "Matrix");
                     // Grouper par catégorie pour ce pays
                     const categoriesMap = {};
                     variants.forEach(variant => {
@@ -632,9 +743,9 @@
                     "TMS", "Asset & Fleet Management", "Track & Trace", "Integration & Middleware", "Financial & Settlement Systems",
                     "Reporting & BI", "Route & Planning Optimization", "Customs",
                     "Freight Marketplace", "Customer Portal", "Documents & Collaboration",
-                    "Digital Forwarding", "YMS", "Warehouse Management Systems (WMS)", "Customer Relationship Management (CRM)", "Order Management System (OMS)", "Last Mile Distribution",
+                    "Digital Forwarding", "YMS", "WMS", "CRM", "OMS", "Last Mile Distribution",
                     "Claims & Damages", "Carriers Portal", "Control & Quality",
-                    "Mobile App", "Legal Compliance", "Autre"
+                    "Mobile App", "Legal Compliance"
                 ];
                 
                 let listHtml = '';
@@ -770,30 +881,25 @@
 
             // Dupliquer Matrix par catégorie selon les variantes présentes dans la région
             let appsWithMatrixDuplicates = [];
-            allRegionApps.forEach(app => {
+            apps.forEach(app => {
                 if (app.name === "Matrix") {
-                    // Récupérer toutes les variantes Matrix (même hidden)
-                    const variants = allAppsFlat.filter(v => v.parent === "Matrix");
-                    // Grouper par catégorie pour cette région
-                    const categoriesMap = {};
-                    variants.forEach(variant => {
-                        if (variant.regions && variant.regions.some(r => r === regionName.toLowerCase())) {
-                            const category = variant.category;
-                            // Si un filtre de catégorie est actif, ne garder que les catégories filtrées
-                            if (checkedCategories.length === 0 || checkedCategories.includes(category)) {
-                                if (!categoriesMap[category]) {
-                                    categoriesMap[category] = true;
+                    const copies = (window.HiddenApps && typeof window.HiddenApps.getMatrixCategoriesForCountry === 'function')
+                        ? window.HiddenApps.getMatrixCategoriesForCountry(country, app, allApps, checkedCategories)
+                        : (function() {
+                            // fallback: mirror previous inline behavior
+                            const variants = allApps.filter(v => v.parent === 'Matrix');
+                            const categoriesMap = {};
+                            variants.forEach(variant => {
+                                if (variant.countries && variant.countries.includes(country)) {
+                                    const category = variant.category;
+                                    if (checkedCategories.length === 0 || checkedCategories.includes(category)) {
+                                        if (!categoriesMap[category]) categoriesMap[category] = true;
+                                    }
                                 }
-                            }
-                        }
-                    });
-                    // Créer une copie Matrix pour chaque catégorie trouvée
-                    Object.keys(categoriesMap).forEach(category => {
-                        appsWithMatrixDuplicates.push({
-                            ...app,
-                            category: category
-                        });
-                    });
+                            });
+                            return Object.keys(categoriesMap).map(category => ({ ...app, category }));
+                        })();
+                    copies.forEach(c => appsWithMatrixDuplicates.push(c));
                 } else {
                     appsWithMatrixDuplicates.push(app);
                 }
@@ -866,7 +972,7 @@
                     "TMS", "Asset & Fleet Management", "Track & Trace", "Integration & Middleware", "Financial & Settlement Systems",
                     "Reporting & BI", "Route & Planning Optimization", "Customs",
                     "Freight Marketplace", "Customer Portal", "Documents & Collaboration",
-                    "Digital Forwarding", "YMS", "Warehouse Management Systems (WMS)", "Customer Relationship Management (CRM)", "Order Management System (OMS)", "Last Mile Distribution",
+                    "Digital Forwarding", "YMS", "WMS", "CRM", "OMS", "Last Mile Distribution",
                     "Claims & Damages", "Carriers Portal", "Control & Quality",
                     "Mobile App", "Legal Compliance", "Autre"
                 ];
@@ -1042,7 +1148,7 @@
                         let item = allApps.find(i => i.name === itemName);
                         // Patch spécial pour Matrix : n'afficher que les variantes du pays sélectionné
                         if (itemName === 'Matrix' && window.HiddenApps && typeof window.HiddenApps.getCombinedMatrixForCountry === 'function' && window.selectedCountryName) {
-                            const combined = window.HiddenApps.getCombinedMatrixForCountry(window.selectedCountryName, window.allApplications);
+                                    const combined = window.HiddenApps.getCombinedMatrixForCountry(window.selectedCountryName, window.allApplications);
                             if (combined) item = combined;
                         }
                         if (!item) return;
@@ -1210,7 +1316,7 @@
                 assessmentButton.addEventListener('click', function() {
                     const a1 = app1Select.value || '';
                     const a2 = app2Select.value || '';
-                    const url = `comparateur.html?app1=${encodeURIComponent(a1)}&app2=${encodeURIComponent(a2)}`;
+                    const url = `comparateur.html?app1=${encodeURIComponent(a1)}&app2=${encodeURIComponent(a2)}&view=radar`;
                     window.open(url, '_blank');
                 });
                 
@@ -1413,7 +1519,6 @@
     // placeholder removed; keep a safe reference (will be null)
     const infoPanelPlaceholder = document.getElementById('info-panel-placeholder');
     const resultsPanel = document.getElementById('results-panel');
-    const panelResizer = document.getElementById('panel-resizer');
     
     let isDualPanelMode = false;
     
@@ -1439,57 +1544,7 @@
     // Double panel mode is enabled by default (sidebar has class 'dual-panel-active')
     // No toggle button: keep results panel visible permanently.
     
-    // Gestion du redimensionnement du séparateur
-    let isResizing = false;
-    let startX = 0;
-    let startLeftWidth = 0;
-    
-    panelResizer.addEventListener('mousedown', function(e) {
-        isResizing = true;
-        startX = e.clientX;
-        const filtersPanel = document.getElementById('filters-panel');
-        startLeftWidth = filtersPanel.offsetWidth;
-        document.body.style.cursor = 'col-resize';
-        e.preventDefault();
-    });
-    
-    document.addEventListener('mousemove', function(e) {
-        if (!isResizing) return;
-
-        const deltaX = e.clientX - startX;
-        const filtersPanel = document.getElementById('filters-panel');
-        const resultsPanel = document.getElementById('results-panel');
-        const panelResizer = document.getElementById('panel-resizer');
-        const sidebar = document.getElementById('sidebar');
-
-        const newLeftWidth = startLeftWidth + deltaX;
-
-        // Fixed pixel bounds (no viewport-dependent logic)
-        const minLeft = 200; // px
-        const maxLeft = 520; // px
-
-        if (newLeftWidth >= minLeft && newLeftWidth <= maxLeft) {
-            const newRightWidth = sidebar.offsetWidth - newLeftWidth - panelResizer.offsetWidth;
-            filtersPanel.style.width = `${newLeftWidth}px`;
-            resultsPanel.style.width = `${newRightWidth}px`;
-        }
-    });
-    
-    document.addEventListener('mouseup', function() {
-        if (isResizing) {
-            isResizing = false;
-            document.body.style.cursor = 'default';
-        }
-    });
-    
-    // Double-clic sur le séparateur pour réinitialiser aux valeurs par défaut selon la taille d'écran
-    panelResizer.addEventListener('dblclick', function() {
-        // Reset to fixed defaults
-        const filtersPanel = document.getElementById('filters-panel');
-        const resultsPanel = document.getElementById('results-panel');
-        filtersPanel.style.width = '360px';
-        resultsPanel.style.width = '240px';
-    });
+    // Panel resizer removed.
         // Stocker la liste des apps du pays sélectionné pour l'export
         window.selectedCountryName = country;
         window.selectedCountryApps = appsWithMatrixDuplicates;

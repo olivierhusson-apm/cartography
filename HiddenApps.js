@@ -130,6 +130,52 @@ function getHiddenVariantsForCountry(mainAppName, country, allApps) {
 }
 
 /**
+ * Récupère les variantes d'une application principale (par `parent`), optionnellement filtrées par pays.
+ * Retourne toutes les variantes (hidden ou non) dont `parent === mainAppName`.
+ * @param {string} mainAppName
+ * @param {string|null} country
+ * @param {Array} allApps
+ * @returns {Array}
+ */
+function getVariantsForMainApp(mainAppName, country, allApps) {
+    if (!Array.isArray(allApps)) return [];
+    const variants = allApps.filter(app => app.parent === mainAppName);
+    if (country) {
+        return variants.filter(v => Array.isArray(v.countries) && v.countries.includes(country));
+    }
+    return variants;
+}
+
+/**
+ * Retourne des copies de l'application principale (ex: Matrix) par catégorie
+ * basées sur les variantes présentes dans un pays donné.
+ * @param {string|null} country
+ * @param {Object} baseApp - l'objet application principal (ex: { name: 'Matrix', ... })
+ * @param {Array} allApps
+ * @param {Array} checkedCategories - filtre optionnel des catégories à conserver
+ * @returns {Array} - copies de baseApp avec propriété `category` définie
+ */
+function getMatrixCategoriesForCountry(country, baseApp, allApps, checkedCategories) {
+    if (!baseApp || !Array.isArray(allApps)) return [];
+    const mainName = baseApp.name || 'Matrix';
+    // récupérer toutes les variantes du main
+    const variants = allApps.filter(v => v.parent === mainName);
+    const categoriesMap = {};
+    variants.forEach(variant => {
+        if (country && Array.isArray(variant.countries) && !variant.countries.includes(country)) return;
+        const category = variant.category;
+        if (checkedCategories && checkedCategories.length > 0) {
+            if (category && checkedCategories.includes(category)) {
+                categoriesMap[category] = true;
+            }
+        } else {
+            if (category) categoriesMap[category] = true;
+        }
+    });
+    return Object.keys(categoriesMap).map(cat => ({ ...baseApp, category: cat }));
+}
+
+/**
  * Fusionne les capabilities de toutes les variantes cachées présentes dans un pays
  * @param {Array} variantsInCountry - Résultat de getHiddenVariantsForCountry
  * @returns {Object} - { l2:[], l3:[], l4:[] } (uniques)
@@ -178,16 +224,24 @@ function renderFloatingButtons(mainAppName, selectedCountry, allApps, containerI
         container.id = containerId;
         container.style.cssText = `
             position: fixed;
-            top: max(20px, 5vh);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
+            top: 8vh;
+            right: 20%;
+            left: auto;
+            transform: translate(0, 0);
+            z-index: 2147483647;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             align-items: center;
             justify-content: center;
-            max-width: 90vw;`;
+            max-width: 40vw;
+            max-height: 60vh;
+            overflow: auto;
+            padding: 4px;
+            pointer-events: auto;
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;`;
         document.body.appendChild(container);
     }
     let buttonsHTML = '';
@@ -212,9 +266,8 @@ function renderFloatingButtons(mainAppName, selectedCountry, allApps, containerI
         }
         buttonsHTML += `
             <button class="matrix-variant-button${extraClass}" data-variant='${JSON.stringify(variant)}'
-                style="background: ${buttonColor}; color: white; border: none; border-radius: 25px; padding: 12px 18px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.2s ease; text-align: center; white-space: nowrap; min-width: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <div style=\"font-size: 14px; font-weight: bold;\">${shortName}</div>
-                <div style=\"font-size: 12px; margin-top: 2px; opacity: 0.9;\">${variant.category}</div>
+                style="background: ${buttonColor}; color: white; border: none; border-radius: 16px; padding: 6px 10px; cursor: pointer; font-size: 13px; font-weight: 700; box-shadow: none; transition: transform 0.15s ease; text-align: center; white-space: nowrap; min-width: 80px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                <div style=\"font-size: 13px; font-weight: 700; line-height: 1; padding: 0 4px;\">${shortName}</div>
             </button>
         `;
     });
@@ -400,4 +453,6 @@ window.HiddenApps = {
     getAppsWithMatrix,
     getAppsWithMatrixForRegion,
     getUniqueAppsForCountryWithMatrix
+    ,getVariantsForMainApp
+    ,getMatrixCategoriesForCountry
 };

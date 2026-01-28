@@ -1,7 +1,7 @@
 
 // Variable globale stockant l'année sélectionnée dans le curseur
 // Par défaut on positionne sur 2025 (slider value 0 → 2025)
-window.timelineYear = 2025;
+window.timelineYear = 2026;
 
 // Event listener pour le slider timeline
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,10 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
             el.style.transform = `translate(-50%,-50%) translateX(${x}px)`;
         };
 
-        // initialize visual offset based on current value
+        // initialize visual offset based on current value and set timelineYear accordingly
         try {
             const initialV = parseInt(timelineSlider.value, 10);
-            adjustSliderOffset(timelineSlider, isNaN(initialV) ? 0 : initialV);
+            const numericInit = isNaN(initialV) ? 0 : initialV;
+            adjustSliderOffset(timelineSlider, numericInit);
+            window.timelineYear = 2025 + numericInit;
         } catch (e) { /* ignore */ }
 
         timelineSlider.addEventListener('input', function(e) {
@@ -55,6 +57,52 @@ function displayApplicationCapabilities(appName, appData) {
     }
     // Do not overwrite existing sidebar classes (keep dual-panel-active); add expanded marker
     document.getElementById('sidebar').classList.add('l2-expanded');
+
+    // Track last displayed app for Back button behavior
+    window._lastDisplayedAppName = appName;
+    console.debug('[displayApplicationCapabilities] appName=', appName, 'selectedCountryName=', window.selectedCountryName, '_currentMatrixViewCountry=', window._currentMatrixViewCountry);
+
+    // Affichage spécifique pour Matrix : lister les variantes (toutes ou celles présentes dans le pays sélectionné)
+    if (appName === 'Matrix') {
+        let variants = [];
+        if (window.HiddenApps && typeof window.HiddenApps.getVariantsForMainApp === 'function') {
+            variants = window.HiddenApps.getVariantsForMainApp('Matrix', window.selectedCountryName || null, window.allApplications);
+        } else {
+            if (window.selectedCountryName) {
+                variants = window.allApplications.filter(app => app.parent === 'Matrix' && Array.isArray(app.countries) && app.countries.includes(window.selectedCountryName));
+            } else {
+                variants = window.allApplications.filter(app => app.parent === 'Matrix');
+            }
+        }
+        if (variants.length > 0) {
+            let html = `
+                <div style="margin-bottom: 15px;">
+                    <button onclick="showBackFromApp()" class="back-button" style="margin-bottom: 8px;">← Back</button>
+                    <h3 class="app-title">Matrix${window.selectedCountryName ? ' ' + window.selectedCountryName : ''} (${variants.length})</h3>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+            `;
+            variants.forEach(variant => {
+                html += `
+                    <div style="background: white; border-radius: 8px; border: 1px solid #e0e0e0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                        <div style="background: #f5f5f5; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #1976d2; display: flex; justify-content: space-between; align-items: center;">
+                            <span>${variant.name}</span>
+                            <span style="font-size: 0.85em; color: #666; font-weight: normal;">${variant.category || ''}</span>
+                        </div>
+                        <div style="padding: 12px; font-size: 14px; line-height: 1.5;">
+                            ${variant.application_code ? `<div style="margin-bottom: 4px;"><strong style="color: #555;">Code:</strong> ${variant.application_code}</div>` : ''}
+                            ${variant["7R_analysis"] ? `<div style="margin-bottom: 4px;"><strong style="color: #555;">7R:</strong> ${variant["7R_analysis"]}</div>` : ''}
+                            ${variant.it_owner ? `<div style="margin-bottom: 4px;"><strong style="color: #555;">IT Owner:</strong> ${variant.it_owner}</div>` : ''}
+                            ${variant.description ? `<div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; color: #444;">${variant.description}</div>` : ''}
+                        </div>
+                    </div>`;
+            });
+            html += `</div>`;
+            infoPanel.innerHTML = html;
+            return;
+        }
+    }
+
     const appCapabilities = [];
     let allL3 = appData?.l3 || [];
     let allL2 = appData?.l2 || [];
@@ -113,15 +161,15 @@ function displayApplicationCapabilities(appName, appData) {
             }
         });
     }
-    let appTitle = `📋 Capabilities of ${appName}`;
+    let appTitle = appName;
     // Code spécifique à Matrix pour afficher le pays ou la région sélectionnée
     if (appName === 'Matrix') {
         let selectedCountry = window.selectedCountryName;
         let selectedRegion = window.selectedRegionName;
         if (selectedCountry && appData.countries && appData.countries.includes(selectedCountry)) {
-            appTitle = `📋 Capabilities of Matrix ${selectedCountry}`;
+            appTitle = `Matrix ${selectedCountry}`;
         } else if (selectedRegion && appData.regions && appData.regions.includes(selectedRegion)) {
-            appTitle = `📋 Capabilities of Matrix ${selectedRegion}`;
+            appTitle = `Matrix ${selectedRegion}`;
         }
     }
     let itOwnerHTML = '';
@@ -158,79 +206,47 @@ function displayApplicationCapabilities(appName, appData) {
                     " title="BIA">BIA</button>`;
     }
     let capabilitiesHTML = `
-        <!-- Search bar (permanent) -->
-        <div style="margin-bottom: 10px;">
-            <input type="text" id="search-input" placeholder="🔍 Search for an application..." style="width: 100%; padding: 10px 12px; border: 2px solid #ff6f00; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: white; transition: border-color 0.2s, box-shadow 0.2s;" onfocus="this.style.borderColor='#ef6c00'; this.style.boxShadow='0 0 0 3px rgba(255,111,0,0.1)'" onblur="this.style.borderColor='#ff6f00'; this.style.boxShadow='none'">
-        </div>
         <div style="margin-bottom: 15px;">
-            <button onclick="showAllApplicationsAndRecolor()" class="back-button" style="margin-bottom: 8px;">← Back</button>
+            <button onclick="showBackFromApp()" class="back-button" style="margin-bottom: 8px;">← Back</button>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h3 class="app-title">${appTitle}</h3>
-                </div>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                    ${biaButtonHTML}
-                    <button id="open-comparator-btn" style="
-                        background: #4CAF50;
-                        color: white;
-                        border: none;
-                        border-radius: 6px;
-                        padding: 6px 12px;
-                        cursor: pointer;
-                        font-size: 12px;
-                        font-weight: bold;
-                        display: inline-block;
-                        transition: all 0.2s ease;
-                    " title="Assessment">⚖️ Assessment</button>
-                </div>
+                
             </div>
         </div>
     `;
-    if (appCapabilities.length > 0) {
-        const l1Groups = {};
-        appCapabilities.forEach(cap => {
-            if (!l1Groups[cap.l1_name]) l1Groups[cap.l1_name] = {};
-            if (!l1Groups[cap.l1_name][cap.l2_name]) l1Groups[cap.l1_name][cap.l2_name] = [];
-            l1Groups[cap.l1_name][cap.l2_name].push(cap);
-        });
-        Object.keys(l1Groups).forEach(l1Id => {
-            let l1Display = (typeof bcL4Definitions !== 'undefined' && bcL4Definitions.L1 && bcL4Definitions.L1[l1Id])
-                ? bcL4Definitions.L1[l1Id]
-                : (capabilities?.L1?.[l1Id] || l1Id);
-            capabilitiesHTML += `<div><h3 class="l1-capability">${l1Display}</h3>`;
-            Object.keys(l1Groups[l1Id]).forEach(l2Id => {
-                let l2Display = (typeof bcL4Definitions !== 'undefined' && bcL4Definitions.L2 && bcL4Definitions.L2[l2Id])
-                    ? bcL4Definitions.L2[l2Id]
-                    : (capabilities?.L2?.[l2Id] || l2Id);
-                capabilitiesHTML += `<h4 class="l2-title">${l2Display}</h4><ul class="l3-list">`;
-                l1Groups[l1Id][l2Id].forEach(cap => {
-                    if (cap.l3_name) {
-                        const l4Blocks = createL4BlocksFromUnified(cap.id, appL4List, appName);
-                        capabilitiesHTML += `
-                            <li class="l3-item">
-                                <span class="l3-name">${cap.l3_name}</span>
-                                <span class="l4-blocks">${l4Blocks}</span>
-                            </li>
-                        `;
-                    }
-                });
-                capabilitiesHTML += `</ul>`;
-            });
-            capabilitiesHTML += `</div>`;
-        });
-    } else {
-        capabilitiesHTML += `<p>Aucune capability trouvée pour cette application.</p>`;
+
+    // Ajout des informations détaillées de l'application
+    capabilitiesHTML += `<div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e0e0e0; font-size: 14px; line-height: 1.5; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">`;
+    
+            capabilitiesHTML += `
+                <div style="background: #f5f5f5; padding: 10px 15px; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #1976d2; display:flex; justify-content: space-between; align-items:center; margin-bottom:8px;">
+                    <span class="app-title">${appTitle}</span>
+                    <span style="font-size:0.85em;color:#666;font-weight:normal;">${appData.category || ''}</span>
+                </div>
+            `;
+    if (appData.application_code) {
+        capabilitiesHTML += `<div style="margin-bottom: 8px;"><strong style="color: #555;">Code:</strong> <span style="color: #333;">${appData.application_code}</span></div>`;
     }
+    if (appData["7R_analysis"]) {
+        capabilitiesHTML += `<div style="margin-bottom: 8px;"><strong style="color: #555;">7R Analysis:</strong> <span style="color: #333;">${appData["7R_analysis"]}</span></div>`;
+    }
+    if (appData["7R_action_year"]) {
+        let action = appData["7R_action_year"];
+        if (appData["7R_action_month"]) action += ` (${appData["7R_action_month"]})`;
+        capabilitiesHTML += `<div style="margin-bottom: 8px;"><strong style="color: #555;">7R Action:</strong> <span style="color: #333;">${action}</span></div>`;
+    }
+    if (appData.replace_by) {
+        capabilitiesHTML += `<div style="margin-bottom: 8px;"><strong style="color: #555;">Replace by:</strong> <span style="color: #333;">${appData.replace_by}</span></div>`;
+    }
+    if (appData.it_owner) {
+        capabilitiesHTML += `<div style="margin-bottom: 8px;"><strong style="color: #555;">IT Owner:</strong> <span style="color: #333;">${appData.it_owner}</span></div>`;
+    }
+    if (appData.description) {
+        capabilitiesHTML += `<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee;"><strong style="color: #555; display: block; margin-bottom: 4px;">Description:</strong><span style="color: #333;">${appData.description}</span></div>`;
+    }
+    
+    capabilitiesHTML += `</div>`;
+
     infoPanel.innerHTML = capabilitiesHTML;
-    // Adapter le comportement du bouton pour ouvrir comparateur.html avec l'application sélectionnée pré-remplie
-    const assessmentBtn = document.getElementById('open-comparator-btn');
-    if (assessmentBtn) {
-        assessmentBtn.onclick = function() {
-            // Ouvre le comparateur avec l'application sélectionnée en app1 et app2 vide (mode remove)
-            const url = `comparateur.html?app1=${encodeURIComponent(appName)}&app2=`;
-            window.open(url, '_blank');
-        };
-    }
     // Ajouter l'événement pour le bouton BIA si présent
     const biaBtn = document.getElementById('bia-btn');
     if (biaBtn) {
@@ -259,6 +275,50 @@ function showAllApplicationsAndRecolor() {
     if (typeof hideSelectedAppButton === 'function') hideSelectedAppButton();
 }
 window.showAllApplicationsAndRecolor = showAllApplicationsAndRecolor;
+// Affiche la liste des variantes Matrix (clear selected country and call display)
+window.showMatrixVariants = function(country) {
+    if (country) {
+        window.selectedCountryName = country;
+        window._currentMatrixViewCountry = country;
+    } else {
+        window.selectedCountryName = null;
+        window._currentMatrixViewCountry = null;
+    }
+    console.debug('[showMatrixVariants] country=', country, 'selectedCountryName=', window.selectedCountryName, '_currentMatrixViewCountry=', window._currentMatrixViewCountry);
+    if (typeof window.displayApplicationCapabilities === 'function') {
+        window.displayApplicationCapabilities('Matrix', {});
+    }
+    // Ensure the floating Matrix variant buttons/container are visible and up-to-date
+    try {
+        if (window.HiddenApps && typeof window.HiddenApps.renderFloatingButtons === 'function') {
+            window.HiddenApps.renderFloatingButtons('Matrix', window.selectedCountryName || null, window.allApplications, 'matrix-variants-container');
+            const mc = document.getElementById('matrix-variants-container');
+            if (mc) mc.style.display = 'flex';
+        }
+    } catch (e) { /* ignore */ }
+};
+
+// Back handler that returns to the appropriate view depending on context
+window.showBackFromApp = function() {
+    const last = window._lastDisplayedAppName;
+    console.debug('[showBackFromApp] last=', last, 'selectedCountryName=', window.selectedCountryName, '_currentMatrixViewCountry=', window._currentMatrixViewCountry);
+    // If currently viewing matrix variants for a country, go to the full Matrix variants list
+    if (window._currentMatrixViewCountry) {
+        window.showMatrixVariants();
+        return;
+    }
+    // If we came from a Matrix variant and a country is selected, show variants for that country
+    if (last && last.startsWith && last.startsWith('Matrix') && window.selectedCountryName) {
+        window.showMatrixVariants(window.selectedCountryName);
+        return;
+    }
+    // Otherwise fallback to global apps list
+    if (typeof window.showAllApplicationsAndRecolor === 'function') {
+        window.showAllApplicationsAndRecolor();
+    } else if (typeof window.showAllApplications === 'function') {
+        window.showAllApplications();
+    }
+};
 // Backwards-compatible alias: certains boutons appellent `showAllApplications()`
 // Définit une fonction globale qui affiche la liste complète via `filterAndShowApplications`.
 window.showAllApplications = function() {
@@ -304,7 +364,7 @@ function displayCategoryFilteredApplications(apps, selectedCategories) {
         "TMS", "Asset & Fleet Management", "Track & Trace", "Integration & Middleware", "Financial & Settlement Systems",
         "Reporting & BI", "Route & Planning Optimization", "Customs",
         "Freight Marketplace", "Customer Portal", "Documents & Collaboration",
-        "Digital Forwarding", "YMS", "Warehouse Management Systems (WMS)", "Customer Relationship Management (CRM)", "Order Management System (OMS)", "Last Mile Distribution",
+        "Digital Forwarding", "YMS", "WMS", "CRM", "OMS", "Last Mile Distribution",
         "Claims & Damages", "Carriers Portal", "Control & Quality",
         "Mobile App", "Legal Compliance"
     ];
@@ -595,43 +655,28 @@ function filterAndShowApplications() {
     
     window.currentFilteredApps = filteredApps;
 
-    // Mettre à jour le compteur d'applications par année (INCLUANT les hidden)
+    // Mettre à jour le compteur d'applications par année (suivant le slider Rationalization Roadmap)
     const yearCounterElement = document.getElementById('year-app-count');
     const yearDisplayElement = document.getElementById('year-display');
     const yearLabelElement = document.getElementById('year-app-label');
+    const fixedYear = window.timelineYear ? String(window.timelineYear) : '2026';
     if (yearCounterElement) {
-        // Compter directement depuis allApplications pour avoir un compte précis
-        let totalCount = 0;
-        if (window.timelineYear) {
-            totalCount = window.allApplications.filter(app => {
-                // Exclure Matrix (car c'est la fusion de ses variantes)
-                if (app.name === 'Matrix') return false;
-                
-                // Filtre par année
-                if (!app.active_years || !app.active_years.includes(window.timelineYear.toString())) return false;
-                
-                // Vérifier si l'app correspond aux filtres (catégories et capabilities)
-                const matchesCategory = checkedCategories.length === 0 || checkedCategories.includes(app.category);
-                const matchesCapability = allActiveCapabilities.length === 0 || 
-                    (app.l2 && app.l2.some(l2 => allActiveCapabilities.includes(l2))) ||
-                    (app.l3 && app.l3.some(l3 => allActiveCapabilities.includes(l3))) ||
-                    (app.l4 && app.l4.some(l4 => allActiveCapabilities.includes(l4)));
-                
-                return matchesCategory && matchesCapability;
-            }).length;
-        }
+        // Compter directement depuis allApplications pour l'année sélectionnée
+        const totalCount = window.allApplications.filter(app => {
+            if (app.name === 'Matrix') return false;
+            if (!app.active_years || !app.active_years.includes(fixedYear)) return false;
+            const matchesCategory = checkedCategories.length === 0 || checkedCategories.includes(app.category);
+            const matchesCapability = allActiveCapabilities.length === 0 || 
+                (app.l2 && app.l2.some(l2 => allActiveCapabilities.includes(l2))) ||
+                (app.l3 && app.l3.some(l3 => allActiveCapabilities.includes(l3))) ||
+                (app.l4 && app.l4.some(l4 => allActiveCapabilities.includes(l4)));
+            return matchesCategory && matchesCapability;
+        }).length;
         yearCounterElement.textContent = totalCount;
     }
-    if (yearDisplayElement && window.timelineYear) {
-        yearDisplayElement.textContent = `Year ${window.timelineYear}`;
-    }
-    if (yearLabelElement && window.timelineYear) {
-        // Changer le label selon l'année
-        if (window.timelineYear >= 2027) {
-            yearLabelElement.textContent = 'Planned Applications';
-        } else {
-            yearLabelElement.textContent = 'Active Applications';
-        }
+    // Afficher l'année sélectionnée dans le petit label si présent
+    if (yearLabelElement) {
+        yearLabelElement.textContent = 'Active Applications ' + (window.timelineYear ? window.timelineYear : '');
     }
 
     // 4. Reset les couleurs
@@ -745,7 +790,272 @@ function filterAndShowApplications() {
 
     // 6. Afficher les markers sur la carte
     if (typeof window.showCountryMarkers === 'function') {
-        window.showCountryMarkers(filteredApps, window.allApplications);
+        let appsForMap = filteredApps;
+        if (window.markerDisplayMode === 2) {
+            // Mode 2: IT Owner: markers région + un marker centré sur Marseille
+            if (typeof window.getRegionMarkers === 'function') {
+                appsForMap = window.getRegionMarkers(filteredApps, window.allApplications);
+            } else {
+                appsForMap = [];
+            }
+        }
+        window.showCountryMarkers(appsForMap, window.allApplications);
+    }
+
+    // Fonction pour changer le mode marker depuis le slider
+    window.updateMarkerMode = function(mode) {
+        window.markerDisplayMode = mode;
+        if (typeof window.filterAndShowApplications === 'function') {
+            window.filterAndShowApplications();
+        }
+    }
+
+    // Table IT Owner -> Region (extrait de Decomm.html)
+    const itOwnerToRegion = {
+        'PEREIRA BRUNO': 'LATAM',
+        'DEBERT, Julien': 'EUROPE',
+        'BIERNACKI Scott': 'NORTAM',
+        'RAUCH, Nancy, DEBERT, Julien': 'EUROPE',
+        'DEBERT, Julien, Santoni Paolo': 'EUROPE',
+        'Santoni Paolo': 'EUROPE',
+        'BERNICOT, Marc': 'GHO',
+        'Santoni Paolo, DEBERT, Julien, Rubini, Marco': 'EUROPE',
+        'Habara Rudy': 'NORTAM',
+        'Santoni Paolo, DEBERT, Julien, Seemann, Marco': 'EUROPE',
+        'Agir Dilek, RAUCH, Nancy, DEBERT, Julien': 'EUROPE',
+        'Cano Adolfo, Santoni Paolo, DEBERT, Julien': 'EUROPE',
+        'VERRECCHIA, Matthieu, DEBERT, Julien': 'EUROPE',
+        'Kelly Shawn': 'NORTAM',
+        'POUYE Fatou, RAUCH, Nancy, DEBERT, Julien': 'EUROPE',
+        'Agir Dilek, Santoni Paolo, DEBERT, Julien': 'EUROPE',
+        'Rubini, Marco, Santoni Paolo, DEBERT, Julien': 'EUROPE',
+        'Santoni Paolo, DEBERT, Julien, Agir Dilek': 'EUROPE',
+        'Rogers, Jeff (Houston)': 'NORTAM',
+        'VERRECCHIA, Matthieu': 'EUROPE',
+        'Bayram, Kaan': 'EUROPE',
+        'Kamal, Mohammed Maher': 'IMECA',
+        'DEBERT, Julien, RAUCH, Nancy': 'EUROPE',
+        'Pereira, Alex': 'LATAM',
+        'Ramasamy Velu': 'APAC',
+        'Seemann, Marco, Santoni Paolo, DEBERT, Julien': 'EUROPE',
+        'Muro, Juan Manuel': 'GHO',
+        'Wang, Bo': 'APAC',
+        'Agir Dilek': 'EUROPE',
+        'Santoni Paolo, DEBERT, Julien': 'EUROPE',
+        'Garcia Leiser': 'NORTAM',
+        'WENDLING, Patrice': 'EUROPE',
+        'DEBERT, Julien, RAUCH, Nancy, PAPIN Anne': 'EUROPE',
+        'Kopara Stacey': 'APAC',
+        'DERRE Gael': 'GHO',
+        'Heilmann Pat': 'NORTAM',
+        'Pasmanik Gena': 'NORTAM',
+        'PENEAUD Cyril (ADM)': 'EUROPE',
+        'Yusuf Koc': 'EUROPE',
+        'Yousef, Yousef Kamal': 'IMECA',
+        'Rodriguez, Guillermo Gomez, Santoni Paolo, DEBERT, Julien': 'EUROPE',
+        'RAUCH, Nancy, DEBERT, Julien, Forget Paul': 'EUROPE',
+        'BIHR, Gerald': 'GHO',
+        'POUYE Fatou, DEBERT, Julien, RAUCH, Nancy': 'EUROPE',
+        'Gatiganti Ram': 'NORTAM',
+        'Saruva, Sundaramoorthy': 'APAC',
+        'RAUCH, Nancy': 'EUROPE',
+        'Hossen Sayeed': 'IMECA',
+        'Li Ye': 'NORTAM',
+        'Seemann, Marco': 'EUROPE',
+        'Laat Angelo de': 'GHO',
+        'van Doornmalen Alois': 'EUROPE',
+        'RAUCH Nancy, DEBERT, Julien': 'EUROPE',
+        'Rubini, MarcoSantoni PaoloDEBERT, Julien': 'EUROPE'
+    };
+
+    function getITOwnerRegion(itOwner) {
+        if (!itOwner) return null;
+        return itOwnerToRegion[itOwner] || null;
+    }
+
+    // Fonction pour retourner les markers région avec counts calculés depuis filteredApps
+    window.getRegionMarkers = function(filteredApps, allApps) {
+        const centers = window.regionCenters || {
+            nortam: [45.0, -100.0],
+            europe: [55.6761, 12.5683], // Copenhagen
+            apac: [15.0, 120.0],
+            latam: [-15.0, -60.0],
+            imeca: [24.7136, 46.6753], // Riyad
+            gho: [43.2965, 5.3698] // Marseille
+        };
+
+        // Afficher la liste des applications pour une région IT Owner
+        window.showAppListForRegion = function(regionName, latlng) {
+            const infoPanel = document.getElementById('info-panel');
+            const year = window.timelineYear ? String(window.timelineYear) : null;
+            // Source: utiliser la liste complète `window.allApplications` pour inclure les apps cachées (hidden)
+            let source = [];
+            if (window.allApplications) {
+                source = Object.values(window.allApplications).flat();
+            } else if (Array.isArray(window.currentFilteredApps) && window.currentFilteredApps.length > 0) {
+                // fallback si allApplications non disponible
+                source = window.currentFilteredApps;
+            }
+
+            // Normaliser la région cible (ex: 'EUROPE')
+            const target = String(regionName || '').toUpperCase();
+
+            // Helper: obtenir la région à partir des champs app.it_owner ou app.regions
+            function regionForApp(app) {
+                if (!app) return null;
+                // Priorité: mapping IT Owner
+                if (typeof getITOwnerRegion === 'function') {
+                    const r = getITOwnerRegion(app.it_owner);
+                    if (r) return String(r).toUpperCase();
+                }
+                // Fallback: utiliser app.regions
+                if (Array.isArray(app.regions) && app.regions.length > 0) {
+                    const r = String(app.regions[0]).toLowerCase();
+                    if (r.includes('nortam') || r.includes('north') || r.includes('usa') || r.includes('canada') || r.includes('mexico')) return 'NORTAM';
+                    if (r.includes('latam') || r.includes('latin')) return 'LATAM';
+                    if (r.includes('apac') || r.includes('asia') || r.includes('china') || r.includes('india')) return 'APAC';
+                    if (r.includes('imeca') || r.includes('middle') || r.includes('africa') || r.includes('saudi')) return 'IMECA';
+                    if (r.includes('gho') || r.includes('marseille')) return 'GHO';
+                    return 'EUROPE';
+                }
+                return null;
+            }
+
+            const apps = (source || []).filter(app => {
+                if (!app || !app.name) return false;
+                if (app.name === 'Matrix' || app.parent === 'Matrix') return false;
+                if (year && app.active_years && !app.active_years.includes(year)) return false;
+                const r = regionForApp(app);
+                if (!r) return false;
+                return r === target;
+            });
+
+            if (!infoPanel) {
+                // Fallback: open a Leaflet popup at the clicked location
+                const mapInstance = window.map || null;
+                if (mapInstance) {
+                    const popupHtml = apps.length === 0 ? '<div>No apps</div>' : '<div><strong>' + target + '</strong><ul>' + apps.map(a => '<li>' + (a.name || '') + '</li>').join('') + '</ul></div>';
+                    L.popup({ maxWidth: 400 }).setLatLng(latlng).setContent(popupHtml).openOn(mapInstance);
+                }
+                return;
+            }
+
+            if (apps.length === 0) {
+                infoPanel.innerHTML = `<div style="padding:12px; color:#666;">Aucune application trouvée pour ${target}</div>`;
+                return;
+            }
+
+            // Grouper par catégorie pour affichage similaire à showCountryApps
+            const grouped = {};
+            apps.forEach(a => {
+                const cat = a.category || 'Autre';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(a);
+            });
+
+            let html = `<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                <div style="font-weight:bold; font-size:1.1em;">${target} — ${apps.length} applications</div>
+                <div></div>
+            </div>`;
+
+            Object.keys(grouped).sort().forEach(cat => {
+                html += `<div style="margin-bottom:10px;"><span style="font-weight:bold;">${cat} (${grouped[cat].length})</span><br>`;
+                html += grouped[cat].map(a => `<div class="sidebar-item" data-name="${a.name}" style="margin-left:10px; cursor:pointer; text-decoration:underline;">${a.name}</div>`).join('');
+                html += `</div>`;
+            });
+
+            infoPanel.innerHTML = html;
+            // Attacher les événements de clic pour afficher les détails d'une application
+            setTimeout(() => {
+                const items = infoPanel.querySelectorAll('.sidebar-item');
+                items.forEach(el => {
+                    el.onclick = function() {
+                        const name = this.getAttribute('data-name');
+                        const appData = (window.allApplications ? Object.values(window.allApplications).flat() : []).find(x => x.name === name) || {};
+                        if (typeof window.displayApplicationCapabilities === 'function') {
+                            window.displayApplicationCapabilities(name, appData);
+                        }
+                    };
+                });
+            }, 20);
+        };
+
+        const keys = ['NORTAM','EUROPE','APAC','LATAM','IMECA','GHO'];
+        const counts = { NORTAM:0, EUROPE:0, APAC:0, LATAM:0, IMECA:0, GHO:0 };
+        const year = window.timelineYear ? String(window.timelineYear) : null;
+
+        // Use a set to avoid double-counting app variants
+        const counted = new Set();
+
+        // First count items present in filteredApps (excluding Matrix parent itself)
+        (filteredApps || []).forEach(app => {
+            if (!app || !app.name) return;
+            if (year && app.active_years && !app.active_years.includes(year)) return;
+            if (app.name === 'Matrix') {
+                // We'll handle Matrix variants from the global list later
+                return;
+            }
+
+            // If this is a Matrix variant, still count it (it may be visible in filteredApps)
+            const name = app.name;
+            if (counted.has(name)) return;
+
+            const regionFromOwner = getITOwnerRegion(app.it_owner);
+            if (regionFromOwner && counts.hasOwnProperty(regionFromOwner)) {
+                counts[regionFromOwner]++;
+                counted.add(name);
+                return;
+            }
+
+            if (Array.isArray(app.regions) && app.regions.length > 0) {
+                const r = String(app.regions[0]).toLowerCase();
+                if (r.includes('nortam') || r.includes('north') || r.includes('usa') || r.includes('canada') || r.includes('mexico')) counts.NORTAM++;
+                else if (r.includes('latam') || r.includes('latin')) counts.LATAM++;
+                else if (r.includes('apac') || r.includes('asia') || r.includes('china') || r.includes('india')) counts.APAC++;
+                else if (r.includes('imeca') || r.includes('middle') || r.includes('africa') || r.includes('saudi') ) counts.IMECA++;
+                else counts.EUROPE++;
+                counted.add(name);
+                return;
+            }
+
+            counts.EUROPE++;
+            counted.add(name);
+        });
+
+        // Ensure Matrix variants (including hidden) are counted: scan global allApplications for parent === 'Matrix'
+        const allAppsFlat = window.allApplications ? Object.values(window.allApplications).flat() : [];
+        const matrixVariants = allAppsFlat.filter(a => a && a.parent === 'Matrix');
+        matrixVariants.forEach(v => {
+            if (!v || !v.name) return;
+            if (counted.has(v.name)) return; // already counted above
+            if (year && v.active_years && !v.active_years.includes(year)) return;
+
+            const regionFromOwner = getITOwnerRegion(v.it_owner);
+            if (regionFromOwner && counts.hasOwnProperty(regionFromOwner)) {
+                counts[regionFromOwner]++;
+                counted.add(v.name);
+                return;
+            }
+            if (Array.isArray(v.regions) && v.regions.length > 0) {
+                const r = String(v.regions[0]).toLowerCase();
+                if (r.includes('nortam') || r.includes('north') || r.includes('usa') || r.includes('canada') || r.includes('mexico')) counts.NORTAM++;
+                else if (r.includes('latam') || r.includes('latin')) counts.LATAM++;
+                else if (r.includes('apac') || r.includes('asia') || r.includes('china') || r.includes('india')) counts.APAC++;
+                else if (r.includes('imeca') || r.includes('middle') || r.includes('africa') || r.includes('saudi') ) counts.IMECA++;
+                else counts.EUROPE++;
+                counted.add(v.name);
+                return;
+            }
+            counts.EUROPE++;
+            counted.add(v.name);
+        });
+
+        const markers = keys.map(k => {
+            const keyLower = k.toLowerCase();
+            const c = centers[keyLower] || [0,0];
+            return { name: k, lat: c[0], lng: c[1], count: counts[k], icon: 'red' };
+        });
+        return markers;
     }
     // 7. Afficher la liste dans la sidebar
     if (typeof window.displayCategoryFilteredApplications === 'function') {

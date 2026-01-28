@@ -690,6 +690,7 @@
                             actionYear: app['7R_action_year'],
                             status: app['7R_analysis'],
                             name: appName,
+                            replace_by: app.replace_by || '',
                             itOwnerRegion: getITOwnerRegion(app.it_owner) || '',
                             actionMonth: app['7R_action_month'] ? app['7R_action_month'].toUpperCase() : '',
                             tco: app.tco || ''
@@ -702,6 +703,7 @@
                             actionYear: '',
                             status: 'Remain',
                             name: appName,
+                            replace_by: app.replace_by || '',
                             itOwnerRegion: getITOwnerRegion(app.it_owner) || '',
                             actionMonth: '',
                             tco: app.tco || ''
@@ -711,7 +713,7 @@
                 
                 // Créer la feuille consolidée
                 const consolidatedData = [];
-                consolidatedData.push(['Current State', '7R Year', '7R Analysis', 'Application Name', 'Region IT Owner', '7R Quarter', 'TCO']);
+                consolidatedData.push(['Current State', '7R Year', '7R Analysis', 'Application Name', 'Replace by', 'Region IT Owner', '7R Quarter', 'TCO']);
                 
                 // Convertir la Map en tableau et trier
                 const sortedApps = Array.from(uniqueApps.values()).sort((a, b) => {
@@ -748,6 +750,7 @@
                             app.actionYear,
                             app.status,
                             app.name,
+                            app.replace_by || '',
                             app.itOwnerRegion,
                             app.actionMonth,
                             app.tco
@@ -766,6 +769,7 @@
                             '',
                             '',
                             `${count} applications`,
+                            '',
                             '',
                             '',
                             tcoTotal
@@ -796,6 +800,7 @@
                     { wch: 10 }, // 7R Year
                     { wch: 12 }, // 7R Analysis
                     { wch: 30 }, // Application Name
+                    { wch: 25 }, // Replace by
                     { wch: 20 }, // Region IT Owner
                     { wch: 12 }, // 7R Month
                     { wch: 15 }  // TCO

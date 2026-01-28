@@ -174,9 +174,8 @@ function addToComparator(appName, appData) {
 }
 
 function openComparatorPage() {
-    
-    // Ouvrir le comparateur dans un nouvel onglet
-    window.open('comparateur.html', '_blank');
+    // Ouvrir le comparateur dans un nouvel onglet (ouvrir sur le radar par défaut)
+    window.open('comparateur.html?view=radar', '_blank');
 }
 
 
